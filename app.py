@@ -33,18 +33,11 @@ def get_data():
 df = get_data()
 
 with st.sidebar:
-    option_1 = (df.Start_bouw.min(),df.Start_bouw.max())
-    st.write(df.Start_bouw.min())
-    st.write(df.Start_bouw.max())
-    st.write(option_1)
-    appointment = st.slider("Schedule your appointment:", df.Start_bouw.min(), df.Start_bouw.max(), value=option_1)
-    
-    
-    option = ('Dure_huur','Sociale_huur','Middeldure_huur', 'Dure_huur_of_Koop','Koop')
-    filter_ = st.selectbox('How would you like to be contacted?',option)
+    appointment = st.slider("Schedule your appointment:", df.Start_bouw.min(), df.Start_bouw.max(), value=(df.Start_bouw.min(),df.Start_bouw.max()))
+    filter_ = st.selectbox('How would you like to be contacted?',('Dure_huur','Sociale_huur','Middeldure_huur', 'Dure_huur_of_Koop','Koop'))
 
 
-df_filter = df[(df.Start_bouw>=option_1[0]) & (df.Start_bouw<=option_1[1])]
+df_filter = df[(df.Start_bouw>=appointment[0]) & (df.Start_bouw<=appointment[1])]
 
 INITIAL_VIEW_STATE = pdk.ViewState(
     latitude=52.374119, 
