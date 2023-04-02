@@ -35,7 +35,7 @@ with st.sidebar:
 
 df = get_data()
 
-INITIAL_VIEW_STATE = pydeck.ViewState(
+INITIAL_VIEW_STATE = pdk.ViewState(
     latitude=52.374119, 
     longitude=4.895906,
     zoom=10,
