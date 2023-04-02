@@ -33,7 +33,9 @@ def get_data():
 df = get_data()
 
 with st.sidebar:
-    appointment = st.slider("Schedule your appointment:", int(df.Start_bouw.min()), int(df.Start_bouw.max()), value=(int(df.Start_bouw.min()),int(df.Start_bouw.max()))
+    appointment = st.slider("Schedule your appointment:", int(df.Start_bouw.min()), int(df.Start_bouw.max()), value=(int(df.Start_bouw.min()),
+                                                                                                                     int(df.Start_bouw.max())
+                                                                                                                    ))
     filter_ = st.selectbox('How would you like to be contacted?',('Dure_huur','Sociale_huur','Middeldure_huur', 'Dure_huur_of_Koop','Koop'))
 
 
