@@ -37,6 +37,17 @@ with st.sidebar:
                                                                                                                      int(df.Start_bouw.max())
                                                                                                                     ))
     filter_ = st.selectbox('How would you like to be contacted?',('Dure_huur','Sociale_huur','Middeldure_huur', 'Dure_huur_of_Koop','Koop'))
+    
+    import numpy as np
+
+    chart_data = pd.DataFrame(
+        np.random.randn(20, 3),
+        columns=['a', 'b', 'c'])
+
+    c = alt.Chart(chart_data).mark_circle().encode(
+        x='a', y='b', size='c', color='c', tooltip=['a', 'b', 'c'])
+
+    st.altair_chart(c, use_container_width=True)
 
 
 df_filter = df[(df.Start_bouw>=appointment[0]) & (df.Start_bouw<=appointment[1])]
