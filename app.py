@@ -33,7 +33,7 @@ df = get_data()
 
 with st.sidebar:
     option_1 = (df.Start_bouw.min(),df.Start_bouw.max())
-    appointment = st.slider("Schedule your appointment:", value=option_1)
+    appointment = st.slider("Schedule your appointment:", df.Start_bouw.min(), df.Start_bouw.max(), value=option_1)
     
     
     option = ('Dure_huur','Sociale_huur','Middeldure_huur', 'Dure_huur_of_Koop','Koop')
