@@ -33,6 +33,9 @@ df = get_data()
 
 with st.sidebar:
     option_1 = (df.Start_bouw.min(),df.Start_bouw.max())
+    st.write(df.Start_bouw.min())
+    st.write(df.Start_bouw.max())
+    st.write(option_1)
     appointment = st.slider("Schedule your appointment:", df.Start_bouw.min(), df.Start_bouw.max(), value=option_1)
     
     
