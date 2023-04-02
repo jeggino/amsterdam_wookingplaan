@@ -38,19 +38,14 @@ with st.sidebar:
                                                                                                                     ))
     filter_ = st.selectbox('How would you like to be contacted?',('Dure_huur','Sociale_huur','Middeldure_huur', 'Dure_huur_of_Koop','Koop'))
     
-    import numpy as np
-
-    chart_data = pd.DataFrame(
-        np.random.randn(20, 3),
-        columns=['a', 'b', 'c'])
-
-    c = alt.Chart(chart_data).mark_circle().encode(
-        x='a', y='b', size='c', color='c', tooltip=['a', 'b', 'c'])
-
-    st.altair_chart(c, use_container_width=True)
 
 
 df_filter = df[(df.Start_bouw>=appointment[0]) & (df.Start_bouw<=appointment[1])]
+
+# with st.sidebar:
+df_segmentation = df_filter.groupby("Gebied")['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'].sum()
+st.dataframe(df_segmentation)
+
 
 INITIAL_VIEW_STATE = pdk.ViewState(
     latitude=52.374119, 
