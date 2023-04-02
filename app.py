@@ -103,3 +103,14 @@ r = pdk.Deck(
 )
 
 st.pydeck_chart(pydeck_obj=r, use_container_width=True)
+
+#-----
+df_filter_2 = df_raw[[filter_,"geometry"]]
+a = df_filter.explore(filter_, 
+              cmap="RdYlGn",
+              k=5,
+              tiles="CartoDB dark_matter",
+              scheme="EqualInterval",
+              legend_kwds={"colorbar":False,"caption":f"Number of {filter_}","fmt": "{:.0f}"},
+             )
+st_folium(a)
