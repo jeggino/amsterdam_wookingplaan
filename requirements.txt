@@ -1,0 +1,7 @@
+pandas
+streamlit_option_menu
+folium
+altair
+streamlit
+streamlit-folium>=0.8.1
+geopandas
