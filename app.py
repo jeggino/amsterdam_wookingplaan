@@ -29,11 +29,18 @@ def get_data():
     df_raw = gpd.read_file('https://maps.amsterdam.nl/open_geodata/geojson_lnglat.php?KAARTLAAG=WONINGBOUWPLANNEN&THEMA=woningbouwplannen')
     return df_raw
 
+df = get_data()
+
 with st.sidebar:
+    option_1 = (df.Start_bouw.min(),df.Start_bouw.max())
+    appointment = st.slider("Schedule your appointment:", value=option_1)
+    
+    
     option = ('Dure_huur','Sociale_huur','Middeldure_huur', 'Dure_huur_of_Koop','Koop')
     filter_ = st.selectbox('How would you like to be contacted?',option)
 
-df = get_data()
+
+df_filter = df[(df.Start_bouw>=option_1[0]) & (df.Start_bouw<=option_1[1])]
 
 INITIAL_VIEW_STATE = pdk.ViewState(
     latitude=52.374119, 
@@ -52,12 +59,12 @@ COLOR_RANGE = [
     [50, 0, 15]
 ]
 
-BREAKS = [(df[filter_].max()*1)/6,
-          (df[filter_].max()*2)/6,
-          (df[filter_].max()*3)/6,
-          (df[filter_].max()*4)/6,
-          (df[filter_].max()*5)/6,
-          df[filter_].max()/6,]
+BREAKS = [(df_filter[filter_].max()*1)/6,
+          (df_filter[filter_].max()*2)/6,
+          (df_filter[filter_].max()*3)/6,
+          (df_filter[filter_].max()*4)/6,
+          (df_filter[filter_].max()*5)/6,
+          df_filter[filter_].max()/6,]
 
 
 def color_scale(val):
@@ -66,11 +73,11 @@ def color_scale(val):
             return COLOR_RANGE[i]
     return COLOR_RANGE[i]
 
-df["color"] = df[filter_].apply(lambda x: color_scale(x))
+df_filter["color"] = df_filter[filter_].apply(lambda x: color_scale(x))
 
 polygon_layer = pdk.Layer(
     'GeoJsonLayer',
-    df,
+    df_filter,
     opacity=0.6,
     stroked=True,
     filled=True,
