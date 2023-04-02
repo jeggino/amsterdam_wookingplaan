@@ -113,4 +113,4 @@ a = df_filter_2.explore(filter_,
               scheme="EqualInterval",
               legend_kwds={"colorbar":False,"caption":f"Number of {filter_}","fmt": "{:.0f}"},
              )
-st_folium(a)
+folium_static(a)
