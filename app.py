@@ -31,7 +31,7 @@ def get_data():
 
 with st.sidebar:
     option = ('Dure_huur','Sociale_huur','Middeldure_huur', 'Dure_huur_of_Koop','Koop')
-    filter_ = st.selectbox('How would you like to be contacted?',option))
+    filter_ = st.selectbox('How would you like to be contacted?',option)
 
 df = get_data()
 
