@@ -68,7 +68,7 @@ def color_scale(val):
 
 df["color"] = df[filter_].apply(lambda x: color_scale(x))
 
-polygon_layer = pydeck.Layer(
+polygon_layer = pdk.Layer(
     'GeoJsonLayer',
     df,
     opacity=0.6,
@@ -83,7 +83,7 @@ polygon_layer = pydeck.Layer(
 )
 
 
-r = pydeck.Deck(
+r = pdk.Deck(
     [polygon_layer],
     tooltip = {"text": "Number of: {Sociale_huur}"},
     map_style = "light",
