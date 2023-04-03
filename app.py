@@ -41,7 +41,7 @@ selected3 = option_menu(None, ["Grafieken", "Kaart"],
 # -------------------------------------------------------
 df = get_data()
 
-col1, col2, col3 = st.columns(3)
+col1, col2 = st.columns([1,3])
 
 with col1:
     filter_year = st.slider("Kies jaarreeks", int(df.Start_bouw.min()), int(df.Start_bouw.max()), 
@@ -49,7 +49,6 @@ with col1:
                                int(df.Start_bouw.max()))
                        )
     
-with col2:
     filter_fase = st.multiselect('Kies wat voor soort bouwfase',['Investeringsbesluit genomen','In aanbouw genomen','Verkenning','Principebesluit genomen'])
 
     
@@ -58,95 +57,100 @@ choices_fase = (df.Fase.isin(filter_fase))
 df_filter = df[choices_bouw & choices_fase]
         
 if selected3 == "Grafieken":
-    with st.container():
-        with col3:
-            genre = st.radio("What\'s your favorite movie genre",('Stadsdeel', 'Gebied'), horizontal=True)
-        df_segmentation = df_filter.groupby(genre)['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'].sum()
+   
+    with col1:
+        genre = st.radio("What\'s your favorite movie genre",('Stadsdeel', 'Gebied'), horizontal=True)
+        
+    with col2:
+        with st.container():
+            df_segmentation = df_filter.groupby(genre)['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'].sum()
 
-        # -------------------------------------------------------
-        tab1, tab2 = st.tabs(["📋", "📊"])
+            # -------------------------------------------------------
+            tab1, tab2 = st.tabs(["📋", "📊"])
 
-        with tab1:
-            st.dataframe(df_segmentation,use_container_width=True)
+            with tab1:
+                st.dataframe(df_segmentation,use_container_width=True)
 
-        with tab2:
-            #----------------------------------
-            filter_rent = st.selectbox('Kies een stadsdeel of gebied', df_segmentation.index)
-            source = df_segmentation.T.reset_index()[["index",filter_rent]]
+            with tab2:
+                #----------------------------------
+                filter_rent = st.selectbox('Kies een stadsdeel of gebied', df_segmentation.index)
+                source = df_segmentation.T.reset_index()[["index",filter_rent]]
 
-            base = alt.Chart(source).encode(
-                theta=alt.Theta(filter_rent, stack=True),
-                radius=alt.Radius(filter_rent, scale=alt.Scale(type="sqrt", zero=True, rangeMin=20)),
-                color="index:N",
-            )
+                base = alt.Chart(source).encode(
+                    theta=alt.Theta(filter_rent, stack=True),
+                    radius=alt.Radius(filter_rent, scale=alt.Scale(type="sqrt", zero=True, rangeMin=20)),
+                    color="index:N",
+                )
 
-            c1 = base.mark_arc(innerRadius=20, stroke="#fff")
+                c1 = base.mark_arc(innerRadius=20, stroke="#fff")
 
-            c2 = base.mark_text(radiusOffset=10).encode(text=filter_rent)
+                c2 = base.mark_text(radiusOffset=10).encode(text=filter_rent)
 
-            st.altair_chart((c1 + c2),use_container_width=True)
+                st.altair_chart((c1 + c2),use_container_width=True)
 
 
 elif selected3 == "Kaart":
     # -------------------------------------------------------
+    
+        
+    with col1:
+        filter_rent = st.selectbox('Kies wat voor soort huur',('Dure_huur','Sociale_huur','Middeldure_huur', 'Dure_huur_of_Koop','Koop'))
+    
     with st.container():
         
-        with col3:
+        with col2:
+            INITIAL_VIEW_STATE = pdk.ViewState(
+                latitude=52.374119, 
+                longitude=4.895906,
+                zoom=10,
+                pitch=45,
+                bearing=0
+            )
 
-            filter_rent = st.selectbox('Kies wat voor soort huur',('Dure_huur','Sociale_huur','Middeldure_huur', 'Dure_huur_of_Koop','Koop'))
+            COLOR_RANGE = [
+                [255, 255, 204],
+                [254, 217, 118],
+                [253, 141, 60],
+                [128, 0, 38],
+                [90, 0, 25],
+                [50, 0, 15]
+            ]
 
-        INITIAL_VIEW_STATE = pdk.ViewState(
-            latitude=52.374119, 
-            longitude=4.895906,
-            zoom=10,
-            pitch=45,
-            bearing=0
-        )
-
-        COLOR_RANGE = [
-            [255, 255, 204],
-            [254, 217, 118],
-            [253, 141, 60],
-            [128, 0, 38],
-            [90, 0, 25],
-            [50, 0, 15]
-        ]
-
-        BREAKS = [(df_filter[filter_rent].max()*1)/6,
-                  (df_filter[filter_rent].max()*2)/6,
-                  (df_filter[filter_rent].max()*3)/6,
-                  (df_filter[filter_rent].max()*4)/6,
-                  (df_filter[filter_rent].max()*5)/6,
-                  df_filter[filter_rent].max()/6,]
+            BREAKS = [(df_filter[filter_rent].max()*1)/6,
+                      (df_filter[filter_rent].max()*2)/6,
+                      (df_filter[filter_rent].max()*3)/6,
+                      (df_filter[filter_rent].max()*4)/6,
+                      (df_filter[filter_rent].max()*5)/6,
+                      df_filter[filter_rent].max()/6,]
 
 
-        def color_scale(val):
-            for i, b in enumerate(BREAKS):
-                if val < b:
-                    return COLOR_RANGE[i]
-            return COLOR_RANGE[i]
+            def color_scale(val):
+                for i, b in enumerate(BREAKS):
+                    if val < b:
+                        return COLOR_RANGE[i]
+                return COLOR_RANGE[i]
 
-        df_filter["color"] = df_filter[filter_rent].apply(lambda x: color_scale(x))
+            df_filter["color"] = df_filter[filter_rent].apply(lambda x: color_scale(x))
 
-        polygon_layer = pdk.Layer(
-            'GeoJsonLayer',
-            df_filter,
-            opacity=0.6,
-            stroked=True,
-            filled=True,
-            extruded=True,
-            wireframe=True,
-            get_elevation=filter_rent,
-            get_fill_color='color',
-            get_line_color=[255, 255, 255],
-            pickable=True
-        )
+            polygon_layer = pdk.Layer(
+                'GeoJsonLayer',
+                df_filter,
+                opacity=0.6,
+                stroked=True,
+                filled=True,
+                extruded=True,
+                wireframe=True,
+                get_elevation=filter_rent,
+                get_fill_color='color',
+                get_line_color=[255, 255, 255],
+                pickable=True
+            )
 
-        r = pdk.Deck(
-            [polygon_layer],
-            tooltip = {"text": f"Number of {filter_rent}: {filter_rent}"},
-            map_style = "light",
-            initial_view_state=INITIAL_VIEW_STATE,
-        )
+            r = pdk.Deck(
+                [polygon_layer],
+                tooltip = {"text": f"Number of {filter_rent}: {filter_rent}"},
+                map_style = "light",
+                initial_view_state=INITIAL_VIEW_STATE,
+            )
 
-        st.pydeck_chart(pydeck_obj=r, use_container_width=True)
+            st.pydeck_chart(pydeck_obj=r, use_container_width=True)
