@@ -42,10 +42,13 @@ with st.sidebar:
                             value=(int(df.Start_bouw.min()),
                                    int(df.Start_bouw.max()))
                            )
+    filter_fase = st.multiselect('Kies wat voor soort bouwfase',df.Fase.unique().tolist())
     
 
 # -------------------------------------------------------
-df_filter = df[(df.Start_bouw>=filter_year[0]) & (df.Start_bouw<=filter_year[1])]
+choices_bouw = (df.Start_bouw>=filter_year[0]) & (df.Start_bouw<=filter_year[1])
+choices_fase = (df.Fase.isin(filter_fase))
+df_filter = df[choices_bouw & choices_fase]
 
 # with st.sidebar:
 
