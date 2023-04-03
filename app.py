@@ -41,7 +41,7 @@ selected3 = option_menu(None, ["Grafieken", "Kaart"],
 # -------------------------------------------------------
 df = get_data()
 
-col1, col2 = st.columns([2,5])
+col1, col2 = st.columns([2,7])
 
 with col1:
     filter_year = st.slider("Kies jaarreeks", int(df.Start_bouw.min()), int(df.Start_bouw.max()), 
