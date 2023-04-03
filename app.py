@@ -48,83 +48,75 @@ with st.sidebar:
 df_filter = df[(df.Start_bouw>=filter_year[0]) & (df.Start_bouw<=filter_year[1])]
 
 # with st.sidebar:
-df_segmentation = df_filter.groupby("Gebied")['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'].sum()
-st.dataframe(df_segmentation)
+
+left, right = st.columns([1,2])
+
+with left:
+    with st.container():
+        df_segmentation = df_filter.groupby("Gebied")['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'].sum()
+        st.dataframe(df_segmentation)
 
 
 # -------------------------------------------------------
-with st.container():
-    
-    filter_rent = st.selectbox('How would you like to be contacted?',('Dure_huur','Sociale_huur','Middeldure_huur', 'Dure_huur_of_Koop','Koop'))
-    
-    INITIAL_VIEW_STATE = pdk.ViewState(
-        latitude=52.374119, 
-        longitude=4.895906,
-        zoom=10,
-        pitch=45,
-        bearing=0
-    )
+with right:
+    with st.container():
 
-    COLOR_RANGE = [
-        [255, 255, 204],
-        [254, 217, 118],
-        [253, 141, 60],
-        [128, 0, 38],
-        [90, 0, 25],
-        [50, 0, 15]
-    ]
+        filter_rent = st.selectbox('How would you like to be contacted?',('Dure_huur','Sociale_huur','Middeldure_huur', 'Dure_huur_of_Koop','Koop'))
 
-    BREAKS = [(df_filter[filter_rent].max()*1)/6,
-              (df_filter[filter_rent].max()*2)/6,
-              (df_filter[filter_rent].max()*3)/6,
-              (df_filter[filter_rent].max()*4)/6,
-              (df_filter[filter_rent].max()*5)/6,
-              df_filter[filter_rent].max()/6,]
+        INITIAL_VIEW_STATE = pdk.ViewState(
+            latitude=52.374119, 
+            longitude=4.895906,
+            zoom=10,
+            pitch=45,
+            bearing=0
+        )
 
+        COLOR_RANGE = [
+            [255, 255, 204],
+            [254, 217, 118],
+            [253, 141, 60],
+            [128, 0, 38],
+            [90, 0, 25],
+            [50, 0, 15]
+        ]
 
-    def color_scale(val):
-        for i, b in enumerate(BREAKS):
-            if val < b:
-                return COLOR_RANGE[i]
-        return COLOR_RANGE[i]
-
-    df_filter["color"] = df_filter[filter_rent].apply(lambda x: color_scale(x))
-
-    polygon_layer = pdk.Layer(
-        'GeoJsonLayer',
-        df_filter,
-        opacity=0.6,
-        stroked=True,
-        filled=True,
-        extruded=True,
-        wireframe=True,
-        get_elevation=filter_rent,
-        get_fill_color='color',
-        get_line_color=[255, 255, 255],
-        pickable=True
-    )
-
-    r = pdk.Deck(
-        [polygon_layer],
-        tooltip = {"text": f"Number of {filter_rent}: {filter_rent}"},
-        map_style = "light",
-        initial_view_state=INITIAL_VIEW_STATE,
-    )
-
-    st.pydeck_chart(pydeck_obj=r, use_container_width=True)
+        BREAKS = [(df_filter[filter_rent].max()*1)/6,
+                  (df_filter[filter_rent].max()*2)/6,
+                  (df_filter[filter_rent].max()*3)/6,
+                  (df_filter[filter_rent].max()*4)/6,
+                  (df_filter[filter_rent].max()*5)/6,
+                  df_filter[filter_rent].max()/6,]
 
 
-# -------------------------------------------------------
-# df_filter_2 = df_filter[[filter_,"geometry"]]
-# a = df_filter_2.explore(filter_, 
-#               cmap="RdYlGn",
-#               k=5,
-#               tiles="CartoDB dark_matter",
-#               scheme="EqualInterval",
-# #               legend_kwds={"colorbar":False,"caption":f"Number of {filter_}","fmt": "{:.0f}"},
-#              )
+        def color_scale(val):
+            for i, b in enumerate(BREAKS):
+                if val < b:
+                    return COLOR_RANGE[i]
+            return COLOR_RANGE[i]
 
-# folium_static(a)
+        df_filter["color"] = df_filter[filter_rent].apply(lambda x: color_scale(x))
+
+        polygon_layer = pdk.Layer(
+            'GeoJsonLayer',
+            df_filter,
+            opacity=0.6,
+            stroked=True,
+            filled=True,
+            extruded=True,
+            wireframe=True,
+            get_elevation=filter_rent,
+            get_fill_color='color',
+            get_line_color=[255, 255, 255],
+            pickable=True
+        )
+
+        r = pdk.Deck(
+            [polygon_layer],
+            tooltip = {"text": f"Number of {filter_rent}: {filter_rent}"},
+            map_style = "light",
+            initial_view_state=INITIAL_VIEW_STATE,
+        )
+
+        st.pydeck_chart(pydeck_obj=r, use_container_width=True)
 
 
-# -------------------------------------------------------
