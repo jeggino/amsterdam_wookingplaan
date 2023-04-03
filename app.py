@@ -73,7 +73,8 @@ if selected3 == "Grafieken":
 
             with tab2:
                 #----------------------------------
-                filter_rent = st.selectbox('Kies een stadsdeel of gebied', df_segmentation.index)
+                with col1:
+                    filter_rent = st.selectbox('Kies een stadsdeel of gebied', df_segmentation.index)
                 source = df_segmentation.T.reset_index()[["index",filter_rent]]
 
                 base = alt.Chart(source).encode(
