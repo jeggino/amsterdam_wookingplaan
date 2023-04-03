@@ -35,7 +35,7 @@ def get_data():
 
 # -------------------------------------------------------
 selected3 = option_menu(None, ["Grafieken", "Kaart"], 
-    icons=['bi bi-clipboard2-data', 'bi bi-map'], 
+    icons=['bi bi-pie-chart', 'bi bi-map'], 
     menu_icon="cast", default_index=0, orientation="horizontal")
 
 # -------------------------------------------------------
