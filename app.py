@@ -54,7 +54,7 @@ with st.sidebar:
         
 if selected3 == "Grafieken":
     with st.container():
-        genre = st.radio("What\'s your favorite movie genre",('Stadsdeel', 'Gebied'))
+        genre = st.radio("What\'s your favorite movie genre",('Stadsdeel', 'Gebied'),, horizontal=True)
         df_segmentation = df_filter.groupby(genre)['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'].sum()
 
         # -------------------------------------------------------
