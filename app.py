@@ -75,7 +75,7 @@ with left:
 
         c2 = base.mark_text(radiusOffset=10).encode(text="Sociale_huur:Q")
 
-        st.altair((c1 + c2))
+        st.altair_chart((c1 + c2))
 
 
 # -------------------------------------------------------
