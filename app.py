@@ -54,14 +54,14 @@ with st.sidebar:
                                int(df.Start_bouw.max()))
                        )
     filter_fase = st.multiselect('Kies wat voor soort bouwfase',['Investeringsbesluit genomen','In aanbouw genomen','Verkenning','Principebesluit genomen'])
+    
+    choices_bouw = (df.Start_bouw>=filter_year[0]) & (df.Start_bouw<=filter_year[1])
+    choices_fase = (df.Fase.isin(filter_fase))
+    df_filter = df[choices_bouw & choices_fase]
         
 if selected3 == "Home":
    
     # -------------------------------------------------------
-    choices_bouw = (df.Start_bouw>=filter_year[0]) & (df.Start_bouw<=filter_year[1])
-    choices_fase = (df.Fase.isin(filter_fase))
-    df_filter = df[choices_bouw & choices_fase]
-
     left, right = st.columns([3,2])
 
     with left:
