@@ -48,7 +48,7 @@ selected3 = option_menu(None, ["Home", "Upload",  "Tasks", 'Settings'],
     }
 )
 
-if selected3 == "Home"
+if selected3 == "Home":
     # -------------------------------------------------------
     with st.sidebar:
         filter_year = st.slider("Kies jaarreeks", int(df.Start_bouw.min()), int(df.Start_bouw.max()), 
@@ -92,7 +92,7 @@ if selected3 == "Home"
             st.altair_chart((c1 + c2))
 
 
-elif selected3 == "Upload"
+elif selected3 == "Upload":
 # -------------------------------------------------------
 with st.container():
 
