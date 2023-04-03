@@ -98,7 +98,7 @@ with st.container():
         filled=True,
         extruded=True,
         wireframe=True,
-        get_elevation=filter_,
+        get_elevation=filter_rent,
         get_fill_color='color',
         get_line_color=[255, 255, 255],
         pickable=True
