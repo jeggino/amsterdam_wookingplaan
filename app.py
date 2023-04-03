@@ -52,7 +52,7 @@ df_filter = df[choices_bouw & choices_fase]
 
 # with st.sidebar:
 
-left, right = st.columns([1,2])
+left, right = st.columns([2,1])
 
 with left:
     with st.container():
@@ -121,5 +121,3 @@ with right:
         )
 
         st.pydeck_chart(pydeck_obj=r, use_container_width=True)
-
-
