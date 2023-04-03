@@ -53,18 +53,17 @@ with st.sidebar:
     df_filter = df[choices_bouw & choices_fase]
         
 if selected3 == "Grafieken":
-    genre = st.radio("What\'s your favorite movie genre",('Stadsdeel', 'Gebied'))
-    df_segmentation = df_filter.groupby(genre)['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'].sum()
-   
-    # -------------------------------------------------------
-    left, right = st.columns([3,2])
+    with st.container():
+        genre = st.radio("What\'s your favorite movie genre",('Stadsdeel', 'Gebied'))
+        df_segmentation = df_filter.groupby(genre)['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'].sum()
 
-    with left:
-        with st.container():
+        # -------------------------------------------------------
+        tab1, tab2, tab3 = st.tabs(["Cat", "Dog", "Owl"])
 
+        with tab1:
             st.dataframe(df_segmentation,use_container_width=True)
-    
-    with right:
+
+        with tab2:
             #----------------------------------
             filter_rent = st.selectbox('Kies een stadsdeel of gebied', df_segmentation.index)
             source = df_segmentation.T.reset_index()[["index",filter_rent]]
