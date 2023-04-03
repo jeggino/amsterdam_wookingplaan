@@ -41,7 +41,7 @@ selected3 = option_menu(None, ["Grafieken", "Kaart"],
 # -------------------------------------------------------
 df = get_data()
 
-col1, col2 = st.columns([2,7],gap="large")
+col1, col2 = st.columns([2,7], gap="medium")
 
 with col1:
     filter_year = st.slider("Kies jaarreeks", int(df.Start_bouw.min()), int(df.Start_bouw.max()), 
@@ -72,7 +72,7 @@ if selected3 == "Grafieken":
         with st.container():
             with tab2:
                 #----------------------------------
-                left, right = st.columns([2,7],gap="medium")
+                left, right = st.columns([2,7],gap="small")
                 with left:
                     filter_rent = st.selectbox('Kies een stadsdeel of gebied', df_segmentation.index)
                     
