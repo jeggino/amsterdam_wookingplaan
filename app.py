@@ -89,6 +89,8 @@ if selected3 == "Grafieken":
                 #------------------------
                 source_2 = pd.melt(df_filter, id_vars=['Start_bouw'], 
                                  value_vars=['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'])
+                
+                st.dataframe(source_2)
 
 
                 time_serie = alt.Chart(source_2).mark_area(height=50,width=400
