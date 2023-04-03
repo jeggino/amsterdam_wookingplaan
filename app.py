@@ -38,7 +38,10 @@ df = get_data()
 
 # -------------------------------------------------------
 with st.sidebar:
-    filter_ = st.selectbox('How would you like to be contacted?',('Dure_huur','Sociale_huur','Middeldure_huur', 'Dure_huur_of_Koop','Koop'))
+     filter_year = st.slider("Schedule your appointment:", int(df.Start_bouw.min()), int(df.Start_bouw.max()), 
+                            value=(int(df.Start_bouw.min()),
+                                   int(df.Start_bouw.max()))
+                           )
     
 
 # -------------------------------------------------------
@@ -51,11 +54,8 @@ st.dataframe(df_segmentation)
 
 # -------------------------------------------------------
 with st.container():
-    filter_year = st.slider("Schedule your appointment:", int(df.Start_bouw.min()), int(df.Start_bouw.max()), 
-                            value=(int(df.Start_bouw.min()),
-                                   int(df.Start_bouw.max())
-                                  ))
     
+    filter_rent = st.selectbox('How would you like to be contacted?',('Dure_huur','Sociale_huur','Middeldure_huur', 'Dure_huur_of_Koop','Koop'))
     
     INITIAL_VIEW_STATE = pdk.ViewState(
         latitude=52.374119, 
@@ -74,12 +74,12 @@ with st.container():
         [50, 0, 15]
     ]
 
-    BREAKS = [(df_filter[filter_].max()*1)/6,
-              (df_filter[filter_].max()*2)/6,
-              (df_filter[filter_].max()*3)/6,
-              (df_filter[filter_].max()*4)/6,
-              (df_filter[filter_].max()*5)/6,
-              df_filter[filter_].max()/6,]
+    BREAKS = [(df_filter[filter_rent].max()*1)/6,
+              (df_filter[filter_rent].max()*2)/6,
+              (df_filter[filter_rent].max()*3)/6,
+              (df_filter[filter_rent].max()*4)/6,
+              (df_filter[filter_rent].max()*5)/6,
+              df_filter[filter_rent].max()/6,]
 
 
     def color_scale(val):
@@ -88,7 +88,7 @@ with st.container():
                 return COLOR_RANGE[i]
         return COLOR_RANGE[i]
 
-    df_filter["color"] = df_filter[filter_].apply(lambda x: color_scale(x))
+    df_filter["color"] = df_filter[filter_rent].apply(lambda x: color_scale(x))
 
     polygon_layer = pdk.Layer(
         'GeoJsonLayer',
@@ -106,7 +106,7 @@ with st.container():
 
     r = pdk.Deck(
         [polygon_layer],
-        tooltip = {"text": "Number of: {filter_year}"},
+        tooltip = {"text": f"Number of {filter_rent}: {filter_rent}"},
         map_style = "light",
         initial_view_state=INITIAL_VIEW_STATE,
     )
