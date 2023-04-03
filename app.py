@@ -38,7 +38,7 @@ df = get_data()
 
 # -------------------------------------------------------
 with st.sidebar:
-     filter_year = st.slider("Schedule your appointment:", int(df.Start_bouw.min()), int(df.Start_bouw.max()), 
+     filter_year = st.slider("Kies jaarreeks", int(df.Start_bouw.min()), int(df.Start_bouw.max()), 
                             value=(int(df.Start_bouw.min()),
                                    int(df.Start_bouw.max()))
                            )
@@ -61,7 +61,7 @@ with left:
 with right:
     with st.container():
 
-        filter_rent = st.selectbox('How would you like to be contacted?',('Dure_huur','Sociale_huur','Middeldure_huur', 'Dure_huur_of_Koop','Koop'))
+        filter_rent = st.selectbox('Kies wat voor soort huur',('Dure_huur','Sociale_huur','Middeldure_huur', 'Dure_huur_of_Koop','Koop'))
 
         INITIAL_VIEW_STATE = pdk.ViewState(
             latitude=52.374119, 
