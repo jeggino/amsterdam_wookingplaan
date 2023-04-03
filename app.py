@@ -92,7 +92,7 @@ if selected3 == "Grafieken":
             
             with tab1:
                 st.dataframe(df_segmentation,use_container_width=True)
-                filter_rent.empty()
+                placeholder.empty()
 
 
 elif selected3 == "Kaart":
