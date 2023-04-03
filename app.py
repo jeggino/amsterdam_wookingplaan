@@ -78,7 +78,7 @@ if selected3 == "Grafieken":
 
             c2 = base.mark_text(radiusOffset=10).encode(text=filter_rent)
 
-            st.altair_chart((c1 + c2))
+            st.altair_chart((c1 + c2),use_container_width=True)
 
 
 elif selected3 == "Kaart":
