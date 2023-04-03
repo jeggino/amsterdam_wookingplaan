@@ -57,7 +57,24 @@ left, right = st.columns([3,2])
 with left:
     with st.container():
         df_segmentation = df_filter.groupby("Gebied")['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'].sum()
+        
+        #----------------------------------
         st.dataframe(df_segmentation,use_container_width=True)
+        
+        #----------------------------------
+        source = pd.DataFrame({"values": [12, 23, 47, 6, 52, 19]})
+
+        base = alt.Chart(source).encode(
+            theta=alt.Theta("values:Q", stack=True),
+            radius=alt.Radius("values", scale=alt.Scale(type="sqrt", zero=True, rangeMin=20)),
+            color="values:N",
+        )
+
+        c1 = base.mark_arc(innerRadius=20, stroke="#fff")
+
+        c2 = base.mark_text(radiusOffset=10).encode(text="values:Q")
+
+        c1 + c2
 
 
 # -------------------------------------------------------
