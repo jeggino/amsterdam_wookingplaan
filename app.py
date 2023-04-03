@@ -84,6 +84,9 @@ if selected3 == "Grafieken":
                     color="index:N",
                 )
                 
+                c1 = base.mark_arc(innerRadius=100, stroke="#fff")
+                
+                #------------------------
                 source_2 = pd.melt(df_filter, id_vars=['Start_bouw'], 
                                  value_vars=['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'])
 
@@ -97,7 +100,6 @@ if selected3 == "Grafieken":
                     alt.Color('variable:N',scale=alt.Scale(scheme='category20b')),
                     ).properties(height=250, width=750)
 
-                c1 = base.mark_arc(innerRadius=100, stroke="#fff")
                 
                 with right:
                     tab3, tab4 = st.tabs(["📋", "📊"])
