@@ -16,6 +16,8 @@ import altair as alt
 
 import pydeck as pdk
 
+
+# -------------------------------------------------------
 st.set_page_config(
     page_title="Amterdam woon[plaan",
     page_icon="🌍",
@@ -24,6 +26,7 @@ st.set_page_config(
 )
 
 
+# -------------------------------------------------------
 @st.cache_data()  # 👈 Set the parameter
 def get_data():
     df_raw = gpd.read_file('https://maps.amsterdam.nl/open_geodata/geojson_lnglat.php?KAARTLAAG=WONINGBOUWPLANNEN&THEMA=woningbouwplannen')
@@ -32,6 +35,8 @@ def get_data():
 
 df = get_data()
 
+
+# -------------------------------------------------------
 with st.sidebar:
     appointment = st.slider("Schedule your appointment:", int(df.Start_bouw.min()), int(df.Start_bouw.max()), value=(int(df.Start_bouw.min()),
                                                                                                                      int(df.Start_bouw.max())
@@ -39,7 +44,7 @@ with st.sidebar:
     filter_ = st.selectbox('How would you like to be contacted?',('Dure_huur','Sociale_huur','Middeldure_huur', 'Dure_huur_of_Koop','Koop'))
     
 
-
+# -------------------------------------------------------
 df_filter = df[(df.Start_bouw>=appointment[0]) & (df.Start_bouw<=appointment[1])]
 
 # with st.sidebar:
@@ -47,6 +52,7 @@ df_segmentation = df_filter.groupby("Gebied")['Sociale_huur', 'Middeldure_huur',
 st.dataframe(df_segmentation)
 
 
+# -------------------------------------------------------
 INITIAL_VIEW_STATE = pdk.ViewState(
     latitude=52.374119, 
     longitude=4.895906,
@@ -103,14 +109,18 @@ r = pdk.Deck(
 
 st.pydeck_chart(pydeck_obj=r, use_container_width=True)
 
-#-----
+
+# -------------------------------------------------------
 df_filter_2 = df_filter[[filter_,"geometry"]]
 a = df_filter_2.explore(filter_, 
               cmap="RdYlGn",
               k=5,
               tiles="CartoDB dark_matter",
               scheme="EqualInterval",
-              legend_kwds={"colorbar":False,"caption":f"Number of {filter_}","fmt": "{:.0f}"},
+#               legend_kwds={"colorbar":False,"caption":f"Number of {filter_}","fmt": "{:.0f}"},
              )
 
 folium_static(a)
+
+
+# -------------------------------------------------------
