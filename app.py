@@ -63,7 +63,7 @@ with left:
         
         #----------------------------------
         filter_rent = st.selectbox('Kies een gebied',['Oud-Noord', 'Centrum-West', 'Noord-Oost', 'Buitenveldert, Zuidas','Geuzenveld, Slotermeer', 'IJburg, Zeeburgereiland','De Pijp, Rivierenbuurt', 'Osdorp', 'Oud-Zuid', 'Slotervaart','Oud-West, De Baarsjes', 'Oud-Oost','Indische Buurt, Oostelijk Havengebied', 'Watergraafsmeer','Centrum-Oost', 'Bijlmer-Centrum', 'Bos en Lommer', 'Noord-West','De Aker, Sloten, Nieuw-Sloten', 'Westerpark', 'Ouder-Amstel','Bijlmer-West', 'Sloterdijk Nieuw-West', 'Gaasperdam','Bijlmer-Oost', 'Weesp, Driemond'])
-        source = df_segmentation.T[filter_rent].reset_index()
+        source = df_segmentation.T.reset_index()[["index",filter_rent]]
 
         base = alt.Chart(source).encode(
             theta=alt.Theta(f"filter_rent:Q", stack=True),
