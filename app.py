@@ -66,14 +66,14 @@ with left:
         source = df_segmentation.T.reset_index()[["index",filter_rent]]
 
         base = alt.Chart(source).encode(
-            theta=alt.Theta(f"filter_rent:Q", stack=True),
+            theta=alt.Theta(filter_rent, stack=True),
             radius=alt.Radius(filter_rent, scale=alt.Scale(type="sqrt", zero=True, rangeMin=20)),
             color="index:N",
         )
 
         c1 = base.mark_arc(innerRadius=20, stroke="#fff")
 
-        c2 = base.mark_text(radiusOffset=10).encode(text=f"filter_rent:Q")
+        c2 = base.mark_text(radiusOffset=10).encode(text=filter_rent)
 
         st.altair_chart((c1 + c2))
 
