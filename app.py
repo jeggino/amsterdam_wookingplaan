@@ -34,7 +34,7 @@ def get_data():
     return df_raw
 
 # -------------------------------------------------------
-selected3 = option_menu(None, ["Charts", "Kaart"], 
+selected3 = option_menu(None, ["Grafieken", "Kaart"], 
     icons=['bi bi-clipboard2-data', 'bi bi-map'], 
     menu_icon="cast", default_index=0, orientation="horizontal")
 
@@ -52,7 +52,7 @@ with st.sidebar:
     choices_fase = (df.Fase.isin(filter_fase))
     df_filter = df[choices_bouw & choices_fase]
         
-if selected3 == "Home":
+if selected3 == "Grafieken":
    
     # -------------------------------------------------------
     left, right = st.columns([3,2])
@@ -82,7 +82,7 @@ if selected3 == "Home":
             st.altair_chart((c1 + c2))
 
 
-elif selected3 == "Upload":
+elif selected3 == "Kaart":
     # -------------------------------------------------------
     with st.container():
 
