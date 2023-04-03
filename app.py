@@ -74,18 +74,18 @@ if selected3 == "Grafieken":
             with tab2:
                 #----------------------------------
                 with col1:
-                    filter_rent = st.selectbox('Kies een stadsdeel of gebied', df_segmentation.index)
-                source = df_segmentation.T.reset_index()[["index",filter_rent]]
+                    filter_kart = st.selectbox('Kies een stadsdeel of gebied', df_segmentation.index)
+                source = df_segmentation.T.reset_index()[["index",filter_kart]]
 
                 base = alt.Chart(source).encode(
-                    theta=alt.Theta(filter_rent, stack=True),
-                    radius=alt.Radius(filter_rent, scale=alt.Scale(type="sqrt", zero=True, rangeMin=20)),
+                    theta=alt.Theta(filter_kart, stack=True),
+                    radius=alt.Radius(filter_kart, scale=alt.Scale(type="sqrt", zero=True, rangeMin=20)),
                     color="index:N",
                 )
 
                 c1 = base.mark_arc(innerRadius=20, stroke="#fff")
 
-                c2 = base.mark_text(radiusOffset=10).encode(text=filter_rent)
+                c2 = base.mark_text(radiusOffset=10).encode(text=filter_kart)
 
                 st.altair_chart((c1 + c2),use_container_width=True)
 
