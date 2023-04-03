@@ -87,7 +87,11 @@ if selected3 == "Grafieken":
                 c1 = base.mark_arc(innerRadius=100, stroke="#fff")
                 
                 with right:
-                    st.altair_chart((c1),use_container_width=True)
+                    tab3, tab4 = st.tabs(["📋", "📊"])
+                    with tab3:
+                        st.altair_chart((c1),use_container_width=True)
+                    with tab4:
+                        st.write("lkjhbcasld")
                 
         with st.container():
             with tab1:
