@@ -58,7 +58,7 @@ if selected3 == "Grafieken":
         df_segmentation = df_filter.groupby(genre)['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'].sum()
 
         # -------------------------------------------------------
-        tab1, tab2, tab3 = st.tabs(["📋", "📊"])
+        tab1, tab2 = st.tabs(["📋", "📊"])
 
         with tab1:
             st.dataframe(df_segmentation,use_container_width=True)
