@@ -20,7 +20,7 @@ import pydeck as pdk
 # -------------------------------------------------------
 st.set_page_config(
     page_title="Amterdam woon[plaan",
-    page_icon="🌍",
+    page_icon="👷",
     layout="wide",
     
 )
@@ -84,11 +84,11 @@ if selected3 == "Grafieken":
                     color="index:N",
                 )
 
-                c1 = base.mark_arc(innerRadius=20, stroke="#fff")
+                c1 = base.mark_arc(innerRadius=100, stroke="#fff")
 
-                c2 = base.mark_text(radiusOffset=10).encode(text=filter_rent)
+#                 c2 = base.mark_text(radiusOffset=10).encode(text=filter_rent)
 
-                st.altair_chart((c1 + c2),use_container_width=True)
+                st.altair_chart((c1),use_container_width=True)
 
 
 elif selected3 == "Kaart":
