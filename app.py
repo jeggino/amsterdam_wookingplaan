@@ -71,12 +71,10 @@ if selected3 == "Grafieken":
 
             
 
-            with tab2:
+            if tab2:
                 #----------------------------------
                 with col1:
-                    placeholder = st.empty()
-                    with placeholder.container():
-                        filter_rent = st.selectbox('Kies een stadsdeel of gebied', df_segmentation.index)
+                    filter_rent = st.selectbox('Kies een stadsdeel of gebied', df_segmentation.index)
                 source = df_segmentation.T.reset_index()[["index",filter_rent]]
 
                 base = alt.Chart(source).encode(
@@ -87,13 +85,10 @@ if selected3 == "Grafieken":
 
                 c1 = base.mark_arc(innerRadius=100, stroke="#fff")
 
-#                 c2 = base.mark_text(radiusOffset=10).encode(text=filter_rent)
-
                 st.altair_chart((c1),use_container_width=True)
             
-            with tab1:
+            elif tab1:
                 st.dataframe(df_segmentation,use_container_width=True)
-                placeholder.empty()
 
 
 elif selected3 == "Kaart":
