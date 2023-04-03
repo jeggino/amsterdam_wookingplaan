@@ -71,11 +71,13 @@ if selected3 == "Grafieken":
 
             with tab1:
                 st.dataframe(df_segmentation,use_container_width=True)
+                filter_rent.empty()
 
             with tab2:
                 #----------------------------------
                 with col1:
-                    filter_rent = st.selectbox('Kies een stadsdeel of gebied', df_segmentation.index)
+                    placeholder = st.empty()
+                    filter_rent = placeholder.selectbox('Kies een stadsdeel of gebied', df_segmentation.index)
                 source = df_segmentation.T.reset_index()[["index",filter_rent]]
 
                 base = alt.Chart(source).encode(
