@@ -52,12 +52,12 @@ df_filter = df[choices_bouw & choices_fase]
 
 # with st.sidebar:
 
-left, right = st.columns([2,1])
+left, right = st.columns([3,2])
 
 with left:
     with st.container():
         df_segmentation = df_filter.groupby("Gebied")['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'].sum()
-        st.dataframe(df_segmentation)
+        st.dataframe(df_segmentation,use_container_width=True)
 
 
 # -------------------------------------------------------
