@@ -91,7 +91,7 @@ if selected3 == "Grafieken":
                 
         with st.container():
             with tab1:
-                st.dataframe(df_segmentation.background_gradient(),use_container_width=True)
+                st.dataframe(df_segmentation.style.background_gradient(),use_container_width=True)
 
 
 elif selected3 == "Kaart":
