@@ -66,7 +66,7 @@ if selected3 == "Grafieken":
     
     with right:
             #----------------------------------
-            filter_rent = st.selectbox('Kies een stadsdeel of gebied', ['Oud-Noord', 'Centrum-West', 'Noord-Oost', 'Buitenveldert, Zuidas','Geuzenveld, Slotermeer', 'IJburg, Zeeburgereiland','De Pijp, Rivierenbuurt', 'Osdorp', 'Oud-Zuid', 'Slotervaart','Oud-West, De Baarsjes', 'Oud-Oost','Indische Buurt, Oostelijk Havengebied', 'Watergraafsmeer','Centrum-Oost', 'Bijlmer-Centrum', 'Bos en Lommer', 'Noord-West','De Aker, Sloten, Nieuw-Sloten', 'Westerpark', 'Ouder-Amstel','Bijlmer-West', 'Sloterdijk Nieuw-West', 'Gaasperdam','Bijlmer-Oost', 'Weesp, Driemond'])
+            filter_rent = st.selectbox('Kies een stadsdeel of gebied', df_segmentation.index)
             source = df_segmentation.T.reset_index()[["index",filter_rent]]
 
             base = alt.Chart(source).encode(
