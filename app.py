@@ -63,7 +63,7 @@ if selected3 == "Grafieken":
         genre = st.radio("",('Stadsdeel', 'Gebied'), horizontal=True, label_visibility="collapsed")
         
     with col2:
-        df_segmentation = df_filter.groupby(genre)['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'].sum().style.highlight_max()
+        df_segmentation = df_filter.groupby(genre)['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'].sum()
 
         # -------------------------------------------------------
         tab1, tab2 = st.tabs(["📋", "📊"])
@@ -91,7 +91,7 @@ if selected3 == "Grafieken":
                 
         with st.container():
             with tab1:
-                st.dataframe(df_segmentation,use_container_width=True)
+                st.dataframe(df_segmentation.style.highlight_max(),use_container_width=True)
 
 
 elif selected3 == "Kaart":
