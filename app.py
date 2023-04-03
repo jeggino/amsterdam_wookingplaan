@@ -60,7 +60,7 @@ df_filter = df[choices_bouw & choices_fase]
 if selected3 == "Grafieken":
    
     with col1:
-        genre = st.radio("What\'s your favorite movie genre",('Stadsdeel', 'Gebied'), horizontal=True)
+        genre = st.radio("",('Stadsdeel', 'Gebied'), horizontal=True, label_visibility="collapsed")
         
     with col2:
         with st.container():
