@@ -62,19 +62,20 @@ with left:
         st.dataframe(df_segmentation,use_container_width=True)
         
         #----------------------------------
-        source = pd.DataFrame({"values": [12, 23, 47, 6, 52, 19]})
+#         source = pd.DataFrame({"values": [12, 23, 47, 6, 52, 19]})
+        source = df_segmentation.reset_index().T["Gebied",'Sociale_huur']
 
         base = alt.Chart(source).encode(
-            theta=alt.Theta("values:Q", stack=True),
-            radius=alt.Radius("values", scale=alt.Scale(type="sqrt", zero=True, rangeMin=20)),
-            color="values:N",
+            theta=alt.Theta("Sociale_huur:Q", stack=True),
+            radius=alt.Radius("Sociale_huur", scale=alt.Scale(type="sqrt", zero=True, rangeMin=20)),
+            color="Gebied:N",
         )
 
         c1 = base.mark_arc(innerRadius=20, stroke="#fff")
 
-        c2 = base.mark_text(radiusOffset=10).encode(text="values:Q")
+        c2 = base.mark_text(radiusOffset=10).encode(text="Sociale_huur:Q")
 
-        c1 + c2
+        st.altair((c1 + c2))
 
 
 # -------------------------------------------------------
