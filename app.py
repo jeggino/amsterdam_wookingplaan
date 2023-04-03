@@ -126,6 +126,8 @@ st.pydeck_chart(pydeck_obj=r, use_container_width=True)
 # -------------------------------------------------------
 import pandas as pd
 import re
+import plotly.graph_objects as go
+from plotly.subplots import make_subplots
 
 df = pd.read_csv("https://raw.githubusercontent.com/plotly/datasets/master/Mining-BTC-180.csv")
 
