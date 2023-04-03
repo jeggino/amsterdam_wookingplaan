@@ -38,14 +38,14 @@ df = get_data()
 
 # -------------------------------------------------------
 with st.sidebar:
-    appointment = st.slider("Schedule your appointment:", int(df.Start_bouw.min()), int(df.Start_bouw.max()), value=(int(df.Start_bouw.min()),
+    filter_year = st.slider("Schedule your appointment:", int(df.Start_bouw.min()), int(df.Start_bouw.max()), value=(int(df.Start_bouw.min()),
                                                                                                                      int(df.Start_bouw.max())
                                                                                                                     ))
     filter_ = st.selectbox('How would you like to be contacted?',('Dure_huur','Sociale_huur','Middeldure_huur', 'Dure_huur_of_Koop','Koop'))
     
 
 # -------------------------------------------------------
-df_filter = df[(df.Start_bouw>=appointment[0]) & (df.Start_bouw<=appointment[1])]
+df_filter = df[(df.Start_bouw>=filter_year[0]) & (df.Start_bouw<=filter_year[1])]
 
 # with st.sidebar:
 df_segmentation = df_filter.groupby("Gebied")['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'].sum()
@@ -53,61 +53,68 @@ st.dataframe(df_segmentation)
 
 
 # -------------------------------------------------------
-INITIAL_VIEW_STATE = pdk.ViewState(
-    latitude=52.374119, 
-    longitude=4.895906,
-    zoom=10,
-    pitch=45,
-    bearing=0
-)
+with st.container():
+    filter_year = st.slider("Schedule your appointment:", int(df.Start_bouw.min()), int(df.Start_bouw.max()), 
+                            value=(int(df.Start_bouw.min()),
+                                   int(df.Start_bouw.max())
+                                  ))
+    
+    
+    INITIAL_VIEW_STATE = pdk.ViewState(
+        latitude=52.374119, 
+        longitude=4.895906,
+        zoom=10,
+        pitch=45,
+        bearing=0
+    )
 
-COLOR_RANGE = [
-    [255, 255, 204],
-    [254, 217, 118],
-    [253, 141, 60],
-    [128, 0, 38],
-    [90, 0, 25],
-    [50, 0, 15]
-]
+    COLOR_RANGE = [
+        [255, 255, 204],
+        [254, 217, 118],
+        [253, 141, 60],
+        [128, 0, 38],
+        [90, 0, 25],
+        [50, 0, 15]
+    ]
 
-BREAKS = [(df_filter[filter_].max()*1)/6,
-          (df_filter[filter_].max()*2)/6,
-          (df_filter[filter_].max()*3)/6,
-          (df_filter[filter_].max()*4)/6,
-          (df_filter[filter_].max()*5)/6,
-          df_filter[filter_].max()/6,]
+    BREAKS = [(df_filter[filter_].max()*1)/6,
+              (df_filter[filter_].max()*2)/6,
+              (df_filter[filter_].max()*3)/6,
+              (df_filter[filter_].max()*4)/6,
+              (df_filter[filter_].max()*5)/6,
+              df_filter[filter_].max()/6,]
 
 
-def color_scale(val):
-    for i, b in enumerate(BREAKS):
-        if val < b:
-            return COLOR_RANGE[i]
-    return COLOR_RANGE[i]
+    def color_scale(val):
+        for i, b in enumerate(BREAKS):
+            if val < b:
+                return COLOR_RANGE[i]
+        return COLOR_RANGE[i]
 
-df_filter["color"] = df_filter[filter_].apply(lambda x: color_scale(x))
+    df_filter["color"] = df_filter[filter_].apply(lambda x: color_scale(x))
 
-polygon_layer = pdk.Layer(
-    'GeoJsonLayer',
-    df_filter,
-    opacity=0.6,
-    stroked=True,
-    filled=True,
-    extruded=True,
-    wireframe=True,
-    get_elevation=filter_,
-    get_fill_color='color',
-    get_line_color=[255, 255, 255],
-    pickable=True
-)
+    polygon_layer = pdk.Layer(
+        'GeoJsonLayer',
+        df_filter,
+        opacity=0.6,
+        stroked=True,
+        filled=True,
+        extruded=True,
+        wireframe=True,
+        get_elevation=filter_,
+        get_fill_color='color',
+        get_line_color=[255, 255, 255],
+        pickable=True
+    )
 
-r = pdk.Deck(
-    [polygon_layer],
-    tooltip = {"text": "Number of: {Sociale_huur}"},
-    map_style = "light",
-    initial_view_state=INITIAL_VIEW_STATE,
-)
+    r = pdk.Deck(
+        [polygon_layer],
+        tooltip = {"text": "Number of: {filter_year}"},
+        map_style = "light",
+        initial_view_state=INITIAL_VIEW_STATE,
+    )
 
-st.pydeck_chart(pydeck_obj=r, use_container_width=True)
+    st.pydeck_chart(pydeck_obj=r, use_container_width=True)
 
 
 # -------------------------------------------------------
