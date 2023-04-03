@@ -96,7 +96,7 @@ if selected3 == "Grafieken":
                     alt.X('year(Start_bouw):T',
                         axis=alt.Axis(format='%Y', domain=False, tickSize=0)
                     ),
-                    alt.Y('sum(value):Q', stack='center', axis=None),
+                    alt.Y('sum(value):Q', stack='normalize'),
                     alt.Color('variable:N',scale=alt.Scale(scheme='category20b')),
                     ).properties(height=250, width=750)
 
