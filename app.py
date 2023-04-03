@@ -41,20 +41,26 @@ selected3 = option_menu(None, ["Grafieken", "Kaart"],
 # -------------------------------------------------------
 df = get_data()
 
-with st.sidebar:
+col1, col2, col3 = st.columns(3)
+
+with col1:
     filter_year = st.slider("Kies jaarreeks", int(df.Start_bouw.min()), int(df.Start_bouw.max()), 
                         value=(int(df.Start_bouw.min()),
                                int(df.Start_bouw.max()))
                        )
-    filter_fase = st.multiselect('Kies wat voor soort bouwfase',['Investeringsbesluit genomen','In aanbouw genomen','Verkenning','Principebesluit genomen'])
     
-    choices_bouw = (df.Start_bouw>=filter_year[0]) & (df.Start_bouw<=filter_year[1])
-    choices_fase = (df.Fase.isin(filter_fase))
-    df_filter = df[choices_bouw & choices_fase]
+with col2:
+    filter_fase = st.multiselect('Kies wat voor soort bouwfase',['Investeringsbesluit genomen','In aanbouw genomen','Verkenning','Principebesluit genomen'])
+
+    
+choices_bouw = (df.Start_bouw>=filter_year[0]) & (df.Start_bouw<=filter_year[1])
+choices_fase = (df.Fase.isin(filter_fase))
+df_filter = df[choices_bouw & choices_fase]
         
 if selected3 == "Grafieken":
     with st.container():
-        genre = st.radio("What\'s your favorite movie genre",('Stadsdeel', 'Gebied'), horizontal=True)
+        with col3:
+            genre = st.radio("What\'s your favorite movie genre",('Stadsdeel', 'Gebied'), horizontal=True)
         df_segmentation = df_filter.groupby(genre)['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'].sum()
 
         # -------------------------------------------------------
@@ -84,8 +90,10 @@ if selected3 == "Grafieken":
 elif selected3 == "Kaart":
     # -------------------------------------------------------
     with st.container():
+        
+        with col3:
 
-        filter_rent = st.selectbox('Kies wat voor soort huur',('Dure_huur','Sociale_huur','Middeldure_huur', 'Dure_huur_of_Koop','Koop'))
+            filter_rent = st.selectbox('Kies wat voor soort huur',('Dure_huur','Sociale_huur','Middeldure_huur', 'Dure_huur_of_Koop','Koop'))
 
         INITIAL_VIEW_STATE = pdk.ViewState(
             latitude=52.374119, 
