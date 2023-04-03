@@ -66,7 +66,7 @@ if selected3 == "Grafieken":
         df_segmentation = df_filter.groupby(genre)['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'].sum()
 
         # -------------------------------------------------------
-        tab1, tab2 = st.tabs(["📋", "📊"])
+        tab1, tab2, tab3 = st.tabs(["📋", "📊", "sfvd"])
 
             
         with st.container():
@@ -83,6 +83,19 @@ if selected3 == "Grafieken":
                     radius=alt.Radius(filter_rent, scale=alt.Scale(type="sqrt", zero=True, rangeMin=20)),
                     color="index:N",
                 )
+                
+                source_2 = pd.melt(df_filter, id_vars=['Start_bouw'], 
+                                 value_vars=['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'])
+
+
+                time_serie = alt.Chart(source_2).mark_area(height=50,width=400
+                    ).encode(
+                    alt.X('year(Start_bouw):T',
+                        axis=alt.Axis(format='%Y', domain=False, tickSize=0)
+                    ),
+                    alt.Y('sum(value):Q', stack='center', axis=None),
+                    alt.Color('variable:N',scale=alt.Scale(scheme='category20b')),
+                    ).properties(height=250, width=750)
 
                 c1 = base.mark_arc(innerRadius=100, stroke="#fff")
                 
@@ -91,11 +104,14 @@ if selected3 == "Grafieken":
                     with tab3:
                         st.altair_chart((c1),use_container_width=True)
                     with tab4:
-                        st.write("lkjhbcasld")
+                        st.altair_chart((time_serie),use_container_width=True)
                 
         with st.container():
             with tab1:
                 st.dataframe(df_segmentation.style.format(precision=2).bar(color="orange"),use_container_width=True)
+                
+                
+                
 
 
 elif selected3 == "Kaart":
