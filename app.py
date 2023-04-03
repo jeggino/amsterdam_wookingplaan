@@ -68,7 +68,7 @@ with left:
         base = alt.Chart(source).encode(
             theta=alt.Theta(f"filter_rent:Q", stack=True),
             radius=alt.Radius(filter_rent, scale=alt.Scale(type="sqrt", zero=True, rangeMin=20)),
-            color="Gebied:N",
+            color="index:N",
         )
 
         c1 = base.mark_arc(innerRadius=20, stroke="#fff")
