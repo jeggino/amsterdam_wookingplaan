@@ -149,7 +149,7 @@ elif selected3 == "Kaart":
 
             r = pdk.Deck(
                 [polygon_layer],
-                tooltip = {"text": f"Number of {filter_rent}: {filter_rent}"},
+#                 tooltip = {"text": f"Aantal: {filter_rent}"},
                 map_style = "light",
                 initial_view_state=INITIAL_VIEW_STATE,
             )
