@@ -2,7 +2,6 @@ pandas
 streamlit_option_menu
 folium
 altair
-plotly
 streamlit
 streamlit-folium>=0.8.1
 geopandas
