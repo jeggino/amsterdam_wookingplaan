@@ -70,7 +70,7 @@ if selected3 == "Grafieken":
 
             
         with st.container():
-            if tab2:
+            with tab2:
                 #----------------------------------
                 with col1:
                     filter_rent = st.selectbox('Kies een stadsdeel of gebied', df_segmentation.index)
@@ -87,7 +87,7 @@ if selected3 == "Grafieken":
                 st.altair_chart((c1),use_container_width=True)
                 
         with st.container():
-            elif tab1:
+            with tab1:
                 st.dataframe(df_segmentation,use_container_width=True)
 
 
