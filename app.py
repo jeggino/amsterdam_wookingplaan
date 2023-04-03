@@ -42,10 +42,7 @@ with st.sidebar:
                             value=(int(df.Start_bouw.min()),
                                    int(df.Start_bouw.max()))
                            )
-    filter_fase = st.multiselect('Kies wat voor soort bouwfase',['Investeringsbesluit genomen',
- 'In aanbouw genomen',
- 'Verkenning',
- 'Principebesluit genomen'])
+    filter_fase = st.multiselect('Kies wat voor soort bouwfase',['Investeringsbesluit genomen','In aanbouw genomen','Verkenning','Principebesluit genomen'])
     
 
 # -------------------------------------------------------
