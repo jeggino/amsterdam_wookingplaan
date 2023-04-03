@@ -63,7 +63,7 @@ with left:
         
         #----------------------------------
 #         source = pd.DataFrame({"values": [12, 23, 47, 6, 52, 19]})
-        source = df_segmentation.reset_index().T["Gebied",'Sociale_huur']
+        source = df_segmentation.reset_index().T[["Gebied",'Sociale_huur']]
 
         base = alt.Chart(source).encode(
             theta=alt.Theta("Sociale_huur:Q", stack=True),
