@@ -78,19 +78,16 @@ if selected3 == "Grafieken":
                     
                 source = df_segmentation.T.reset_index()[["index",filter_rent]]
 
-                base = alt.Chart(source).encode(
+                c1 = alt.Chart(source).encode(
                     theta=alt.Theta(filter_rent, stack=True),
                     radius=alt.Radius(filter_rent, scale=alt.Scale(type="sqrt", zero=True, rangeMin=20)),
                     color="index:N",
-                )
+                ).mark_arc(innerRadius=100, stroke="#fff")
                 
-                c1 = base.mark_arc(innerRadius=100, stroke="#fff")
                 
                 #------------------------
                 source_2 = pd.melt(df_filter, id_vars=['Start_bouw'], 
-                                 value_vars=['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'])
-                
-                st.dataframe(source_2)
+                                   value_vars=['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'])                
 
 
                 time_serie = alt.Chart(source_2).mark_area(height=50,width=400
@@ -103,6 +100,7 @@ if selected3 == "Grafieken":
                     ).properties(height=250, width=750)
 
                 
+                #------------------------
                 with right:
                     tab3, tab4 = st.tabs(["📋", "📊"])
                     with tab3:
