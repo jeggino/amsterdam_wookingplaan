@@ -96,10 +96,10 @@ if selected3 == "Statistiek":
 
                 time_serie = alt.Chart(source_2).mark_area(
                     ).encode(
-                    alt.X('year(Start_bouw):T',
+                    alt.X('Start_bouw:T',
                         axis=alt.Axis(format='%Y', domain=False, tickSize=0)
                     ),
-                    alt.Y('sum(value):Q', stack='normalize'),
+                    alt.Y('sum(value):Q', stack='zero'),
                     alt.Color('variable:N',scale=alt.Scale(scheme='category20b')),
                     ).properties(height=250, width=750)
 
