@@ -123,17 +123,16 @@ if selected3 == "Statistiek":
         with tab3:
             list_1 = ['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop']
             df_metrics = df_filter.groupby("Start_bouw")['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'].sum()
-            st.dataframe(df_metrics)
                 
-            dict_1 = {}
+            dict_metrics = {}
             for i in list_1:
-                dict_1[i] = {"Highest":{"year":df_metrics.loc[df_metrics[i]==df_metrics[i].max()].index[0],
+                dict_metrics[i] = {"Highest":{"year":df_metrics.loc[df_metrics[i]==df_metrics[i].max()].index[0],
                                         "ammount":df_metrics[i].max() },
                              "Lowest":{"year":df_metrics.loc[df_metrics[i]==df_metrics[i].min()].index[0],
                                        "ammount":df_metrics[i].min()}
                             }  
 
-            st.write(dict_1)
+            st.write(dict_metrics)
                 
                 
                 
