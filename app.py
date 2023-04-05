@@ -63,55 +63,58 @@ if selected3 == "Statistiek":
         genre = st.radio("",('Totaal','Stadsdeel', 'Gebied'), horizontal=True, label_visibility="collapsed")
         
     with col2:
-        df_segmentation = df_filter.groupby(genre)['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'].sum()
-
-        
-        # -------------------------------------------------------
-        tab1, tab2, tab3 = st.tabs(["📋", "📊", "🔢"])
-
-        
-        #-------------------------
-        with st.container():
-            with tab2:
-                #----------------------------------
-                left, right = st.columns([2,7],gap="small")
-                
-                #----------------------------------
-                with left:
-                    filter_rent = st.selectbox('Kies een stadsdeel of gebied', df_segmentation.index)
-                    
-                source = df_segmentation.T.reset_index()[["index",filter_rent]]
-
-                c1 = alt.Chart(source).encode(
-                    theta=alt.Theta(filter_rent, stack=True),
-                    radius=alt.Radius(filter_rent, scale=alt.Scale(type="sqrt", zero=True, rangeMin=20)),
-                    color="index:N",
-                ).mark_arc(innerRadius=100, stroke="#fff")
-                
-                
-                #------------------------
-                source_2 = pd.melt(df_filter, id_vars=['Start_bouw'], 
-                                   value_vars=['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'])   
-                source_2['Start_bouw'] = pd.to_datetime(source_2['Start_bouw'], format='%Y')
+        if genre == 'Totaal':
+            st.write("ljfhbweslr")
+        else:
+            df_segmentation = df_filter.groupby(genre)['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'].sum()
 
 
-                time_serie = alt.Chart(source_2).mark_area(
-                    ).encode(
-                    alt.X('Start_bouw:T',
-                        axis=alt.Axis(format='%Y', domain=False, tickSize=0)
-                    ),
-                    alt.Y('sum(value):Q', stack='zero'),
-                    alt.Color('variable:N',scale=alt.Scale(scheme='category20b')),
-                    ).properties(height=250, width=750)
+            # -------------------------------------------------------
+            tab1, tab2, tab3 = st.tabs(["📋", "📊", "🔢"])
 
-                
-                #------------------------
-                with right:
-                    tab2_1, tab2_2 = st.tabs(["📋", "📊"])
-                    with tab2_1:
-                        st.altair_chart((c1),use_container_width=True)
-                    with tab2_2:
-                        st.altair_chart((time_serie),use_container_width=True)
+
+            #-------------------------
+            with st.container():
+                with tab2:
+                    #----------------------------------
+                    left, right = st.columns([2,7],gap="small")
+
+                    #----------------------------------
+                    with left:
+                        filter_rent = st.selectbox('Kies een stadsdeel of gebied', df_segmentation.index)
+
+                    source = df_segmentation.T.reset_index()[["index",filter_rent]]
+
+                    c1 = alt.Chart(source).encode(
+                        theta=alt.Theta(filter_rent, stack=True),
+                        radius=alt.Radius(filter_rent, scale=alt.Scale(type="sqrt", zero=True, rangeMin=20)),
+                        color="index:N",
+                    ).mark_arc(innerRadius=100, stroke="#fff")
+
+
+                    #------------------------
+                    source_2 = pd.melt(df_filter, id_vars=['Start_bouw'], 
+                                       value_vars=['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'])   
+                    source_2['Start_bouw'] = pd.to_datetime(source_2['Start_bouw'], format='%Y')
+
+
+                    time_serie = alt.Chart(source_2).mark_area(
+                        ).encode(
+                        alt.X('Start_bouw:T',
+                            axis=alt.Axis(format='%Y', domain=False, tickSize=0)
+                        ),
+                        alt.Y('sum(value):Q', stack='zero'),
+                        alt.Color('variable:N',scale=alt.Scale(scheme='category20b')),
+                        ).properties(height=250, width=750)
+
+
+                    #------------------------
+                    with right:
+                        tab2_1, tab2_2 = st.tabs(["📋", "📊"])
+                        with tab2_1:
+                            st.altair_chart((c1),use_container_width=True)
+                        with tab2_2:
+                            st.altair_chart((time_serie),use_container_width=True)
         
         #----------------
         with st.container():
