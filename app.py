@@ -106,10 +106,10 @@ if selected3 == "Statistiek":
                 
                 #------------------------
                 with right:
-                    tab3, tab4 = st.tabs(["📋", "📊"])
-                    with tab3:
+                    tab2_1, tab2_2 = st.tabs(["📋", "📊"])
+                    with tab2_1:
                         st.altair_chart((c1),use_container_width=True)
-                    with tab4:
+                    with tab2_2:
                         st.altair_chart((time_serie),use_container_width=True)
         
         #----------------
