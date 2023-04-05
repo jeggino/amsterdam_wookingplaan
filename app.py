@@ -131,9 +131,18 @@ if selected3 == "Statistiek":
                              "Lowest":{"year":df_metrics.loc[df_metrics[i]==df_metrics[i].min()].index[0],
                                        "ammount":df_metrics[i].min()}
                             }  
-
-            st.write(dict_metrics)
                 
+            tab3_col1, tab3_col2, tab3_col3 = st.columns(3)
+            tab3_col1.metric("Sociale_huur Highest", 
+                             f"Jaar: {dict_metrics["Sociale_huur"]["Highest"]["year"]}",
+                             f"Antaal: {dict_metrics["Sociale_huur"]["Highest"]["ammount"]}")
+            tab3_col2.metric("Middeldure_huur Highest", 
+                             f"Jaar: {dict_metrics["Middeldure_huur"]["Highest"]["year"]}",
+                             f"Antaal: {dict_metrics["Middeldure_huur"]["Highest"]["ammount"]}")
+            tab3_col3.metric("Dure_huur Highest", 
+                             f"Jaar: {dict_metrics["Dure_huur"]["Highest"]["year"]}",
+                             f"Antaal: {dict_metrics["Dure_huur"]["Highest"]["ammount"]}")
+           
                 
                 
 
