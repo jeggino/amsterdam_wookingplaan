@@ -132,7 +132,7 @@ if selected3 == "Statistiek":
                                        "ammount":df_metrics[i].min()}
                             }  
                 
-            tab3_col1, tab3_col2, tab3_col3 = st.columns(3)
+            tab3_col1, tab3_col2, tab3_col3, tab3_col4, tab3_col5 = st.columns(5)
             tab3_col1.metric("Sociale_huur Highest", 
                              f"Jaar: {dict_metrics['Sociale_huur']['Highest']['year']}",
                              f"Antaal: {dict_metrics['Sociale_huur']['Highest']['ammount']}")
@@ -142,6 +142,12 @@ if selected3 == "Statistiek":
             tab3_col3.metric("Dure_huur Highest", 
                              f"Jaar: {dict_metrics['Dure_huur']['Highest']['year']}",
                              f"Antaal: {dict_metrics['Dure_huur']['Highest']['ammount']}")
+            tab3_col4.metric("Dure_huur_of_Koop Highest", 
+                             f"Jaar: {dict_metrics['Dure_huur_of_Koop']['Highest']['year']}",
+                             f"Antaal: {dict_metrics['Dure_huur_of_Koop']['Highest']['ammount']}")
+            tab3_col5.metric("Koop Highest", 
+                             f"Jaar: {dict_metrics['Koop']['Highest']['year']}",
+                             f"Antaal: {dict_metrics['Koop']['Highest']['ammount']}")
             
 
 elif selected3 == "Kaart":
