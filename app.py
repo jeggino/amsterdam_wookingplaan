@@ -60,7 +60,7 @@ df_filter = df[choices_bouw & choices_fase]
 if selected3 == "Statistiek":
    
     with col1:
-        genre = st.radio("",('Stadsdeel', 'Gebied'), horizontal=True, label_visibility="collapsed")
+        genre = st.radio("",('Totaal','Stadsdeel', 'Gebied'), horizontal=True, label_visibility="collapsed")
         
     with col2:
         df_segmentation = df_filter.groupby(genre)['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'].sum()
