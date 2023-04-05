@@ -65,8 +65,9 @@ if selected3 == "Grafieken":
     with col2:
         df_segmentation = df_filter.groupby(genre)['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'].sum()
 
+        
         # -------------------------------------------------------
-        tab1, tab2, tab3 = st.tabs(["📋", "📊", "sfvd"])
+        tab1, tab2, tab3 = st.tabs(["📋", "📊", "🔢"])
 
             
         with st.container():
@@ -111,6 +112,23 @@ if selected3 == "Grafieken":
         with st.container():
             with tab1:
                 st.dataframe(df_segmentation.style.format(precision=2).bar(color="orange"),use_container_width=True)
+        
+        
+        #------------------------
+        with st.container():
+            with tab3:
+                list_1 = ['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop']
+                df_metrics = df_filter.groupby(["Start_bouw"])['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'].sum()
+
+                dict_1 = {}
+                for i in list_1:
+                    dict_1[i] = {"Highest":{"year":a.loc[a[i]==a[i].max()].index[0],
+                                            "ammount":a[i].max() },
+                                 "Lowest":{"year":a.loc[a[i]==a[i].min()].index[0],
+                                           "ammount":a[i].min()}
+                                }  
+                    
+                st.write(dict_1)
                 
                 
                 
