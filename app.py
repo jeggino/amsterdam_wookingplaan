@@ -94,7 +94,7 @@ if selected3 == "Statistiek":
                                    value_vars=['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'])                
 
 
-                time_serie = alt.Chart(source_2).mark_area(height=50,width=400
+                time_serie = alt.Chart(source_2).mark_area(
                     ).encode(
                     alt.X('year(Start_bouw):T',
                         axis=alt.Axis(format='%Y', domain=False, tickSize=0)
