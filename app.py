@@ -123,7 +123,7 @@ if selected3 == "Statistiek":
             with tab3:
                 list_1 = ['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop']
                 df_metrics = df_filter.groupby(["Start_bouw"])['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'].sum()
-                st.write(df_metrics)
+                st.write("erfgwret")
                 
 
 #                 dict_1 = {}
