@@ -97,7 +97,7 @@ if selected3 == "Statistiek":
 
                 time_serie = alt.Chart(source_2).mark_area(
                     ).encode(
-                    alt.X('year(Start_bouw):T',
+                    alt.X('Start_bouw:T',
                         axis=alt.Axis(format='%Y', domain=False, tickSize=0)
                     ),
                     alt.Y('sum(value):Q', stack='zero'),
