@@ -34,7 +34,7 @@ def get_data():
     return df_raw
 
 # -------------------------------------------------------
-selected3 = option_menu(None, ["Grafieken", "Kaart"], 
+selected3 = option_menu(None, ["Statistiek", "Kaart"], 
     icons=['bi bi-pie-chart', 'bi bi-map'], 
     menu_icon="cast", default_index=0, orientation="horizontal")
 
@@ -57,7 +57,7 @@ choices_bouw = (df.Start_bouw>=filter_year[0]) & (df.Start_bouw<=filter_year[1])
 choices_fase = (df.Fase.isin(filter_fase))
 df_filter = df[choices_bouw & choices_fase]
         
-if selected3 == "Grafieken":
+if selected3 == "Statistiek":
    
     with col1:
         genre = st.radio("",('Stadsdeel', 'Gebied'), horizontal=True, label_visibility="collapsed")
