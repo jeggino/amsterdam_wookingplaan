@@ -134,18 +134,15 @@ if selected3 == "Statistiek":
                 
             tab3_col1, tab3_col2, tab3_col3 = st.columns(3)
             tab3_col1.metric("Sociale_huur Highest", 
-                             f"Jaar: {dict_metrics["Sociale_huur"]["Highest"]["year"]}",
-                             f"Antaal: {dict_metrics["Sociale_huur"]["Highest"]["ammount"]}")
+                             f"Jaar: {dict_metrics['Sociale_huur']['Highest']['year']}",
+                             f"Antaal: {dict_metrics['Sociale_huur']['Highest']['ammount']}")
             tab3_col2.metric("Middeldure_huur Highest", 
-                             f"Jaar: {dict_metrics["Middeldure_huur"]["Highest"]["year"]}",
-                             f"Antaal: {dict_metrics["Middeldure_huur"]["Highest"]["ammount"]}")
+                             f"Jaar: {dict_metrics['Middeldure_huur']['Highest']['year']}",
+                             f"Antaal: {dict_metrics['Middeldure_huur']['Highest']['ammount']}")
             tab3_col3.metric("Dure_huur Highest", 
-                             f"Jaar: {dict_metrics["Dure_huur"]["Highest"]["year"]}",
-                             f"Antaal: {dict_metrics["Dure_huur"]["Highest"]["ammount"]}")
-           
-                
-                
-
+                             f"Jaar: {dict_metrics['Dure_huur']['Highest']['year']}",
+                             f"Antaal: {dict_metrics['Dure_huur']['Highest']['ammount']}")
+            
 
 elif selected3 == "Kaart":
     # -------------------------------------------------------
