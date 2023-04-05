@@ -91,7 +91,8 @@ if selected3 == "Statistiek":
                 
                 #------------------------
                 source_2 = pd.melt(df_filter, id_vars=['Start_bouw'], 
-                                   value_vars=['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'])                
+                                   value_vars=['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'])   
+                source_2['Start_bouw'] = pd.to_datetime(source_2['Start_bouw'], format='%Y')
 
 
                 time_serie = alt.Chart(source_2).mark_area(
