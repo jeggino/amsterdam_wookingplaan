@@ -69,11 +69,14 @@ if selected3 == "Grafieken":
         # -------------------------------------------------------
         tab1, tab2, tab3 = st.tabs(["📋", "📊", "🔢"])
 
-            
+        
+        #-------------------------
         with st.container():
             with tab2:
                 #----------------------------------
                 left, right = st.columns([2,7],gap="small")
+                
+                #----------------------------------
                 with left:
                     filter_rent = st.selectbox('Kies een stadsdeel of gebied', df_segmentation.index)
                     
@@ -108,7 +111,8 @@ if selected3 == "Grafieken":
                         st.altair_chart((c1),use_container_width=True)
                     with tab4:
                         st.altair_chart((time_serie),use_container_width=True)
-                
+        
+        #----------------
         with st.container():
             with tab1:
                 st.dataframe(df_segmentation.style.format(precision=2).bar(color="orange"),use_container_width=True)
@@ -119,7 +123,8 @@ if selected3 == "Grafieken":
             with tab3:
                 list_1 = ['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop']
                 df_metrics = df_filter.groupby(["Start_bouw"])['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'].sum()
-                st.json(df_metrics)
+                st.write(df_metrics)
+                
 
 #                 dict_1 = {}
 #                 for i in list_1:
