@@ -122,10 +122,10 @@ if selected3 == "Grafieken":
 
                 dict_1 = {}
                 for i in list_1:
-                    dict_1[i] = {"Highest":{"year":a.loc[a[i]==a[i].max()].index[0],
-                                            "ammount":a[i].max() },
-                                 "Lowest":{"year":a.loc[a[i]==a[i].min()].index[0],
-                                           "ammount":a[i].min()}
+                    dict_1[i] = {"Highest":{"year":df_metrics.loc[df_metrics[i]==a[i].max()].index[0],
+                                            "ammount":df_metrics[i].max() },
+                                 "Lowest":{"year":df_metrics.loc[df_metricsa[i]==a[i].min()].index[0],
+                                           "ammount":df_metrics[i].min()}
                                 }  
                     
                 st.write(dict_1)
