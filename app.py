@@ -128,10 +128,10 @@ if selected3 == "Statistiek":
             dict_1 = {}
             for i in list_1:
                 dict_1[i] = {"Highest":{"year":df_metrics.loc[df_metrics[i]==df_metrics[i].max()].index[0],
-                                        "ammount":df_metrics[i].max() },
-                             "Lowest":{"year":df_metrics.loc[df_metricsa[i]==df_metrics[i].min()].index[0],
-                                       "ammount":df_metrics[i].min()}
-                            }  
+                                        "ammount":df_metrics[i].max()}}
+#                              "Lowest":{"year":df_metrics.loc[df_metricsa[i]==df_metrics[i].min()].index[0],
+#                                        "ammount":df_metrics[i].min()}
+#                             }  
 
             st.write(dict_1)
                 
