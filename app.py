@@ -132,7 +132,8 @@ if selected3 == "Statistiek":
                                        "ammount":df_metrics[i].min()}
                             }  
                 
-            tab3_col1, tab3_col2, tab3_col3, tab3_col4, tab3_col5 = st.columns(5)
+            tab3_col1, tab3_col2, tab3_col3 = st.columns(3) 
+            tab3_col4, tab3_col5 = st.columns(2)
             tab3_col1.metric("Sociale_huur Highest", 
                              f"Jaar: {dict_metrics['Sociale_huur']['Highest']['year']}",
                              f"Antaal: {dict_metrics['Sociale_huur']['Highest']['ammount']}")
