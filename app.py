@@ -100,14 +100,15 @@ if selected3 == "Statistiek":
                     source_2 = pd.melt(df_filter, id_vars=['Start_bouw'], 
                                        value_vars=['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'])   
                     source_2['Start_bouw'] = pd.to_datetime(source_2['Start_bouw'], format='%Y')
-
-
+                    
+                    stack_filter = st.selectbox("", ['zero', 'center', 'normalize'], label_visibility="collapsed")                    
+                    
                     time_serie = alt.Chart(source_2).mark_area(
                         ).encode(
                         alt.X('Start_bouw:T',
                             axis=alt.Axis(format='%Y', domain=False, tickSize=0)
                         ),
-                        alt.Y('sum(value):Q', stack='zero'),
+                        alt.Y('sum(value):Q', stack_filter='zero'),
                         alt.Color('variable:N',scale=alt.Scale(scheme='category20b')),
                         ).properties(height=250, width=750)
 
