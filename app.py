@@ -67,7 +67,7 @@ if selected3 == "Statistiek":
     with col2:
         if genre == 'Totaal':
             df_total = df_filter[['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop']].sum()
-            st.data_frame(df_total)
+            st.dataframe(df_total)
             
         else:
             df_segmentation = df_filter.groupby(genre)['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'].sum()
