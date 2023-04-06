@@ -229,7 +229,7 @@ elif selected3 == "Kaart":
                 tooltip = {"text": "Antaal Koop: {Koop}"}
 
 
-            r = pydeck.Deck(
+            r = pdk.Deck(
                 [polygon_layer],
                 tooltip = tooltip,
                 map_style = filter_map,
