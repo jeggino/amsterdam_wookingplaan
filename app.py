@@ -44,7 +44,7 @@ df = get_data()
 col1, col2 = st.columns([2,7], gap="medium")
 
 with col1:
-    expander = st.expander("See explanation")
+    expander = st.expander("Filters")
     filter_year = expander.slider("Kies jaarreeks", int(df.Start_bouw.min()), int(df.Start_bouw.max()), 
                         value=(int(df.Start_bouw.min()),
                                int(df.Start_bouw.max()))
@@ -82,7 +82,7 @@ if selected3 == "Statistiek":
 
                     #----------------------------------
                     with left:
-                        filter_rent = st.selectbox('Kies een stadsdeel of gebied', df_segmentation.index)
+                        filter_rent = expander.selectbox('Kies een stadsdeel of gebied', df_segmentation.index)
 
                     source = df_segmentation.T.reset_index()[["index",filter_rent]]
 
@@ -161,7 +161,7 @@ elif selected3 == "Kaart":
     
         
     with col1:
-        filter_rent = st.selectbox('Kies wat voor soort huur',('Dure_huur','Sociale_huur','Middeldure_huur', 'Dure_huur_of_Koop','Koop'))
+        filter_rent = expander.selectbox('Kies wat voor soort huur',('Dure_huur','Sociale_huur','Middeldure_huur', 'Dure_huur_of_Koop','Koop'))
     
     with st.container():
         
