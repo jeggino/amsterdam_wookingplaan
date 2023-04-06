@@ -124,7 +124,8 @@ if selected3 == "Statistiek":
             #----------------
             with st.container():
                 with tab1:
-                    st.dataframe(df_segmentation.style.format(precision=2).bar(color="orange"),use_container_width=True)
+                    df_tab = df_segmentation.style.apply(lambda x: ['background-color: red' if x.name == filter_rent else '' for i in x],axis=1)
+                    st.dataframe(df_tab,use_container_width=True)
 
 
             #------------------------
