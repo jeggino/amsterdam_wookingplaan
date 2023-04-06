@@ -108,7 +108,7 @@ if selected3 == "Statistiek":
                         alt.X('Start_bouw:T',
                             axis=alt.Axis(format='%Y', domain=False, tickSize=0)
                         ),
-                        alt.Y('sum(value):Q', stack_filter='zero'),
+                        alt.Y('sum(value):Q', stack=stack_filter),
                         alt.Color('variable:N',scale=alt.Scale(scheme='category20b')),
                         ).properties(height=250, width=750)
 
