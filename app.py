@@ -45,13 +45,14 @@ col1, col2 = st.columns([2,7], gap="medium")
 
 with col1:
     expander = st.expander("Filters")
-filter_year = expander.slider("Kies jaarreeks", int(df.Start_bouw.min()), int(df.Start_bouw.max()), 
-                    value=(int(df.Start_bouw.min()),
-                           int(df.Start_bouw.max()))
-                   )
+    
+    filter_year = expander.slider("Kies jaarreeks", int(df.Start_bouw.min()), int(df.Start_bouw.max()), 
+                        value=(int(df.Start_bouw.min()),
+                               int(df.Start_bouw.max()))
+                       )
 
-filter_fase = expander.multiselect('Kies wat voor soort bouwfase',['Investeringsbesluit genomen','In aanbouw genomen','Verkenning','Principebesluit genomen'],
-                            default='Investeringsbesluit genomen')
+    filter_fase = expander.multiselect('Kies wat voor soort bouwfase',['Investeringsbesluit genomen','In aanbouw genomen','Verkenning','Principebesluit genomen'],
+                                default='Investeringsbesluit genomen')
 
     
 choices_bouw = (df.Start_bouw>=filter_year[0]) & (df.Start_bouw<=filter_year[1])
@@ -65,7 +66,9 @@ if selected3 == "Statistiek":
         
     with col2:
         if genre == 'Totaal':
-            st.write("ljfhbweslr")
+            df_total = df_filter[['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop']].sum()
+            st.data_frame(df_total)
+            
         else:
             df_segmentation = df_filter.groupby(genre)['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'].sum()
 
