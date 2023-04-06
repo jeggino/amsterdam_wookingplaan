@@ -101,7 +101,7 @@ if selected3 == "Statistiek":
                                        value_vars=['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'])   
                     source_2['Start_bouw'] = pd.to_datetime(source_2['Start_bouw'], format='%Y')
                     
-                    stack_filter = st.selectbox("", ['zero', 'center', 'normalize'], label_visibility="collapsed")                    
+                    stack_filter = expander.selectbox("", ['zero', 'normalize'], label_visibility="collapsed")                    
                     
                     time_serie = alt.Chart(source_2).mark_area(
                         ).encode(
