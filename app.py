@@ -165,6 +165,7 @@ elif selected3 == "Kaart":
         
     with col1:
         filter_rent = expander.selectbox('Kies wat voor soort huur',('Dure_huur','Sociale_huur','Middeldure_huur', 'Dure_huur_of_Koop','Koop'))
+        filter_map = expander.selectbox('',('road', 'light_no_labels', 'dark_no_labels'),label_visibility="collapsed")
     
     with st.container():
         
@@ -215,11 +216,23 @@ elif selected3 == "Kaart":
                 get_line_color=[255, 255, 255],
                 pickable=True
             )
+            
+            if filter_rent == 'Sociale_huur':
+                tooltip = {"text": "Antaal Sociale_huur: {Sociale_huur}"}
+            elif filter_rent == 'Dure_huur':
+                tooltip = {"text": "Antaal Dure_huur: {Dure_huur}"}
+            elif filter_rent == 'Middeldure_huur':
+                tooltip = {"text": "Antaal Middeldure_huur: {Middeldure_huur}"}
+            elif filter_rent == 'Dure_huur_of_Koop':
+                tooltip = {"text": "Antaal Dure_huur_of_Koop: {Dure_huur_of_Koop}"}
+            elif filter_rent == 'Koop':
+                tooltip = {"text": "Antaal Koop: {Koop}"}
 
-            r = pdk.Deck(
+
+            r = pydeck.Deck(
                 [polygon_layer],
-#                 tooltip = {"text": f"Aantal: {filter_rent}"},
-                map_style = "light",
+                tooltip = tooltip,
+                map_style = filter_map,
                 initial_view_state=INITIAL_VIEW_STATE,
             )
 
