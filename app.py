@@ -50,10 +50,9 @@ with col1:
                         value=(int(df.Start_bouw.min()),
                                int(df.Start_bouw.max()))
                        )
-    with expander:
-
-        filter_fase = st.expander("gbtsdbr").multiselect('Kies wat voor soort bouwfase',['Investeringsbesluit genomen','In aanbouw genomen','Verkenning','Principebesluit genomen'],
-                                    default='Investeringsbesluit genomen')
+    
+    filter_fase = expander.multiselect('Kies wat voor soort bouwfase',['Investeringsbesluit genomen','In aanbouw genomen','Verkenning','Principebesluit genomen'],
+                                       default='Investeringsbesluit genomen')
 
     
 choices_bouw = (df.Start_bouw>=filter_year[0]) & (df.Start_bouw<=filter_year[1])
