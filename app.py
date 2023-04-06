@@ -44,13 +44,14 @@ df = get_data()
 col1, col2 = st.columns([2,7], gap="medium")
 
 with col1:
-    filter_year = st.slider("Kies jaarreeks", int(df.Start_bouw.min()), int(df.Start_bouw.max()), 
-                        value=(int(df.Start_bouw.min()),
-                               int(df.Start_bouw.max()))
-                       )
-    
-    filter_fase = st.multiselect('Kies wat voor soort bouwfase',['Investeringsbesluit genomen','In aanbouw genomen','Verkenning','Principebesluit genomen'],
-                                default='Investeringsbesluit genomen')
+    with st.expander("ciao", expanded=False):
+        filter_year = st.slider("Kies jaarreeks", int(df.Start_bouw.min()), int(df.Start_bouw.max()), 
+                            value=(int(df.Start_bouw.min()),
+                                   int(df.Start_bouw.max()))
+                           )
+
+        filter_fase = st.multiselect('Kies wat voor soort bouwfase',['Investeringsbesluit genomen','In aanbouw genomen','Verkenning','Principebesluit genomen'],
+                                    default='Investeringsbesluit genomen')
 
     
 choices_bouw = (df.Start_bouw>=filter_year[0]) & (df.Start_bouw<=filter_year[1])
