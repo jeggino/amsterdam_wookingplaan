@@ -44,14 +44,14 @@ df = get_data()
 col1, col2 = st.columns([2,7], gap="medium")
 
 with col1:
-    with st.expander("ciao", expanded=False):
-        filter_year = st.slider("Kies jaarreeks", int(df.Start_bouw.min()), int(df.Start_bouw.max()), 
-                            value=(int(df.Start_bouw.min()),
-                                   int(df.Start_bouw.max()))
-                           )
+    expander = st.expander("See explanation")
+    filter_year = expander.slider("Kies jaarreeks", int(df.Start_bouw.min()), int(df.Start_bouw.max()), 
+                        value=(int(df.Start_bouw.min()),
+                               int(df.Start_bouw.max()))
+                       )
 
-        filter_fase = st.multiselect('Kies wat voor soort bouwfase',['Investeringsbesluit genomen','In aanbouw genomen','Verkenning','Principebesluit genomen'],
-                                    default='Investeringsbesluit genomen')
+    filter_fase = expander.multiselect('Kies wat voor soort bouwfase',['Investeringsbesluit genomen','In aanbouw genomen','Verkenning','Principebesluit genomen'],
+                                default='Investeringsbesluit genomen')
 
     
 choices_bouw = (df.Start_bouw>=filter_year[0]) & (df.Start_bouw<=filter_year[1])
@@ -61,7 +61,7 @@ df_filter = df[choices_bouw & choices_fase]
 if selected3 == "Statistiek":
    
     with col1:
-        genre = st.radio("",('Totaal','Stadsdeel', 'Gebied'), horizontal=True, label_visibility="collapsed")
+        genre = expander.radio("",('Totaal','Stadsdeel', 'Gebied'), horizontal=True, label_visibility="collapsed")
         
     with col2:
         if genre == 'Totaal':
