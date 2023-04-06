@@ -218,15 +218,15 @@ elif selected3 == "Kaart":
             )
             
             if filter_rent == 'Sociale_huur':
-                tooltip = {"text": "Antaal Sociale_huur: {Sociale_huur}"}
+                tooltip = {"text": "Antaal: {Sociale_huur}"}
             elif filter_rent == 'Dure_huur':
-                tooltip = {"text": "Antaal Dure_huur: {Dure_huur}"}
+                tooltip = {"text": "Antaal: {Dure_huur}"}
             elif filter_rent == 'Middeldure_huur':
-                tooltip = {"text": "Antaal Middeldure_huur: {Middeldure_huur}"}
+                tooltip = {"text": "Antaal: {Middeldure_huur}"}
             elif filter_rent == 'Dure_huur_of_Koop':
-                tooltip = {"text": "Antaal Dure_huur_of_Koop: {Dure_huur_of_Koop}"}
+                tooltip = {"text": "Antaal: {Dure_huur_of_Koop}"}
             elif filter_rent == 'Koop':
-                tooltip = {"text": "Antaal Koop: {Koop}"}
+                tooltip = {"text": "Antaal: {Koop}"}
 
 
             r = pdk.Deck(
