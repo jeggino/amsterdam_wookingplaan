@@ -45,13 +45,13 @@ col1, col2 = st.columns([2,7], gap="medium")
 
 with col1:
     expander = st.expander("Filters")
-    filter_year = expander.slider("Kies jaarreeks", int(df.Start_bouw.min()), int(df.Start_bouw.max()), 
-                        value=(int(df.Start_bouw.min()),
-                               int(df.Start_bouw.max()))
-                       )
+filter_year = expander.slider("Kies jaarreeks", int(df.Start_bouw.min()), int(df.Start_bouw.max()), 
+                    value=(int(df.Start_bouw.min()),
+                           int(df.Start_bouw.max()))
+                   )
 
-    filter_fase = expander.multiselect('Kies wat voor soort bouwfase',['Investeringsbesluit genomen','In aanbouw genomen','Verkenning','Principebesluit genomen'],
-                                default='Investeringsbesluit genomen')
+filter_fase = expander.multiselect('Kies wat voor soort bouwfase',['Investeringsbesluit genomen','In aanbouw genomen','Verkenning','Principebesluit genomen'],
+                            default='Investeringsbesluit genomen')
 
     
 choices_bouw = (df.Start_bouw>=filter_year[0]) & (df.Start_bouw<=filter_year[1])
