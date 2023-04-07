@@ -27,7 +27,7 @@ st.set_page_config(
 
 
 # -------------------------------------------------------
-@st.cache_data()  # 👈 Set the parameter
+@st.cache_data() 
 def get_data():
     df_raw = gpd.read_file('https://maps.amsterdam.nl/open_geodata/geojson_lnglat.php?KAARTLAAG=WONINGBOUWPLANNEN&THEMA=woningbouwplannen')
     df_raw = df_raw[df_raw.Start_bouw!=0]
@@ -84,7 +84,6 @@ if selected3 == "Statistiek":
 
             source_2['Start_bouw'] = pd.to_datetime(source_2['Start_bouw'], format='%Y')
 
-
             time_serie = alt.Chart(source_2).mark_area(
             ).encode(
             alt.X('Start_bouw:T',
@@ -102,98 +101,75 @@ if selected3 == "Statistiek":
             st.altair_chart((time_serie),use_container_width=True)
             
         else:
+            
+            filter_rent = expander.selectbox('Kies een stadsdeel of gebied', df_segmentation.index)
             df_segmentation = df_filter.groupby(genre)['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'].sum()
-
-
-            # -------------------------------------------------------
-            tab1, tab2, tab3 = st.tabs(["📋", "📊", "🔢"])
-
-
+            source = df_segmentation.T.reset_index()[["index",filter_rent]]
             #-------------------------
-            with st.container():
-                with tab2:
-                    #----------------------------------
-                    left, right = st.columns([2,7],gap="small")
 
-                    #----------------------------------
-                    with left:
-                        filter_rent = expander.selectbox('Kies een stadsdeel of gebied', df_segmentation.index)
+            pie_subareas = alt.Chart(source).encode(
+                theta=alt.Theta(filter_rent, stack=True),
+                radius=alt.Radius(filter_rent, scale=alt.Scale(type="sqrt", zero=True, rangeMin=5)),
+                color=alt.Color('index:N',scale=alt.Scale(scheme='category20b')),
+            ).mark_arc(innerRadius=20, stroke="#fff")
+            #-------------------------
 
-                    source = df_segmentation.T.reset_index()[["index",filter_rent]]
+            source_2 = pd.melt(df_filter, id_vars=['Start_bouw'], 
+                               value_vars=['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'])   
+            source_2['Start_bouw'] = pd.to_datetime(source_2['Start_bouw'], format='%Y')
 
-                    c1 = alt.Chart(source).encode(
-                        theta=alt.Theta(filter_rent, stack=True),
-                        radius=alt.Radius(filter_rent, scale=alt.Scale(type="sqrt", zero=True, rangeMin=20)),
-                        color=alt.Color('index:N',scale=alt.Scale(scheme='category20b')),
-                    ).mark_arc(innerRadius=30, stroke="#fff")
+            time_serie = alt.Chart(source_2).mark_area(
+                ).encode(
+                alt.X('Start_bouw:T',
+                    axis=alt.Axis(format='%Y', domain=False, tickSize=0)
+                ),
+                alt.Y('sum(value):Q', stack=stack_filter),
+                alt.Color('variable:N',scale=alt.Scale(scheme='category20b'),legend=None),
+                ).properties(height=250, width=750)
+            #-------------------------
+            
+            col2_left,col2_right = st.columns([2,5], gap="medium")
+            
+            df_tab = df_segmentation.style \
+                .apply(lambda x: ['background-color: red' if x.name == filter_rent else '' for i in x],axis=1) \
+                .apply(lambda x: ["color: white" if x.name == filter_rent else '' for i in x],axis=1) \
+                .apply(lambda x: ["font-weight: bold" if x.name == filter_rent else '' for i in x],axis=1)
+            
+            col2_left.dataframe(df_tab,use_container_width=True)
+            col2_right.altair_chart((pie_subareas),use_container_width=True)
+            st.altair_chart((time_serie),use_container_width=True)
+            #-------------------------
 
+       
+#             with tab3:
+#                 list_1 = ['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop']
+#                 df_metrics = df_filter.groupby("Start_bouw")['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'].sum()
 
-                    #------------------------
-                    source_2 = pd.melt(df_filter, id_vars=['Start_bouw'], 
-                                       value_vars=['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'])   
-                    source_2['Start_bouw'] = pd.to_datetime(source_2['Start_bouw'], format='%Y')
-                    
-                                       
-                    
-                    time_serie = alt.Chart(source_2).mark_area(
-                        ).encode(
-                        alt.X('Start_bouw:T',
-                            axis=alt.Axis(format='%Y', domain=False, tickSize=0)
-                        ),
-                        alt.Y('sum(value):Q', stack=stack_filter),
-                        alt.Color('variable:N',scale=alt.Scale(scheme='category20b')),
-                        ).properties(height=250, width=750)
+#                 dict_metrics = {}
+#                 for i in list_1:
+#                     dict_metrics[i] = {"Highest":{"year":df_metrics.loc[df_metrics[i]==df_metrics[i].max()].index[0],
+#                                             "ammount":df_metrics[i].max() },
+#                                  "Lowest":{"year":df_metrics.loc[df_metrics[i]==df_metrics[i].min()].index[0],
+#                                            "ammount":df_metrics[i].min()}
+#                                 }  
 
-
-                    #------------------------
-                    with right:
-                        tab2_1, tab2_2 = st.tabs(["📋", "📊"])
-                        with tab2_1:
-                            st.altair_chart((c1),use_container_width=True)
-                        with tab2_2:
-                            st.altair_chart((time_serie),use_container_width=True)
-        
-            #----------------
-            with st.container():
-                with tab1:
-                    df_tab = df_segmentation.style \
-                        .apply(lambda x: ['background-color: red' if x.name == filter_rent else '' for i in x],axis=1) \
-                        .apply(lambda x: ["color: white" if x.name == filter_rent else '' for i in x],axis=1) \
-                        .apply(lambda x: ["font-weight: bold" if x.name == filter_rent else '' for i in x],axis=1)
-                    st.dataframe(df_tab,use_container_width=True)
-
-
-            #------------------------
-
-            with tab3:
-                list_1 = ['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop']
-                df_metrics = df_filter.groupby("Start_bouw")['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'].sum()
-
-                dict_metrics = {}
-                for i in list_1:
-                    dict_metrics[i] = {"Highest":{"year":df_metrics.loc[df_metrics[i]==df_metrics[i].max()].index[0],
-                                            "ammount":df_metrics[i].max() },
-                                 "Lowest":{"year":df_metrics.loc[df_metrics[i]==df_metrics[i].min()].index[0],
-                                           "ammount":df_metrics[i].min()}
-                                }  
-
-                tab3_col1, tab3_col2, tab3_col3 = st.columns(3) 
-                tab3_col4, tab3_col5 = st.columns(2)
-                tab3_col1.metric("Sociale_huur Highest", 
-                                 f"Jaar: {dict_metrics['Sociale_huur']['Highest']['year']}",
-                                 f"Antaal: {dict_metrics['Sociale_huur']['Highest']['ammount']}")
-                tab3_col2.metric("Middeldure_huur Highest", 
-                                 f"Jaar: {dict_metrics['Middeldure_huur']['Highest']['year']}",
-                                 f"Antaal: {dict_metrics['Middeldure_huur']['Highest']['ammount']}")
-                tab3_col3.metric("Dure_huur Highest", 
-                                 f"Jaar: {dict_metrics['Dure_huur']['Highest']['year']}",
-                                 f"Antaal: {dict_metrics['Dure_huur']['Highest']['ammount']}")
-                tab3_col4.metric("Dure_huur_of_Koop Highest", 
-                                 f"Jaar: {dict_metrics['Dure_huur_of_Koop']['Highest']['year']}",
-                                 f"Antaal: {dict_metrics['Dure_huur_of_Koop']['Highest']['ammount']}")
-                tab3_col5.metric("Koop Highest", 
-                                 f"Jaar: {dict_metrics['Koop']['Highest']['year']}",
-                                 f"Antaal: {dict_metrics['Koop']['Highest']['ammount']}")
+#                 tab3_col1, tab3_col2, tab3_col3 = st.columns(3) 
+#                 tab3_col4, tab3_col5 = st.columns(2)
+#                 tab3_col1.metric("Sociale_huur Highest", 
+#                                  f"Jaar: {dict_metrics['Sociale_huur']['Highest']['year']}",
+#                                  f"Antaal: {dict_metrics['Sociale_huur']['Highest']['ammount']}")
+#                 tab3_col2.metric("Middeldure_huur Highest", 
+#                                  f"Jaar: {dict_metrics['Middeldure_huur']['Highest']['year']}",
+#                                  f"Antaal: {dict_metrics['Middeldure_huur']['Highest']['ammount']}")
+#                 tab3_col3.metric("Dure_huur Highest", 
+#                                  f"Jaar: {dict_metrics['Dure_huur']['Highest']['year']}",
+#                                  f"Antaal: {dict_metrics['Dure_huur']['Highest']['ammount']}")
+#                 tab3_col4.metric("Dure_huur_of_Koop Highest", 
+#                                  f"Jaar: {dict_metrics['Dure_huur_of_Koop']['Highest']['year']}",
+#                                  f"Antaal: {dict_metrics['Dure_huur_of_Koop']['Highest']['ammount']}")
+#                 tab3_col5.metric("Koop Highest", 
+#                                  f"Jaar: {dict_metrics['Koop']['Highest']['year']}",
+#                                  f"Antaal: {dict_metrics['Koop']['Highest']['ammount']}")
             
 
 elif selected3 == "Kaart":
