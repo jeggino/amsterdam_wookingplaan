@@ -119,7 +119,7 @@ else:
         alt.X('Start_bouw:T',
             axis=alt.Axis(format='%Y', domain=False, tickSize=0)
         ),
-        alt.Y('sum(value):Q', stack=stack_filter),
+        alt.Y('sum(value):Q', stack=stack_filter, title="Antaal"),
         alt.Color('variable:N',scale=alt.Scale(scheme='category20b'),legend=None),
         ).properties(height=250, width=750)
     #-------------------------
