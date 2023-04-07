@@ -67,7 +67,7 @@ if selected3 == "Statistiek":
     with col2:
         if genre == 'Totaal':
             df_total = df_filter[['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop']].sum().reset_index().rename(columns={0:"Antaal","index":"Huur"})
-            st.dataframe(df_total)
+            st.dataframe(df_total.hide(axis="index"))
             
 
             pie_total = alt.Chart(df_total).encode(
