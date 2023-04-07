@@ -57,13 +57,14 @@ with col1:
     
 choices_bouw = (df.Start_bouw>=filter_year[0]) & (df.Start_bouw<=filter_year[1])
 choices_fase = (df.Fase.isin(filter_fase))
-stack_filter = expander.selectbox("", ['zero', 'normalize'], label_visibility="collapsed") 
+
 df_filter = df[choices_bouw & choices_fase]
         
 if selected3 == "Statistiek":
    
     with col1:
         genre = expander.radio("",('Totaal','Stadsdeel', 'Gebied'), horizontal=True, label_visibility="collapsed")
+        stack_filter = expander.selectbox("", ['zero', 'normalize'], label_visibility="collapsed") 
         
     with col2:
         if genre == 'Totaal':
