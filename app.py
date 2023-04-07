@@ -66,19 +66,17 @@ if selected3 == "Statistiek":
         
     with col2:
         if genre == 'Totaal':
-            df_total = df_filter[['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop']].sum().reset_index().rename(columns={0:"Antaal","index":"Huur"})
-            st.dataframe(df_total.set_index("Huur"),use_container_width=True)
             
+            df_total = df_filter[['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop']].sum().reset_index().rename(columns={0:"Antaal","index":"Huur"})
+            #-------------------------
 
             pie_total = alt.Chart(df_total).encode(
                 theta=alt.Theta("Antaal", stack=True),
                 radius=alt.Radius("Antaal", scale=alt.Scale(type="sqrt", zero=True, rangeMin=5)),
-                color=alt.Color('Huur:N',scale=alt.Scale(scheme='category20b')),
+                color=alt.Color('Huur:N',scale=alt.Scale(scheme='category20b'),legend=None),
             ).mark_arc(innerRadius=20, stroke="#fff")
-            
-            st.altair_chart((pie_total),use_container_width=True)
-            
             #-------------------------
+            
             source_2 = pd.melt(df_filter, id_vars=['Start_bouw'], 
                    value_vars=['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'])   
 
@@ -93,10 +91,13 @@ if selected3 == "Statistiek":
             alt.Y('sum(value):Q', stack="zero"),
             alt.Color('variable:N',scale=alt.Scale(scheme='category20b')),
             ).properties(height=250, width=750)
+            #-------------------------
             
+            col2_left,col2_right = st.columns([2,5], gap="medium")
+            
+            col2_left.dataframe(df_total.set_index("Huur"),use_container_width=True)
+            col2_right.altair_chart((pie_total),use_container_width=True)
             st.altair_chart((time_serie),use_container_width=True)
-            
-            
             
         else:
             df_segmentation = df_filter.groupby(genre)['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'].sum()
