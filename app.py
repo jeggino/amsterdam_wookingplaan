@@ -101,7 +101,7 @@ if selected3 == "Statistiek":
                     c1 = alt.Chart(source).encode(
                         theta=alt.Theta(filter_rent, stack=True),
                         radius=alt.Radius(filter_rent, scale=alt.Scale(type="sqrt", zero=True, rangeMin=20)),
-                        color="index:N",
+                        color=alt.Color('index:N',scale=alt.Scale(scheme='category20b')),
                     ).mark_arc(innerRadius=30, stroke="#fff")
 
 
