@@ -66,7 +66,7 @@ if selected3 == "Statistiek":
         
     with col2:
         if genre == 'Totaal':
-            df_total = df_filter[['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop']].sum()
+            df_total = df_filter[['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop']].sum().T
             st.dataframe(df_total)
             
         else:
