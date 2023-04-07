@@ -74,7 +74,7 @@ if genre == 'Totaal':
 
     source_2['Start_bouw'] = pd.to_datetime(source_2['Start_bouw'], format='%Y')
 
-    time_serie = alt.Chart(source_2).mark_area(opacity=0.7
+    time_serie = alt.Chart(source_2).mark_bar(opacity=0.7
     ).encode(
     alt.X('Start_bouw:T',
         axis=alt.Axis(format='%Y', domain=False, tickSize=0)
@@ -114,7 +114,7 @@ else:
                        value_vars=['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'])   
     source_2['Start_bouw'] = pd.to_datetime(source_2['Start_bouw'], format='%Y')
 
-    time_serie = alt.Chart(source_2).mark_area(opacity=0.7
+    time_serie = alt.Chart(source_2).mark_bar(opacity=0.7
         ).encode(
         alt.X('Start_bouw:T',
             axis=alt.Axis(format='%Y', domain=False, tickSize=0)
