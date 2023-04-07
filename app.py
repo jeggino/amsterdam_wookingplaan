@@ -66,7 +66,7 @@ if genre == 'Totaal':
         theta=alt.Theta("Antaal", stack=True),
         radius=alt.Radius("Antaal", scale=alt.Scale(type="sqrt", zero=True, rangeMin=5)),
         color=alt.Color('Huur:N',scale=alt.Scale(scheme='category20b')),
-    ).mark_arc(innerRadius=20, stroke="#fff")
+    ).mark_arc(innerRadius=5, stroke="#fff")
     #-------------------------
 
     source_2 = pd.melt(df_filter, id_vars=['Start_bouw'], 
@@ -103,7 +103,7 @@ else:
 
     pie_subareas = alt.Chart(source).encode(
         theta=alt.Theta(filter_rent, stack=True),
-        radius=alt.Radius(filter_rent, scale=alt.Scale(type="sqrt", zero=True, rangeMin=5)),
+        radius=alt.Radius(filter_rent, scale=alt.Scale(type="sqrt", zero=True, rangeMin=0)),
         color=alt.Color('Huur:N',scale=alt.Scale(scheme='category20b')),
     ).mark_arc(innerRadius=5, stroke="#fff")
     #-------------------------
