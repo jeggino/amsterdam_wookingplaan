@@ -96,27 +96,6 @@ if selected3 == "Statistiek":
         st.altair_chart((time_serie),use_container_width=True)
         #-------------------------
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
 
     else:
 
@@ -160,6 +139,14 @@ if selected3 == "Statistiek":
         #-------------------------
         
     #-------------------------
+    if genre == 'Totaal':
+        df_map = df_filter
+    elif genre == 'Stadsdeel':
+        df_map = df_filter[df_filter["Stadsdeel"]==filter_rent]
+    elif genre == 'Gebied':
+        df_map = df_filter[df_filter["Gebied"]==filter_rent]
+        
+    
     filter_rent = expander.selectbox('Kies wat voor soort huur',('Dure_huur','Sociale_huur','Middeldure_huur', 'Dure_huur_of_Koop','Koop'))
     filter_map = expander.selectbox('',('road', 'light_no_labels', 'dark_no_labels'),label_visibility="collapsed")
 
@@ -181,12 +168,12 @@ if selected3 == "Statistiek":
         [50, 0, 15]
     ]
 
-    BREAKS = [(df_filter[filter_rent].max()*1)/6,
-              (df_filter[filter_rent].max()*2)/6,
-              (df_filter[filter_rent].max()*3)/6,
-              (df_filter[filter_rent].max()*4)/6,
-              (df_filter[filter_rent].max()*5)/6,
-              df_filter[filter_rent].max()/6,]
+    BREAKS = [(df_map[filter_rent].max()*1)/6,
+              (df_map[filter_rent].max()*2)/6,
+              (df_map[filter_rent].max()*3)/6,
+              (df_map[filter_rent].max()*4)/6,
+              (df_map[filter_rent].max()*5)/6,
+              df_map[filter_rent].max()/6,]
 
 
     def color_scale(val):
@@ -195,11 +182,11 @@ if selected3 == "Statistiek":
                 return COLOR_RANGE[i]
         return COLOR_RANGE[i]
 
-    df_filter["color"] = df_filter[filter_rent].apply(lambda x: color_scale(x))
+    df_map["color"] = df_map[filter_rent].apply(lambda x: color_scale(x))
 
     polygon_layer = pdk.Layer(
         'GeoJsonLayer',
-        df_filter,
+        df_map,
         opacity=0.6,
         stroked=True,
         filled=True,
