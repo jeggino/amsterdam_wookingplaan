@@ -102,8 +102,8 @@ if selected3 == "Statistiek":
             
         else:
             
-            filter_rent = expander.selectbox('Kies een stadsdeel of gebied', df_segmentation.index)
             df_segmentation = df_filter.groupby(genre)['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'].sum()
+            filter_rent = expander.selectbox('Kies een stadsdeel of gebied', df_segmentation.index)
             source = df_segmentation.T.reset_index()[["index",filter_rent]]
             #-------------------------
 
