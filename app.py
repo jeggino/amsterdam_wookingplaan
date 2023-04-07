@@ -124,7 +124,7 @@ if selected3 == "Statistiek":
             ).properties(height=250, width=750)
         #-------------------------
 
-        col2_left,col2_right = st.columns([5,3], gap="medium")
+        col2_left,col2_right = st.columns([5,3], gap="large")
 
         df_tab = df_segmentation.style \
             .apply(lambda x: ['background-color: red' if x.name == filter_rent else '' for i in x],axis=1) \
