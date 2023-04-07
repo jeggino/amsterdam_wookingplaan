@@ -76,8 +76,8 @@ if genre == 'Totaal':
 
     time_serie = alt.Chart(source_2).mark_bar(opacity=0.7
     ).encode(
-    alt.X('Start_bouw:T',
-        axis=alt.Axis(format='%Y', domain=False, tickSize=0)
+    alt.X('Start_bouw:O',
+        axis=alt.Axis( domain=False, tickSize=0)
     ),
     alt.Y('sum(value):Q', stack=stack_filter),
     alt.Color('variable:N',scale=alt.Scale(scheme='category20b'),legend=None),
