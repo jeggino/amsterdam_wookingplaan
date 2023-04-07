@@ -229,21 +229,21 @@ r = pdk.Deck(
 
 tab3_col1, tab3_col2, tab3_col3 = st.columns(3) 
 tab3_col4, tab3_col5 = st.columns(2)
-tab3_col1.metric("Sociale_huur Highest", 
-                 f"Jaar: {dict_metrics['Sociale_huur']['Highest']['year']}",
-                 f"Antaal: {dict_metrics['Sociale_huur']['Highest']['ammount']}")
-tab3_col2.metric("Middeldure_huur Highest", 
-                 f"Jaar: {dict_metrics['Middeldure_huur']['Highest']['year']}",
-                 f"Antaal: {dict_metrics['Middeldure_huur']['Highest']['ammount']}")
-tab3_col3.metric("Dure_huur Highest", 
-                 f"Jaar: {dict_metrics['Dure_huur']['Highest']['year']}",
-                 f"Antaal: {dict_metrics['Dure_huur']['Highest']['ammount']}")
-tab3_col4.metric("Dure_huur_of_Koop Highest", 
-                 f"Jaar: {dict_metrics['Dure_huur_of_Koop']['Highest']['year']}",
-                 f"Antaal: {dict_metrics['Dure_huur_of_Koop']['Highest']['ammount']}")
-tab3_col5.metric("Koop Highest", 
-                 f"Jaar: {dict_metrics['Koop']['Highest']['year']}",
-                 f"Antaal: {dict_metrics['Koop']['Highest']['ammount']}")
+tab3_col1.metric("Sociale huur", 
+                 f"Het hoogste jaar was {dict_metrics['Sociale_huur']['Highest']['year']} ({dict_metrics['Sociale_huur']['Highest']['ammount']})",
+                 f"Het laagste jaar was {dict_metrics['Sociale_huur']['Lowest']['year']} ({dict_metrics['Sociale_huur']['Lowest']['ammount']})")
+tab3_col2.metric("Middeldure huur", 
+                 f"Het hoogste jaar was {dict_metrics['Middeldure_huur']['Highest']['year']} ({dict_metrics['Middeldure_huur']['Highest']['ammount']})",
+                 f"Het laagste jaar was {dict_metrics['Middeldure_huur']['Lowest']['year']} ({dict_metrics['Middeldure_huur']['Lowest']['ammount']})")
+tab3_col3.metric("Dure huur", 
+                 f"Het hoogste jaar was {dict_metrics['Dure_huur']['Highest']['year']} ({dict_metrics['Dure_huur']['Highest']['ammount']})",
+                 f"Het laagste jaar was {dict_metrics['Dure_huur']['Lowest']['year']} ({dict_metrics['Dure_huur']['Lowest']['ammount']})")
+tab3_col4.metric("Dure huur of Koop", 
+                 f"Het hoogste jaar was {dict_metrics['Dure_huur_of_Koop']['Highest']['year']} ({dict_metrics['Dure_huur_of_Koop']['Highest']['ammount']})",
+                 f"Het laagste jaar was {dict_metrics['Dure_huur_of_Koop']['Lowest']['year']} ({dict_metrics['Dure_huur_of_Koop']['Lowest']['ammount']})")
+tab3_col5.metric("Koop", 
+                 f"Het hoogste jaar was {dict_metrics['Koop']['Highest']['year']} ({dict_metrics['Koop']['Highest']['ammount']})",
+                 f"Het laagste jaar was {dict_metrics['Koop']['Lowest']['year']} ({dict_metrics['Koop']['Lowest']['ammount']})")
 
 st.pydeck_chart(pydeck_obj=r, use_container_width=True)
         
