@@ -73,7 +73,7 @@ if selected3 == "Statistiek":
             pie_total = alt.Chart(df_total).encode(
                 theta=alt.Theta("Antaal", stack=True),
                 radius=alt.Radius("Antaal", scale=alt.Scale(type="sqrt", zero=True, rangeMin=5)),
-                color=alt.Color('Huur:N',scale=alt.Scale(scheme='category20b'),legend=None),
+                color=alt.Color('Huur:N',scale=alt.Scale(scheme='category20b')),
             ).mark_arc(innerRadius=20, stroke="#fff")
             #-------------------------
             
@@ -89,7 +89,7 @@ if selected3 == "Statistiek":
                 axis=alt.Axis(format='%Y', domain=False, tickSize=0)
             ),
             alt.Y('sum(value):Q', stack="zero"),
-            alt.Color('variable:N',scale=alt.Scale(scheme='category20b')),
+            alt.Color('variable:N',scale=alt.Scale(scheme='category20b'),legend=None),
             ).properties(height=250, width=750)
             #-------------------------
             
