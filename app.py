@@ -41,18 +41,15 @@ selected3 = option_menu(None, ["Statistiek", "Kaart"],
 # -------------------------------------------------------
 df = get_data()
 
-col1, col2 = st.columns([2,7], gap="medium")
+expander = st.sidebar
 
-with col1:
-    expander = st.expander("Filters")
-    
-    filter_year = expander.slider("Kies jaarreeks", int(df.Start_bouw.min()), int(df.Start_bouw.max()), 
-                        value=(int(df.Start_bouw.min()),
-                               int(df.Start_bouw.max()))
-                       )
-    
-    filter_fase = expander.multiselect('Kies wat voor soort bouwfase',['Investeringsbesluit genomen','In aanbouw genomen','Verkenning','Principebesluit genomen'],
-                                       default=['Investeringsbesluit genomen','In aanbouw genomen','Verkenning','Principebesluit genomen'])
+filter_year = expander.slider("Kies jaarreeks", int(df.Start_bouw.min()), int(df.Start_bouw.max()), 
+                    value=(int(df.Start_bouw.min()),
+                           int(df.Start_bouw.max()))
+                   )
+
+filter_fase = expander.multiselect('Kies wat voor soort bouwfase',['Investeringsbesluit genomen','In aanbouw genomen','Verkenning','Principebesluit genomen'],
+                                   default=['Investeringsbesluit genomen','In aanbouw genomen','Verkenning','Principebesluit genomen'])
 
     
 choices_bouw = (df.Start_bouw>=filter_year[0]) & (df.Start_bouw<=filter_year[1])
@@ -62,29 +59,62 @@ df_filter = df[choices_bouw & choices_fase]
         
 if selected3 == "Statistiek":
    
-    with col1:
-        genre = expander.radio("",('Totaal','Stadsdeel', 'Gebied'), horizontal=True, label_visibility="collapsed")
-        stack_filter = expander.selectbox("", ['zero', 'normalize'], label_visibility="collapsed") 
-        
-    with col2:
-        if genre == 'Totaal':
-            
-            df_total = df_filter[['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop']].sum().reset_index().rename(columns={0:"Antaal","index":"Huur"})
-            #-------------------------
+    genre = expander.radio("",('Totaal','Stadsdeel', 'Gebied'), horizontal=True, label_visibility="collapsed")
+    stack_filter = expander.selectbox("", ['zero', 'normalize'], label_visibility="collapsed") 
 
-            pie_total = alt.Chart(df_total).encode(
-                theta=alt.Theta("Antaal", stack=True),
-                radius=alt.Radius("Antaal", scale=alt.Scale(type="sqrt", zero=True, rangeMin=5)),
-                color=alt.Color('Huur:N',scale=alt.Scale(scheme='category20b')),
-            ).mark_arc(innerRadius=20, stroke="#fff")
-            #-------------------------
-            
-            source_2 = pd.melt(df_filter, id_vars=['Start_bouw'], 
-                   value_vars=['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'])   
+    if genre == 'Totaal':
 
-            source_2['Start_bouw'] = pd.to_datetime(source_2['Start_bouw'], format='%Y')
+        df_total = df_filter[['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop']].sum().reset_index().rename(columns={0:"Antaal","index":"Huur"})
+        #-------------------------
 
-            time_serie = alt.Chart(source_2).mark_area(
+        pie_total = alt.Chart(df_total).encode(
+            theta=alt.Theta("Antaal", stack=True),
+            radius=alt.Radius("Antaal", scale=alt.Scale(type="sqrt", zero=True, rangeMin=5)),
+            color=alt.Color('Huur:N',scale=alt.Scale(scheme='category20b')),
+        ).mark_arc(innerRadius=20, stroke="#fff")
+        #-------------------------
+
+        source_2 = pd.melt(df_filter, id_vars=['Start_bouw'], 
+               value_vars=['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'])   
+
+        source_2['Start_bouw'] = pd.to_datetime(source_2['Start_bouw'], format='%Y')
+
+        time_serie = alt.Chart(source_2).mark_area(
+        ).encode(
+        alt.X('Start_bouw:T',
+            axis=alt.Axis(format='%Y', domain=False, tickSize=0)
+        ),
+        alt.Y('sum(value):Q', stack=stack_filter),
+        alt.Color('variable:N',scale=alt.Scale(scheme='category20b'),legend=None),
+        ).properties(height=250, width=750)
+        #-------------------------
+
+        col2_left,col2_right = st.columns([2,5], gap="medium")
+
+        col2_left.dataframe(df_total.set_index("Huur"),use_container_width=True)
+        col2_right.altair_chart((pie_total),use_container_width=True)
+        st.altair_chart((time_serie),use_container_width=True)
+
+    else:
+
+        df_segmentation = df_filter.groupby(genre)['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'].sum()
+        filter_rent = expander.selectbox('Kies een stadsdeel of gebied', df_segmentation.index)
+        #-------------------------
+
+        source = df_segmentation.T.reset_index()[["index",filter_rent]]
+
+        pie_subareas = alt.Chart(source).encode(
+            theta=alt.Theta(filter_rent, stack=True),
+            radius=alt.Radius(filter_rent, scale=alt.Scale(type="sqrt", zero=True, rangeMin=5)),
+            color=alt.Color('index:N',scale=alt.Scale(scheme='category20b')),
+        ).mark_arc(innerRadius=20, stroke="#fff")
+        #-------------------------
+
+        source_2 = pd.melt(df_filter[df_filter[genre]==filter_rent], id_vars=['Start_bouw'], 
+                           value_vars=['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'])   
+        source_2['Start_bouw'] = pd.to_datetime(source_2['Start_bouw'], format='%Y')
+
+        time_serie = alt.Chart(source_2).mark_area(
             ).encode(
             alt.X('Start_bouw:T',
                 axis=alt.Axis(format='%Y', domain=False, tickSize=0)
@@ -92,56 +122,21 @@ if selected3 == "Statistiek":
             alt.Y('sum(value):Q', stack=stack_filter),
             alt.Color('variable:N',scale=alt.Scale(scheme='category20b'),legend=None),
             ).properties(height=250, width=750)
-            #-------------------------
-            
-            col2_left,col2_right = st.columns([2,5], gap="medium")
-            
-            col2_left.dataframe(df_total.set_index("Huur"),use_container_width=True)
-            col2_right.altair_chart((pie_total),use_container_width=True)
-            st.altair_chart((time_serie),use_container_width=True)
-            
-        else:
-            
-            df_segmentation = df_filter.groupby(genre)['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'].sum()
-            filter_rent = expander.selectbox('Kies een stadsdeel of gebied', df_segmentation.index)
-            #-------------------------
-            
-            source = df_segmentation.T.reset_index()[["index",filter_rent]]
+        #-------------------------
 
-            pie_subareas = alt.Chart(source).encode(
-                theta=alt.Theta(filter_rent, stack=True),
-                radius=alt.Radius(filter_rent, scale=alt.Scale(type="sqrt", zero=True, rangeMin=5)),
-                color=alt.Color('index:N',scale=alt.Scale(scheme='category20b')),
-            ).mark_arc(innerRadius=20, stroke="#fff")
-            #-------------------------
+        col2_left,col2_right = st.columns([2,5], gap="medium")
 
-            source_2 = pd.melt(df_filter[df_filter[genre]==filter_rent], id_vars=['Start_bouw'], 
-                               value_vars=['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'])   
-            source_2['Start_bouw'] = pd.to_datetime(source_2['Start_bouw'], format='%Y')
+        df_tab = df_segmentation.style \
+            .apply(lambda x: ['background-color: red' if x.name == filter_rent else '' for i in x],axis=1) \
+            .apply(lambda x: ["color: white" if x.name == filter_rent else '' for i in x],axis=1) \
+            .apply(lambda x: ["font-weight: bold" if x.name == filter_rent else '' for i in x],axis=1)
 
-            time_serie = alt.Chart(source_2).mark_area(
-                ).encode(
-                alt.X('Start_bouw:T',
-                    axis=alt.Axis(format='%Y', domain=False, tickSize=0)
-                ),
-                alt.Y('sum(value):Q', stack=stack_filter),
-                alt.Color('variable:N',scale=alt.Scale(scheme='category20b'),legend=None),
-                ).properties(height=250, width=750)
-            #-------------------------
-            
-            col2_left,col2_right = st.columns([2,5], gap="medium")
-            
-            df_tab = df_segmentation.style \
-                .apply(lambda x: ['background-color: red' if x.name == filter_rent else '' for i in x],axis=1) \
-                .apply(lambda x: ["color: white" if x.name == filter_rent else '' for i in x],axis=1) \
-                .apply(lambda x: ["font-weight: bold" if x.name == filter_rent else '' for i in x],axis=1)
-            
-            col2_left.dataframe(df_tab,use_container_width=True)
-            col2_right.altair_chart((pie_subareas),use_container_width=True)
-            st.altair_chart((time_serie),use_container_width=True)
-            #-------------------------
+        col2_left.dataframe(df_tab,use_container_width=True)
+        col2_right.altair_chart((pie_subareas),use_container_width=True)
+        st.altair_chart((time_serie),use_container_width=True)
+        #-------------------------
 
-       
+
 #             with tab3:
 #                 list_1 = ['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop']
 #                 df_metrics = df_filter.groupby("Start_bouw")['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'].sum()
