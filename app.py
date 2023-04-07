@@ -73,7 +73,7 @@ if selected3 == "Statistiek":
             pie_total = alt.Chart(df_total).encode(
                 theta=alt.Theta("Antaal", stack=True),
                 radius=alt.Radius("Antaal", scale=alt.Scale(type="sqrt", zero=True, rangeMin=5)),
-                color="Huur:N",
+                color=alt.Color('Huur:N',scale=alt.Scale(scheme='category20b')),
             ).mark_arc(innerRadius=20, stroke="#fff")
             
             st.altair_chart((pie_total),use_container_width=True)
