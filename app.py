@@ -78,6 +78,26 @@ if selected3 == "Statistiek":
             
             st.altair_chart((pie_total),use_container_width=True)
             
+            #-------------------------
+            source_2 = pd.melt(df_filter, id_vars=['Start_bouw'], 
+                   value_vars=['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'])   
+
+            source_2['Start_bouw'] = pd.to_datetime(source_2['Start_bouw'], format='%Y')
+
+
+            time_serie = alt.Chart(source_2).mark_area(
+            ).encode(
+            alt.X('Start_bouw:T',
+                axis=alt.Axis(format='%Y', domain=False, tickSize=0)
+            ),
+            alt.Y('sum(value):Q', stack="zero"),
+            alt.Color('variable:N',scale=alt.Scale(scheme='category20b')),
+            ).properties(height=250, width=750)
+            
+            st.altair_chart((time_serie),use_container_width=True)
+            
+            
+            
         else:
             df_segmentation = df_filter.groupby(genre)['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'].sum()
 
