@@ -57,6 +57,7 @@ with col1:
     
 choices_bouw = (df.Start_bouw>=filter_year[0]) & (df.Start_bouw<=filter_year[1])
 choices_fase = (df.Fase.isin(filter_fase))
+stack_filter = expander.selectbox("", ['zero', 'normalize'], label_visibility="collapsed") 
 df_filter = df[choices_bouw & choices_fase]
         
 if selected3 == "Statistiek":
@@ -88,7 +89,7 @@ if selected3 == "Statistiek":
             alt.X('Start_bouw:T',
                 axis=alt.Axis(format='%Y', domain=False, tickSize=0)
             ),
-            alt.Y('sum(value):Q', stack="zero"),
+            alt.Y('sum(value):Q', stack=stack_filter),
             alt.Color('variable:N',scale=alt.Scale(scheme='category20b'),legend=None),
             ).properties(height=250, width=750)
             #-------------------------
@@ -131,7 +132,7 @@ if selected3 == "Statistiek":
                                        value_vars=['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'])   
                     source_2['Start_bouw'] = pd.to_datetime(source_2['Start_bouw'], format='%Y')
                     
-                    stack_filter = expander.selectbox("", ['zero', 'normalize'], label_visibility="collapsed")                    
+                                       
                     
                     time_serie = alt.Chart(source_2).mark_area(
                         ).encode(
