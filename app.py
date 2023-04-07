@@ -112,11 +112,11 @@ else:
 
     source_2 = pd.melt(df_filter[df_filter[genre]==filter_rent], id_vars=['Start_bouw'], 
                        value_vars=['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'])   
-    source_2['Start_bouw'] = pd.to_datetime(source_2['Start_bouw'], format='%Y')
+#     source_2['Start_bouw'] = pd.to_datetime(source_2['Start_bouw'], format='%Y')
 
     time_serie = alt.Chart(source_2).mark_bar(opacity=0.7
         ).encode(
-        alt.X('Start_bouw:T',
+        alt.X('Start_bouw:O',
             axis=alt.Axis(format='%Y', domain=False, tickSize=0)
         ),
         alt.Y('sum(value):Q', stack=stack_filter, title="Antaal"),
