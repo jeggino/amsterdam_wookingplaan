@@ -83,12 +83,42 @@ if genre == 'Totaal':
     alt.Color('variable:N',scale=alt.Scale(scheme='category20b'),legend=None),
     ).properties(height=250, width=750)
     #-------------------------
+    
+    list_1 = ['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop']
+    df_metrics = df_filter.groupby("Start_bouw")['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'].sum()
+
+    dict_metrics = {}
+    for i in list_1:
+        dict_metrics[i] = {"Highest":{"year":df_metrics.loc[df_metrics[i]==df_metrics[i].max()].index[0],
+                                "ammount":df_metrics[i].max() },
+                     "Lowest":{"year":df_metrics.loc[df_metrics[i]==df_metrics[i].min()].index[0],
+                               "ammount":df_metrics[i].min()}
+                    }  
+    #-------------------------
 
     col2_left,col2_right = st.columns([2,5], gap="medium")
 
     col2_left.dataframe(df_total.set_index("Huur"),use_container_width=True)
     col2_right.altair_chart((pie_total),use_container_width=True)
     st.altair_chart((time_serie),use_container_width=True)
+    
+    tab3_col1, tab3_col2, tab3_col3 = st.columns(3) 
+    tab3_col4, tab3_col5 = st.columns(2)
+    tab3_col1.metric("Sociale_huur Highest", 
+                     f"Jaar: {dict_metrics['Sociale_huur']['Highest']['year']}",
+                     f"Antaal: {dict_metrics['Sociale_huur']['Highest']['ammount']}")
+    tab3_col2.metric("Middeldure_huur Highest", 
+                     f"Jaar: {dict_metrics['Middeldure_huur']['Highest']['year']}",
+                     f"Antaal: {dict_metrics['Middeldure_huur']['Highest']['ammount']}")
+    tab3_col3.metric("Dure_huur Highest", 
+                     f"Jaar: {dict_metrics['Dure_huur']['Highest']['year']}",
+                     f"Antaal: {dict_metrics['Dure_huur']['Highest']['ammount']}")
+    tab3_col4.metric("Dure_huur_of_Koop Highest", 
+                     f"Jaar: {dict_metrics['Dure_huur_of_Koop']['Highest']['year']}",
+                     f"Antaal: {dict_metrics['Dure_huur_of_Koop']['Highest']['ammount']}")
+    tab3_col5.metric("Koop Highest", 
+                     f"Jaar: {dict_metrics['Koop']['Highest']['year']}",
+                     f"Antaal: {dict_metrics['Koop']['Highest']['ammount']}")
     #-------------------------
 
 
@@ -214,56 +244,8 @@ r = pdk.Deck(
 
 st.pydeck_chart(pydeck_obj=r, use_container_width=True)
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
 
 
-#             with tab3:
-#                 list_1 = ['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop']
-#                 df_metrics = df_filter.groupby("Start_bouw")['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'].sum()
 
-#                 dict_metrics = {}
-#                 for i in list_1:
-#                     dict_metrics[i] = {"Highest":{"year":df_metrics.loc[df_metrics[i]==df_metrics[i].max()].index[0],
-#                                             "ammount":df_metrics[i].max() },
-#                                  "Lowest":{"year":df_metrics.loc[df_metrics[i]==df_metrics[i].min()].index[0],
-#                                            "ammount":df_metrics[i].min()}
-#                                 }  
 
-#                 tab3_col1, tab3_col2, tab3_col3 = st.columns(3) 
-#                 tab3_col4, tab3_col5 = st.columns(2)
-#                 tab3_col1.metric("Sociale_huur Highest", 
-#                                  f"Jaar: {dict_metrics['Sociale_huur']['Highest']['year']}",
-#                                  f"Antaal: {dict_metrics['Sociale_huur']['Highest']['ammount']}")
-#                 tab3_col2.metric("Middeldure_huur Highest", 
-#                                  f"Jaar: {dict_metrics['Middeldure_huur']['Highest']['year']}",
-#                                  f"Antaal: {dict_metrics['Middeldure_huur']['Highest']['ammount']}")
-#                 tab3_col3.metric("Dure_huur Highest", 
-#                                  f"Jaar: {dict_metrics['Dure_huur']['Highest']['year']}",
-#                                  f"Antaal: {dict_metrics['Dure_huur']['Highest']['ammount']}")
-#                 tab3_col4.metric("Dure_huur_of_Koop Highest", 
-#                                  f"Jaar: {dict_metrics['Dure_huur_of_Koop']['Highest']['year']}",
-#                                  f"Antaal: {dict_metrics['Dure_huur_of_Koop']['Highest']['ammount']}")
-#                 tab3_col5.metric("Koop Highest", 
-#                                  f"Jaar: {dict_metrics['Koop']['Highest']['year']}",
-#                                  f"Antaal: {dict_metrics['Koop']['Highest']['ammount']}")
-            
+
