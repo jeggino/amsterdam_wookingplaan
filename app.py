@@ -104,8 +104,9 @@ if selected3 == "Statistiek":
             
             df_segmentation = df_filter.groupby(genre)['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'].sum()
             filter_rent = expander.selectbox('Kies een stadsdeel of gebied', df_segmentation.index)
-            source = df_segmentation.T.reset_index()[["index",filter_rent]]
             #-------------------------
+            
+            source = df_segmentation.T.reset_index()[["index",filter_rent]]
 
             pie_subareas = alt.Chart(source).encode(
                 theta=alt.Theta(filter_rent, stack=True),
@@ -114,7 +115,7 @@ if selected3 == "Statistiek":
             ).mark_arc(innerRadius=20, stroke="#fff")
             #-------------------------
 
-            source_2 = pd.melt(df_filter, id_vars=['Start_bouw'], 
+            source_2 = pd.melt(df_filter[df_filter[genre]==filter_rent], id_vars=['Start_bouw'], 
                                value_vars=['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'])   
             source_2['Start_bouw'] = pd.to_datetime(source_2['Start_bouw'], format='%Y')
 
