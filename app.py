@@ -66,12 +66,11 @@ if selected3 == "Statistiek":
         
     with col2:
         if genre == 'Totaal':
-            df_total = df_filter[['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop']].sum()
+            df_total = df_filter[['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop']].sum().reset_index().rename(columns={0:"Antaal","index":"Huur"})
             st.dataframe(df_total)
             
-            source_total = df_total.reset_index().rename(columns={0:"Antaal","index":"Huur"})
 
-            pie_total = alt.Chart(source_total).encode(
+            pie_total = alt.Chart(df_total).encode(
                 theta=alt.Theta("Antaal", stack=True),
                 radius=alt.Radius("Antaal", scale=alt.Scale(type="sqrt", zero=True, rangeMin=5)),
                 color="Huur:N",
