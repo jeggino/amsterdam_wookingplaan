@@ -66,8 +66,18 @@ if selected3 == "Statistiek":
         
     with col2:
         if genre == 'Totaal':
-            df_total = df_filter[['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop']].sum().T
+            df_total = df_filter[['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop']].sum()
             st.dataframe(df_total)
+            
+            source_total = df_total.reset_index().rename(columns={0:"Antaal","index":"Huur"})
+
+            pie_total = alt.Chart(source_total).encode(
+                theta=alt.Theta("Antaal", stack=True),
+                radius=alt.Radius("Antaal", scale=alt.Scale(type="sqrt", zero=True, rangeMin=5)),
+                color="Huur:N",
+            ).mark_arc(innerRadius=20, stroke="#fff")
+            
+            st.altair_chart((pie_total),use_container_width=True)
             
         else:
             df_segmentation = df_filter.groupby(genre)['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'].sum()
