@@ -55,8 +55,8 @@ tab3_col4, tab3_col5 = st.columns([3,1], gap="large")
 stack_filter = tab3_col5.selectbox("", ['zero', 'normalize'], label_visibility="collapsed") 
 "---"
 map_left,map_right = st.columns([1,6], gap="large")
-map_left.selectbox('Kies wat voor soort huur',('Dure_huur','Sociale_huur','Middeldure_huur', 'Dure_huur_of_Koop','Koop'))
-map_left.selectbox('',('road', 'light_no_labels', 'dark_no_labels'),label_visibility="collapsed")
+filter_rent = map_left.selectbox('Kies wat voor soort huur',('Dure_huur','Sociale_huur','Middeldure_huur', 'Dure_huur_of_Koop','Koop'))
+filter_map = map_left.selectbox('',('road', 'light_no_labels', 'dark_no_labels'),label_visibility="collapsed")
 
 
 # -------------------------------------------------------    
