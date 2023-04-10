@@ -58,6 +58,7 @@ genre = expander.radio("",('Totaal','Stadsdeel', 'Gebied'), horizontal=True, lab
 "---"
 stack_filter = expander.selectbox("", ['zero', 'normalize'], label_visibility="collapsed") 
 
+col2_left,col2_right = st.columns([2,5], gap="medium")
 tab3_col4, tab3_col5 = st.columns([4,1])
 
 if genre == 'Totaal':
@@ -85,10 +86,7 @@ if genre == 'Totaal':
     ).properties(height=250, width=750)
     #-------------------------
     
-      
-    #-------------------------
-
-    col2_left,col2_right = st.columns([2,5], gap="medium")
+    
 
     col2_left.dataframe(df_total.set_index("Huur"),use_container_width=True)
     col2_right.altair_chart((pie_total),use_container_width=True)
@@ -125,7 +123,6 @@ else:
         ).properties(height=250, width=750)
     #-------------------------
 
-    col2_left,col2_right = st.columns([5,3], gap="large")
 
     df_tab = df_segmentation.style \
         .apply(lambda x: ['background-color: red' if x.name == filter_rent else '' for i in x],axis=1) \
