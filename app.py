@@ -143,16 +143,16 @@ else:
     
     if genre == 'Stadsdeel':
         df_map = df_filter[df_filter["Stadsdeel"]==filter_rent]
-    else:
+    elif genre == 'Gebied':
         df_map = df_filter[df_filter["Gebied"]==filter_rent]
 
 
-# if genre == 'Totaal':
-#     df_map = df_filter
-# elif genre == 'Stadsdeel':
-#     df_map = df_filter[df_filter["Stadsdeel"]==filter_rent]
-# elif genre == 'Gebied':
-#     df_map = df_filter[df_filter["Gebied"]==filter_rent]
+if genre == 'Totaal':
+    df_map = df_filter
+elif genre == 'Stadsdeel':
+    df_map = df_filter[df_filter["Stadsdeel"]==filter_rent]
+elif genre == 'Gebied':
+    df_map = df_filter[df_filter["Gebied"]==filter_rent]
 #-------------------------
 
 df_metrics = df_map.groupby("Start_bouw")['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'].sum()
