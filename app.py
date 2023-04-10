@@ -1,13 +1,7 @@
 import streamlit as st
-from streamlit_option_menu import option_menu
-
-import folium
-from folium.plugins import Fullscreen,HeatMapWithTime,MiniMap,HeatMap
-from streamlit_folium import st_folium,folium_static 
 
 import pandas as pd
 import geopandas as gpd
-from shapely.geometry import Point
 
 import datetime
 from datetime import date,datetime
@@ -98,6 +92,7 @@ if genre == 'Totaal':
     col2_left.dataframe(df_total.set_index("Huur"),use_container_width=True)
     col2_right.altair_chart((pie_total),use_container_width=True)
     tab3_col4.altair_chart((time_serie),use_container_width=True)
+    df_map = df_filter
 
 
 else:
@@ -138,15 +133,20 @@ else:
     col2_right.altair_chart((pie_subareas),use_container_width=True)
     tab3_col4.altair_chart((time_serie),use_container_width=True)
     
+    if genre == 'Stadsdeel':
+        df_map = df_filter[df_filter["Stadsdeel"]==filter_rent]
+    elif genre == 'Gebied':
+        df_map = df_filter[df_filter["Gebied"]==filter_rent]
     
     
     
-if genre == 'Totaal':
-    df_map = df_filter
-elif genre == 'Stadsdeel':
-    df_map = df_filter[df_filter["Stadsdeel"]==filter_rent]
-elif genre == 'Gebied':
-    df_map = df_filter[df_filter["Gebied"]==filter_rent]
+    
+# if genre == 'Totaal':
+#     df_map = df_filter
+# elif genre == 'Stadsdeel':
+#     df_map = df_filter[df_filter["Stadsdeel"]==filter_rent]
+# elif genre == 'Gebied':
+#     df_map = df_filter[df_filter["Gebied"]==filter_rent]
     
 #-------------------------
 df_metrics = df_map.groupby("Start_bouw")['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'].sum()
