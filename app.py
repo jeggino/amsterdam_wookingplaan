@@ -157,8 +157,8 @@ for i in df_metrics.columns:
                         }
 #-------------------------
 
-filter_rent = selectbox('Kies wat voor soort huur',('Dure_huur','Sociale_huur','Middeldure_huur', 'Dure_huur_of_Koop','Koop'))
-filter_map = selectbox('',('road', 'light_no_labels', 'dark_no_labels'),label_visibility="collapsed")
+filter_rent = st.selectbox('Kies wat voor soort huur',('Dure_huur','Sociale_huur','Middeldure_huur', 'Dure_huur_of_Koop','Koop'))
+filter_map = st.selectbox('',('road', 'light_no_labels', 'dark_no_labels'),label_visibility="collapsed")
 
 
 INITIAL_VIEW_STATE = pdk.ViewState(
