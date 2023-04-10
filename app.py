@@ -54,6 +54,8 @@ tab3_col4, tab3_col5 = st.columns([3,1], gap="large")
 "---"
 stack_filter = tab3_col5.selectbox("", ['zero', 'normalize'], label_visibility="collapsed") 
 "---"
+filter_huur = map_left.selectbox('Kies wat voor soort huur',('Dure_huur','Sociale_huur','Middeldure_huur', 'Dure_huur_of_Koop','Koop'))
+filter_map = map_left.selectbox('',('road', 'light_no_labels', 'dark_no_labels'),label_visibility="collapsed")
 map_left,map_right = st.columns([1,6], gap="large")
 
 
@@ -144,8 +146,8 @@ elif genre == 'Stadsdeel':
     df_map = df_filter[df_filter["Stadsdeel"]==filter_rent]
 elif genre == 'Gebied':
     df_map = df_filter[df_filter["Gebied"]==filter_rent]
+    
 #-------------------------
-
 df_metrics = df_map.groupby("Start_bouw")['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'].sum()
 
 dict_metrics = {}
@@ -155,12 +157,8 @@ for i in df_metrics.columns:
                        "Lowest":{"year":df_metrics.loc[df_metrics[i]==df_metrics[i].min()].index[0], 
                                  "ammount":df_metrics[i].min()}
                         }
+    
 #-------------------------
-
-filter_rent = map_left.selectbox('Kies wat voor soort huur',('Dure_huur','Sociale_huur','Middeldure_huur', 'Dure_huur_of_Koop','Koop'))
-filter_map = map_left.selectbox('',('road', 'light_no_labels', 'dark_no_labels'),label_visibility="collapsed")
-
-
 INITIAL_VIEW_STATE = pdk.ViewState(
     latitude=52.374119, 
     longitude=4.895906,
@@ -178,12 +176,12 @@ COLOR_RANGE = [
     [50, 0, 15]
 ]
 
-BREAKS = [(df_map[filter_rent].max()*1)/6,
-          (df_map[filter_rent].max()*2)/6,
-          (df_map[filter_rent].max()*3)/6,
-          (df_map[filter_rent].max()*4)/6,
-          (df_map[filter_rent].max()*5)/6,
-          df_map[filter_rent].max()/6,]
+BREAKS = [(df_map[filter_huur].max()*1)/6,
+          (df_map[filter_huur].max()*2)/6,
+          (df_map[filter_huur].max()*3)/6,
+          (df_map[filter_huur].max()*4)/6,
+          (df_map[filter_huur].max()*5)/6,
+          df_map[filter_huur].max()/6,]
 
 
 def color_scale(val):
@@ -192,7 +190,7 @@ def color_scale(val):
             return COLOR_RANGE[i]
     return COLOR_RANGE[i]
 
-df_map["color"] = df_map[filter_rent].apply(lambda x: color_scale(x))
+df_map["color"] = df_map[filter_huur].apply(lambda x: color_scale(x))
 
 polygon_layer = pdk.Layer(
     'GeoJsonLayer',
@@ -202,21 +200,21 @@ polygon_layer = pdk.Layer(
     filled=True,
     extruded=True,
     wireframe=True,
-    get_elevation=filter_rent,
+    get_elevation=filter_huur,
     get_fill_color='color',
     get_line_color=[255, 255, 255],
     pickable=True
 )
 
-if filter_rent == 'Sociale_huur':
+if filter_huur == 'Sociale_huur':
     tooltip = {"text": "Antaal: {Sociale_huur}"}
-elif filter_rent == 'Dure_huur':
+elif filter_huur == 'Dure_huur':
     tooltip = {"text": "Antaal: {Dure_huur}"}
-elif filter_rent == 'Middeldure_huur':
+elif filter_huur == 'Middeldure_huur':
     tooltip = {"text": "Antaal: {Middeldure_huur}"}
-elif filter_rent == 'Dure_huur_of_Koop':
+elif filter_huur == 'Dure_huur_of_Koop':
     tooltip = {"text": "Antaal: {Dure_huur_of_Koop}"}
-elif filter_rent == 'Koop':
+elif filter_huur == 'Koop':
     tooltip = {"text": "Antaal: {Koop}"}
 
 
