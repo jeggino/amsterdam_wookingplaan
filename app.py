@@ -58,6 +58,8 @@ genre = expander.radio("",('Totaal','Stadsdeel', 'Gebied'), horizontal=True, lab
 "---"
 stack_filter = expander.selectbox("", ['zero', 'normalize'], label_visibility="collapsed") 
 
+tab3_col4, tab3_col5 = st.columns([4,1])
+
 if genre == 'Totaal':
 
     df_total = df_filter[['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop']].sum().reset_index().rename(columns={0:"Antaal","index":"Huur"})
@@ -90,7 +92,7 @@ if genre == 'Totaal':
 
     col2_left.dataframe(df_total.set_index("Huur"),use_container_width=True)
     col2_right.altair_chart((pie_total),use_container_width=True)
-    st.altair_chart((time_serie),use_container_width=True)
+    tab3_col4.altair_chart((time_serie),use_container_width=True)
     #-------------------------
 
 
@@ -132,7 +134,7 @@ else:
 
     col2_left.dataframe(df_tab,use_container_width=True)
     col2_right.altair_chart((pie_subareas),use_container_width=True)
-    st.altair_chart((time_serie),use_container_width=True)
+    tab3_col4.altair_chart((time_serie),use_container_width=True)
     #-------------------------
 
 
@@ -226,25 +228,6 @@ r = pdk.Deck(
 )
 #-------------------------
 
-# tab3_col1, tab3_col2, tab3_col3 = st.columns(3) 
-# tab3_col4, tab3_col5 = st.columns(2)
-# tab3_col1.metric("Sociale huur", 
-#                  f"Het hoogste jaar was {dict_metrics['Sociale_huur']['Highest']['year']} ({dict_metrics['Sociale_huur']['Highest']['ammount']})",
-#                  f"Het laagste jaar was {dict_metrics['Sociale_huur']['Lowest']['year']} ({dict_metrics['Sociale_huur']['Lowest']['ammount']})")
-# tab3_col2.metric("Middeldure huur", 
-#                  f"Het hoogste jaar was {dict_metrics['Middeldure_huur']['Highest']['year']} ({dict_metrics['Middeldure_huur']['Highest']['ammount']})",
-#                  f"Het laagste jaar was {dict_metrics['Middeldure_huur']['Lowest']['year']} ({dict_metrics['Middeldure_huur']['Lowest']['ammount']})")
-# tab3_col3.metric("Dure huur", 
-#                  f"Het hoogste jaar was {dict_metrics['Dure_huur']['Highest']['year']} ({dict_metrics['Dure_huur']['Highest']['ammount']})",
-#                  f"Het laagste jaar was {dict_metrics['Dure_huur']['Lowest']['year']} ({dict_metrics['Dure_huur']['Lowest']['ammount']})")
-# tab3_col4.metric("Dure huur of Koop", 
-#                  f"Het hoogste jaar was {dict_metrics['Dure_huur_of_Koop']['Highest']['year']} ({dict_metrics['Dure_huur_of_Koop']['Highest']['ammount']})",
-#                  f"Het laagste jaar was {dict_metrics['Dure_huur_of_Koop']['Lowest']['year']} ({dict_metrics['Dure_huur_of_Koop']['Lowest']['ammount']})")
-# tab3_col5.metric("Koop", 
-#                  f"Het hoogste jaar was {dict_metrics['Koop']['Highest']['year']} ({dict_metrics['Koop']['Highest']['ammount']})",
-#                  f"Het laagste jaar was {dict_metrics['Koop']['Lowest']['year']} ({dict_metrics['Koop']['Lowest']['ammount']})")
-
-
  
 text_Sociale_huur  = f"""
 Sociale huur \n
@@ -272,15 +255,15 @@ Het hoogste jaar was **:green[{dict_metrics['Koop']['Highest']['year']}]** ({dic
 """
 
 
-tab3_col4, tab3_col5 = st.columns([1,4])
-with tab3_col4:
+
+with tab3_col5:
     st.subheader(text_Sociale_huur)
     st.subheader(text_Middeldure_huur)
     st.subheader(text_Dure_huur)
     st.subheader(text_Dure_huur_of_Koop)
     st.subheader(text_Koop)
     
-tab3_col5.pydeck_chart(pydeck_obj=r, use_container_width=True)
+st.pydeck_chart(pydeck_obj=r, use_container_width=True)
         
 
 
