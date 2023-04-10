@@ -244,7 +244,7 @@ r = pdk.Deck(
 #                  f"Het laagste jaar was {dict_metrics['Koop']['Lowest']['year']} ({dict_metrics['Koop']['Lowest']['ammount']})")
 
 text  = f"""
-Het hoogste jaar was {dict_metrics['Koop']['Highest']['year']} ({dict_metrics['Koop']['Highest']['ammount']}) \n
+Het hoogste :red[jaar] was **:blue[{dict_metrics['Koop']['Highest']['year']}]** ({dict_metrics['Koop']['Highest']['ammount']}) \n
 Het laagste jaar was {dict_metrics['Koop']['Lowest']['year']} ({dict_metrics['Koop']['Lowest']['ammount']}) \n
 This text is :red[colored red], and this is **:blue[colored]** and bold.
 """
