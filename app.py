@@ -157,8 +157,11 @@ for i in df_metrics.columns:
                         }
 #-------------------------
 
-filter_rent = st.selectbox('Kies wat voor soort huur',('Dure_huur','Sociale_huur','Middeldure_huur', 'Dure_huur_of_Koop','Koop'))
-filter_map = st.selectbox('',('road', 'light_no_labels', 'dark_no_labels'),label_visibility="collapsed")
+map_left,map_right = st.columns([1,5], gap="large")
+
+with map_left:
+    filter_rent = st.selectbox('Kies wat voor soort huur',('Dure_huur','Sociale_huur','Middeldure_huur', 'Dure_huur_of_Koop','Koop'))
+    filter_map = st.selectbox('',('road', 'light_no_labels', 'dark_no_labels'),label_visibility="collapsed")
 
 
 INITIAL_VIEW_STATE = pdk.ViewState(
@@ -263,7 +266,7 @@ with tab3_col5:
     st.subheader(text_Dure_huur_of_Koop)
     st.subheader(text_Koop)
     
-st.pydeck_chart(pydeck_obj=r, use_container_width=True)
+map_right.pydeck_chart(pydeck_obj=r, use_container_width=True)
         
 
 
