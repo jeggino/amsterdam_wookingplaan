@@ -96,16 +96,12 @@ if genre == 'Totaal':
     col2_left.dataframe(df_total.set_index("Huur"),use_container_width=True)
     col2_right.altair_chart((pie_total),use_container_width=True)
     tab3_col4.altair_chart((time_serie),use_container_width=True)
-    
-    df_map = df_filter
-    #-------------------------
 
 
 else:
 
     df_segmentation = df_filter.groupby(genre)['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'].sum()
     filter_rent = expander.selectbox('Kies een stadsdeel of gebied', df_segmentation.index)
-    #-------------------------
 
     source = df_segmentation.T.reset_index()[["index",filter_rent]].rename(columns={"index":"Huur"})
 
@@ -139,14 +135,10 @@ else:
     col2_left.dataframe(df_tab,use_container_width=True)
     col2_right.altair_chart((pie_subareas),use_container_width=True)
     tab3_col4.altair_chart((time_serie),use_container_width=True)
-    #-------------------------
     
-    if genre == 'Stadsdeel':
-        df_map = df_filter[df_filter["Stadsdeel"]==filter_rent]
-    elif genre == 'Gebied':
-        df_map = df_filter[df_filter["Gebied"]==filter_rent]
-
-
+    
+    
+    
 if genre == 'Totaal':
     df_map = df_filter
 elif genre == 'Stadsdeel':
