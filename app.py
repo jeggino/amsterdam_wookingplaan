@@ -57,7 +57,7 @@ df_filter = df[choices_StartBouw & choices_fase]
 genre = expander.radio("",('Totaal','Stadsdeel', 'Gebied'), horizontal=True, label_visibility="collapsed")
 stack_filter = expander.selectbox("", ['zero', 'normalize'], label_visibility="collapsed") 
 
-col2_left,col2_right = st.columns([2,5], gap="medium")
+col2_left,col2_right = st.columns([5,2], gap="medium")
 "---"
 tab3_col4, tab3_col5 = st.columns([3,1], gap="large")
 "---"
