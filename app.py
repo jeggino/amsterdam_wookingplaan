@@ -40,7 +40,13 @@ df = get_data()
 
 # -------------------------------------------------------
 expander = st.sidebar
+col2_left,col2_right = st.columns([3,2], gap="large")
+"---"
+tab3_col4, tab3_col5 = st.columns([3,1], gap="large")
+"---"
+map_left,map_right = st.columns([1,6], gap="large")
 
+# -------------------------------------------------------
 filter_year = expander.slider("Kies jaarreeks", int(df.Start_bouw.min()), int(df.Start_bouw.max()), 
                     value=(int(df.Start_bouw.min()),
                            int(df.Start_bouw.max()))
@@ -48,13 +54,7 @@ filter_year = expander.slider("Kies jaarreeks", int(df.Start_bouw.min()), int(df
 filter_fase = expander.multiselect('Kies wat voor soort bouwfase',['Investeringsbesluit genomen','In aanbouw genomen','Verkenning','Principebesluit genomen'],
                                    default=['Investeringsbesluit genomen','In aanbouw genomen','Verkenning','Principebesluit genomen'])
 genre = expander.radio("",('Totaal','Stadsdeel', 'Gebied'), horizontal=True, label_visibility="collapsed")
-col2_left,col2_right = st.columns([3,2], gap="large")
-"---"
-tab3_col4, tab3_col5 = st.columns([3,1], gap="large")
-"---"
 stack_filter = tab3_col5.selectbox("", ['zero', 'normalize'], label_visibility="collapsed") 
-"---"
-map_left,map_right = st.columns([1,6], gap="large")
 filter_huur = map_left.selectbox('Kies wat voor soort huur',('Dure_huur','Sociale_huur','Middeldure_huur', 'Dure_huur_of_Koop','Koop'))
 filter_map = map_left.selectbox('',('road', 'light_no_labels', 'dark_no_labels'),label_visibility="collapsed")
 
