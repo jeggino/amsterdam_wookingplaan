@@ -55,6 +55,7 @@ df_filter = df[choices_StartBouw & choices_fase]
         
    
 genre = expander.radio("",('Totaal','Stadsdeel', 'Gebied'), horizontal=True, label_visibility="collapsed")
+st.divider()
 stack_filter = expander.selectbox("", ['zero', 'normalize'], label_visibility="collapsed") 
 
 if genre == 'Totaal':
