@@ -248,27 +248,27 @@ r = pdk.Deck(
  
 text_Sociale_huur  = f"""
 Sociale huur \n
-Het hoogste jaar was **:green[{dict_metrics['Sociale_huur']['Highest']['year']}]** ({dict_metrics['Sociale_huur']['Highest']['ammount']}) en het laagste jaar was **:red[{dict_metrics['Sociale_huur']['Lowest']['year']}] ({dict_metrics['Sociale_huur']['Lowest']['ammount']})
+Het hoogste jaar was **:green[{dict_metrics['Sociale_huur']['Highest']['year']}]** ({dict_metrics['Sociale_huur']['Highest']['ammount']}) en het laagste jaar was **:red[{dict_metrics['Sociale_huur']['Lowest']['year']}]** ({dict_metrics['Sociale_huur']['Lowest']['ammount']})
 """
 
 text_Middeldure_huur  = f"""
 Middeldure huur \n
-Het hoogste jaar was **:green[{dict_metrics['Middeldure_huur']['Highest']['year']}]** ({dict_metrics['Middeldure_huur']['Highest']['ammount']}) en het laagste jaar was **:red[{dict_metrics['Middeldure_huur']['Lowest']['year']}] ({dict_metrics['Middeldure_huur']['Lowest']['ammount']})
+Het hoogste jaar was **:green[{dict_metrics['Middeldure_huur']['Highest']['year']}]** ({dict_metrics['Middeldure_huur']['Highest']['ammount']}) en het laagste jaar was **:red[{dict_metrics['Middeldure_huur']['Lowest']['year']}]** ({dict_metrics['Middeldure_huur']['Lowest']['ammount']})
 """
 
 text_Dure_huur  = f"""
 Dure huur \n
-Het hoogste jaar was **:green[{dict_metrics['Dure_huur']['Highest']['year']}]** ({dict_metrics['Dure_huur']['Highest']['ammount']}) en het laagste jaar was **:red[{dict_metrics['Dure_huur']['Lowest']['year']}] ({dict_metrics['Dure_huur']['Lowest']['ammount']})
+Het hoogste jaar was **:green[{dict_metrics['Dure_huur']['Highest']['year']}]** ({dict_metrics['Dure_huur']['Highest']['ammount']}) en het laagste jaar was **:red[{dict_metrics['Dure_huur']['Lowest']['year']}]** ({dict_metrics['Dure_huur']['Lowest']['ammount']})
 """
 
 text_Dure_huur_of_Koop  = f"""
 Dure huur of Koop \n
-Het hoogste jaar was **:green[{dict_metrics['Dure_huur_of_Koop']['Highest']['year']}]** ({dict_metrics['Dure_huur_of_Koop']['Highest']['ammount']}) en het laagste jaar was **:red[{dict_metrics['Dure_huur_of_Koop']['Lowest']['year']}] ({dict_metrics['Dure_huur_of_Koop']['Lowest']['ammount']})
+Het hoogste jaar was **:green[{dict_metrics['Dure_huur_of_Koop']['Highest']['year']}]** ({dict_metrics['Dure_huur_of_Koop']['Highest']['ammount']}) en het laagste jaar was **:red[{dict_metrics['Dure_huur_of_Koop']['Lowest']['year']}]** ({dict_metrics['Dure_huur_of_Koop']['Lowest']['ammount']})
 """
 
 text_Koop  = f"""
 Koop huur \n
-Het hoogste jaar was **:green[{dict_metrics['Koop']['Highest']['year']}]** ({dict_metrics['Koop']['Highest']['ammount']}) en het laagste jaar was **:red[{dict_metrics['Koop']['Lowest']['year']}] ({dict_metrics['Koop']['Lowest']['ammount']})
+Het hoogste jaar was **:green[{dict_metrics['Koop']['Highest']['year']}]** ({dict_metrics['Koop']['Highest']['ammount']}) en het laagste jaar was **:red[{dict_metrics['Koop']['Lowest']['year']}]** ({dict_metrics['Koop']['Lowest']['ammount']})
 """
 
 
