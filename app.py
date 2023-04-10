@@ -250,7 +250,8 @@ Het laagste jaar was {dict_metrics['Koop']['Lowest']['year']} ({dict_metrics['Ko
 This text is :red[colored red], and this is **:blue[colored]** and bold.
 """
 
-st.header(text)
+# st.header(text)
+text
 
 st.pydeck_chart(pydeck_obj=r, use_container_width=True)
         
