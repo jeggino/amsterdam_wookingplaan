@@ -143,7 +143,7 @@ else:
     
     if genre == 'Stadsdeel':
         df_map = df_filter[df_filter["Stadsdeel"]==filter_rent]
-    elif genre == 'Gebied':
+    else:
         df_map = df_filter[df_filter["Gebied"]==filter_rent]
 
 
