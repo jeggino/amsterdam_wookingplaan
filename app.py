@@ -59,7 +59,7 @@ stack_filter = expander.selectbox("", ['zero', 'normalize'], label_visibility="c
 
 col2_left,col2_right = st.columns([2,5], gap="medium")
 "---"
-tab3_col4, tab3_col5 = st.columns([3,1], gap="medium")
+tab3_col4, tab3_col5 = st.columns([3,1], gap="large")
 "---"
 
 if genre == 'Totaal':
