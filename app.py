@@ -139,15 +139,6 @@ else:
         df_map = df_filter[df_filter["Gebied"]==filter_rent]
     
     
-    
-    
-# if genre == 'Totaal':
-#     df_map = df_filter
-# elif genre == 'Stadsdeel':
-#     df_map = df_filter[df_filter["Stadsdeel"]==filter_rent]
-# elif genre == 'Gebied':
-#     df_map = df_filter[df_filter["Gebied"]==filter_rent]
-    
 #-------------------------
 df_metrics = df_map.groupby("Start_bouw")['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'].sum()
 
@@ -158,6 +149,31 @@ for i in df_metrics.columns:
                        "Lowest":{"year":df_metrics.loc[df_metrics[i]==df_metrics[i].min()].index[0], 
                                  "ammount":df_metrics[i].min()}
                         }
+
+text_Sociale_huur  = f"""
+Sociale huur \n
+Het hoogste jaar was **:green[{dict_metrics['Sociale_huur']['Highest']['year']}]** ({dict_metrics['Sociale_huur']['Highest']['ammount']}) en het laagste jaar was **:red[{dict_metrics['Sociale_huur']['Lowest']['year']}]** ({dict_metrics['Sociale_huur']['Lowest']['ammount']})
+"""
+
+text_Middeldure_huur  = f"""
+Middeldure huur \n
+Het hoogste jaar was **:green[{dict_metrics['Middeldure_huur']['Highest']['year']}]** ({dict_metrics['Middeldure_huur']['Highest']['ammount']}) en het laagste jaar was **:red[{dict_metrics['Middeldure_huur']['Lowest']['year']}]** ({dict_metrics['Middeldure_huur']['Lowest']['ammount']})
+"""
+
+text_Dure_huur  = f"""
+Dure huur \n
+Het hoogste jaar was **:green[{dict_metrics['Dure_huur']['Highest']['year']}]** ({dict_metrics['Dure_huur']['Highest']['ammount']}) en het laagste jaar was **:red[{dict_metrics['Dure_huur']['Lowest']['year']}]** ({dict_metrics['Dure_huur']['Lowest']['ammount']})
+"""
+
+text_Dure_huur_of_Koop  = f"""
+Dure huur of Koop \n
+Het hoogste jaar was **:green[{dict_metrics['Dure_huur_of_Koop']['Highest']['year']}]** ({dict_metrics['Dure_huur_of_Koop']['Highest']['ammount']}) en het laagste jaar was **:red[{dict_metrics['Dure_huur_of_Koop']['Lowest']['year']}]** ({dict_metrics['Dure_huur_of_Koop']['Lowest']['ammount']})
+"""
+
+text_Koop  = f"""
+Koop huur \n
+Het hoogste jaar was **:green[{dict_metrics['Koop']['Highest']['year']}]** ({dict_metrics['Koop']['Highest']['ammount']}) en het laagste jaar was **:red[{dict_metrics['Koop']['Lowest']['year']}]** ({dict_metrics['Koop']['Lowest']['ammount']})
+"""
     
 #-------------------------
 INITIAL_VIEW_STATE = pdk.ViewState(
@@ -228,30 +244,7 @@ r = pdk.Deck(
 #-------------------------
 
  
-text_Sociale_huur  = f"""
-Sociale huur \n
-Het hoogste jaar was **:green[{dict_metrics['Sociale_huur']['Highest']['year']}]** ({dict_metrics['Sociale_huur']['Highest']['ammount']}) en het laagste jaar was **:red[{dict_metrics['Sociale_huur']['Lowest']['year']}]** ({dict_metrics['Sociale_huur']['Lowest']['ammount']})
-"""
 
-text_Middeldure_huur  = f"""
-Middeldure huur \n
-Het hoogste jaar was **:green[{dict_metrics['Middeldure_huur']['Highest']['year']}]** ({dict_metrics['Middeldure_huur']['Highest']['ammount']}) en het laagste jaar was **:red[{dict_metrics['Middeldure_huur']['Lowest']['year']}]** ({dict_metrics['Middeldure_huur']['Lowest']['ammount']})
-"""
-
-text_Dure_huur  = f"""
-Dure huur \n
-Het hoogste jaar was **:green[{dict_metrics['Dure_huur']['Highest']['year']}]** ({dict_metrics['Dure_huur']['Highest']['ammount']}) en het laagste jaar was **:red[{dict_metrics['Dure_huur']['Lowest']['year']}]** ({dict_metrics['Dure_huur']['Lowest']['ammount']})
-"""
-
-text_Dure_huur_of_Koop  = f"""
-Dure huur of Koop \n
-Het hoogste jaar was **:green[{dict_metrics['Dure_huur_of_Koop']['Highest']['year']}]** ({dict_metrics['Dure_huur_of_Koop']['Highest']['ammount']}) en het laagste jaar was **:red[{dict_metrics['Dure_huur_of_Koop']['Lowest']['year']}]** ({dict_metrics['Dure_huur_of_Koop']['Lowest']['ammount']})
-"""
-
-text_Koop  = f"""
-Koop huur \n
-Het hoogste jaar was **:green[{dict_metrics['Koop']['Highest']['year']}]** ({dict_metrics['Koop']['Highest']['ammount']}) en het laagste jaar was **:red[{dict_metrics['Koop']['Lowest']['year']}]** ({dict_metrics['Koop']['Lowest']['ammount']})
-"""
 
 
 
