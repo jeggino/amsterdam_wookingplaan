@@ -244,16 +244,18 @@ r = pdk.Deck(
 #                  f"Het hoogste jaar was {dict_metrics['Koop']['Highest']['year']} ({dict_metrics['Koop']['Highest']['ammount']})",
 #                  f"Het laagste jaar was {dict_metrics['Koop']['Lowest']['year']} ({dict_metrics['Koop']['Lowest']['ammount']})")
 
+
+ 
 text  = f"""
 Het hoogste :red[jaar] was **:blue[{dict_metrics['Koop']['Highest']['year']}]** ({dict_metrics['Koop']['Highest']['ammount']}) \n
 Het laagste jaar was {dict_metrics['Koop']['Lowest']['year']} ({dict_metrics['Koop']['Lowest']['ammount']}) \n
 This text is :red[colored red], and this is **:blue[colored]** and bold.
 """
 
-# st.header(text)
-text
 
-st.pydeck_chart(pydeck_obj=r, use_container_width=True)
+tab3_col4, tab3_col5 = st.columns([1,4])
+tab3_col4.markdown(text)
+tab3_col5.pydeck_chart(pydeck_obj=r, use_container_width=True)
         
 
 
