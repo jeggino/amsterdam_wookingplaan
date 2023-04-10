@@ -64,16 +64,18 @@ df_filter = df[choices_StartBouw & choices_fase]
    
 if genre == 'Totaal':
 
-    df_total = df_filter[['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop']].sum().reset_index().rename(columns={0:"Antaal","index":"Huur"})
+    
     #-------------------------
-
+    df_total = df_filter[['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop']].sum().reset_index().rename(columns={0:"Antaal","index":"Huur"})
+    
     pie_total = alt.Chart(df_total).encode(
         theta=alt.Theta("Antaal", stack=True),
         radius=alt.Radius("Antaal", scale=alt.Scale(type="sqrt", zero=True, rangeMin=5)),
         color=alt.Color('Huur:N',scale=alt.Scale(scheme='category20b')),
     ).mark_arc(innerRadius=5, stroke="#fff")
+    
+    
     #-------------------------
-
     source_2 = pd.melt(df_filter, id_vars=['Start_bouw'], 
            value_vars=['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'])   
 
@@ -85,13 +87,14 @@ if genre == 'Totaal':
     alt.Y('sum(value):Q', stack=stack_filter, title="Antaal"),
     alt.Color('variable:N',scale=alt.Scale(scheme='category20b'),legend=None),
     ).properties(height=550, width=750)
+    
+    
     #-------------------------
-    
-    
-
     col2_left.dataframe(df_total.set_index("Huur"),use_container_width=True)
     col2_right.altair_chart((pie_total),use_container_width=True)
     tab3_col4.altair_chart((time_serie),use_container_width=True)
+    
+    #-------------------------
     df_map = df_filter
 
 
@@ -107,11 +110,10 @@ else:
         radius=alt.Radius(filter_rent, scale=alt.Scale(type="sqrt", zero=True, rangeMin=0)),
         color=alt.Color('Huur:N',scale=alt.Scale(scheme='category20b')),
     ).mark_arc(innerRadius=5, stroke="#fff")
+    
     #-------------------------
-
     source_2 = pd.melt(df_filter[df_filter[genre]==filter_rent], id_vars=['Start_bouw'], 
                        value_vars=['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'])   
-#     source_2['Start_bouw'] = pd.to_datetime(source_2['Start_bouw'], format='%Y')
 
     time_serie = alt.Chart(source_2).mark_bar(opacity=0.7
         ).encode(
@@ -121,18 +123,19 @@ else:
         alt.Y('sum(value):Q', stack=stack_filter, title="Antaal"),
         alt.Color('variable:N',scale=alt.Scale(scheme='category20b'),legend=None),
         ).properties(height=550, width=750)
+    
     #-------------------------
-
-
     df_tab = df_segmentation.style \
         .apply(lambda x: ['background-color: red' if x.name == filter_rent else '' for i in x],axis=1) \
         .apply(lambda x: ["color: white" if x.name == filter_rent else '' for i in x],axis=1) \
         .apply(lambda x: ["font-weight: bold" if x.name == filter_rent else '' for i in x],axis=1)
-
+    
+    #-------------------------
     col2_left.dataframe(df_tab,use_container_width=True)
     col2_right.altair_chart((pie_subareas),use_container_width=True)
     tab3_col4.altair_chart((time_serie),use_container_width=True)
     
+    #-------------------------
     if genre == 'Stadsdeel':
         df_map = df_filter[df_filter["Stadsdeel"]==filter_rent]
     elif genre == 'Gebied':
@@ -174,6 +177,14 @@ text_Koop  = f"""
 Koop huur \n
 Het hoogste jaar was **:green[{dict_metrics['Koop']['Highest']['year']}]** ({dict_metrics['Koop']['Highest']['ammount']}) en het laagste jaar was **:red[{dict_metrics['Koop']['Lowest']['year']}]** ({dict_metrics['Koop']['Lowest']['ammount']})
 """
+
+with tab3_col5:
+    st.subheader(text_Sociale_huur)
+    st.subheader(text_Middeldure_huur)
+    st.subheader(text_Dure_huur)
+    st.subheader(text_Dure_huur_of_Koop)
+    st.subheader(text_Koop)
+
     
 #-------------------------
 INITIAL_VIEW_STATE = pdk.ViewState(
@@ -241,21 +252,11 @@ r = pdk.Deck(
     map_style = filter_map,
     initial_view_state=INITIAL_VIEW_STATE,
 )
-#-------------------------
 
- 
-
-
-
-
-with tab3_col5:
-    st.subheader(text_Sociale_huur)
-    st.subheader(text_Middeldure_huur)
-    st.subheader(text_Dure_huur)
-    st.subheader(text_Dure_huur_of_Koop)
-    st.subheader(text_Koop)
-    
 map_right.pydeck_chart(pydeck_obj=r, use_container_width=True)
+
+    
+
         
 
 
