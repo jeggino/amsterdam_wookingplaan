@@ -244,7 +244,7 @@ r = pdk.Deck(
 #                  f"Het laagste jaar was {dict_metrics['Koop']['Lowest']['year']} ({dict_metrics['Koop']['Lowest']['ammount']})")
 
 f"""
-Het hoogste jaar was {dict_metrics['Koop']['Highest']['year']} ({dict_metrics['Koop']['Highest']['ammount']})
+Het hoogste jaar was {dict_metrics['Koop']['Highest']['year']} ({dict_metrics['Koop']['Highest']['ammount']}) \n
 Het laagste jaar was {dict_metrics['Koop']['Lowest']['year']} ({dict_metrics['Koop']['Lowest']['ammount']})
 
 """
