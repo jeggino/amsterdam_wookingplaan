@@ -157,7 +157,7 @@ for i in df_metrics.columns:
                         }
 #-------------------------
 
-map_left,map_right = st.columns([1,5], gap="large")
+map_left,map_right = st.columns([1,6], gap="large")
 
 with map_left:
     filter_rent = st.selectbox('Kies wat voor soort huur',('Dure_huur','Sociale_huur','Middeldure_huur', 'Dure_huur_of_Koop','Koop'))
