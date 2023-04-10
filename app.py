@@ -246,15 +246,40 @@ r = pdk.Deck(
 
 
  
-text  = f"""
-Het hoogste :red[jaar] was **:blue[{dict_metrics['Koop']['Highest']['year']}]** ({dict_metrics['Koop']['Highest']['ammount']}) \n
-Het laagste jaar was {dict_metrics['Koop']['Lowest']['year']} ({dict_metrics['Koop']['Lowest']['ammount']}) \n
-This text is :red[colored red], and this is **:blue[colored]** and bold.
+text_Sociale_huur  = f"""
+Sociale huur \n
+Het hoogste jaar was **:green[{dict_metrics['Sociale_huur']['Highest']['year']}]** ({dict_metrics['Sociale_huur']['Highest']['ammount']}) en het laagste jaar was **:red[{dict_metrics['Sociale_huur']['Lowest']['year']}] ({dict_metrics['Sociale_huur']['Lowest']['ammount']})
+"""
+
+text_Middeldure_huur  = f"""
+Middeldure huur \n
+Het hoogste jaar was **:green[{dict_metrics['Middeldure_huur']['Highest']['year']}]** ({dict_metrics['Middeldure_huur']['Highest']['ammount']}) en het laagste jaar was **:red[{dict_metrics['Middeldure_huur']['Lowest']['year']}] ({dict_metrics['Middeldure_huur']['Lowest']['ammount']})
+"""
+
+text_Dure_huur  = f"""
+Dure huur \n
+Het hoogste jaar was **:green[{dict_metrics['Dure_huur']['Highest']['year']}]** ({dict_metrics['Dure_huur']['Highest']['ammount']}) en het laagste jaar was **:red[{dict_metrics['Dure_huur']['Lowest']['year']}] ({dict_metrics['Dure_huur']['Lowest']['ammount']})
+"""
+
+text_Dure_huur_of_Koop  = f"""
+Dure huur of Koop \n
+Het hoogste jaar was **:green[{dict_metrics['Dure_huur_of_Koop']['Highest']['year']}]** ({dict_metrics['Dure_huur_of_Koop']['Highest']['ammount']}) en het laagste jaar was **:red[{dict_metrics['Dure_huur_of_Koop']['Lowest']['year']}] ({dict_metrics['Dure_huur_of_Koop']['Lowest']['ammount']})
+"""
+
+text_Koop  = f"""
+Koop huur \n
+Het hoogste jaar was **:green[{dict_metrics['Koop']['Highest']['year']}]** ({dict_metrics['Koop']['Highest']['ammount']}) en het laagste jaar was **:red[{dict_metrics['Koop']['Lowest']['year']}] ({dict_metrics['Koop']['Lowest']['ammount']})
 """
 
 
 tab3_col4, tab3_col5 = st.columns([1,4])
-tab3_col4.markdown(text)
+with tab3_col4:
+    st.subheader(text_Sociale_huur)
+    st.subheader(text_Middeldure_huur)
+    st.subheader(text_Dure_huur)
+    st.subheader(text_Dure_huur_of_Koop)
+    st.subheader(text_Koop)
+    
 tab3_col5.pydeck_chart(pydeck_obj=r, use_container_width=True)
         
 
