@@ -66,7 +66,6 @@ choices_fase = (df.Fase.isin(filter_fase))
 df_filter = df[choices_StartBouw & choices_fase]
         
    
-# -------------------------------------------------------    
 if genre == 'Totaal':
 
     df_total = df_filter[['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop']].sum().reset_index().rename(columns={0:"Antaal","index":"Huur"})
@@ -97,6 +96,8 @@ if genre == 'Totaal':
     col2_left.dataframe(df_total.set_index("Huur"),use_container_width=True)
     col2_right.altair_chart((pie_total),use_container_width=True)
     tab3_col4.altair_chart((time_serie),use_container_width=True)
+    
+    df_map = df_filter
     #-------------------------
 
 
@@ -139,14 +140,19 @@ else:
     col2_right.altair_chart((pie_subareas),use_container_width=True)
     tab3_col4.altair_chart((time_serie),use_container_width=True)
     #-------------------------
+    
+    if genre == 'Stadsdeel':
+        df_map = df_filter[df_filter["Stadsdeel"]==filter_rent]
+    elif genre == 'Gebied':
+        df_map = df_filter[df_filter["Gebied"]==filter_rent]
 
 
-if genre == 'Totaal':
-    df_map = df_filter
-elif genre == 'Stadsdeel':
-    df_map = df_filter[df_filter["Stadsdeel"]==filter_rent]
-elif genre == 'Gebied':
-    df_map = df_filter[df_filter["Gebied"]==filter_rent]
+# if genre == 'Totaal':
+#     df_map = df_filter
+# elif genre == 'Stadsdeel':
+#     df_map = df_filter[df_filter["Stadsdeel"]==filter_rent]
+# elif genre == 'Gebied':
+#     df_map = df_filter[df_filter["Gebied"]==filter_rent]
 #-------------------------
 
 df_metrics = df_map.groupby("Start_bouw")['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'].sum()
