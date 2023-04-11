@@ -40,6 +40,8 @@ row_1_2_tab2_col1,row_1_2_tab2_col2 = row_1_2_tab2.columns([3,2], gap="large")
 
 "---"
 row_2_1, row_2_2 = st.columns([3,1], gap="large")
+row_2_2_tab1, row_2_2_tab2 = row_2_1.tabs(["Pie", "Sun"])
+row_2_2_tab1_col1,row_2_2_tab1_col2 = row_2_2_tab1.columns([3,2], gap="large")
 "---"
 row_3_1,row_3_2 = st.columns([1,6], gap="large")
 
@@ -92,8 +94,8 @@ if genre == 'Totaal':
     
     #-------------------------
     row_1_1.dataframe(df_total.set_index("Huur"),use_container_width=True)
-    row_1_2_tab2_col2.altair_chart((pie_total),use_container_width=True)
-    row_2_1.altair_chart((time_serie),use_container_width=True)
+    row_2_2_tab1_col1.altair_chart((pie_total),use_container_width=True)
+    row_2_2_tab2.altair_chart((time_serie),use_container_width=True)
     
     #-------------------------
     df_map = df_filter
@@ -274,7 +276,7 @@ fig = px.sunburst(df_sunburst, path=['Start_bouw',"Fase","variable"], values='va
                   labels={"value": "Antaal",}
                  )
 
-row_1_2_tab2_col1.plotly_chart(fig, theme="streamlit", use_container_width=True)
+row_2_2_tab1_col2.plotly_chart(fig, theme="streamlit", use_container_width=True)
 
 
 
