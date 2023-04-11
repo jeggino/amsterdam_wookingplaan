@@ -77,6 +77,9 @@ if filter_genre == 'Totaal':
            value_vars=['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop']) 
     
     #-------------------------
+    df_metrics = df_filter.groupby("Start_bouw")['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'].sum()
+    
+    #-------------------------
     df_map = df_filter
     
     #-------------------------
@@ -110,6 +113,9 @@ else:
                        value_vars=['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'])
     
     #-------------------------
+    df_metrics = df_filter[df_filter[filter_genre]==filter_rent].groupby("Start_bouw")['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'].sum()
+    
+    #-------------------------
     df_map = df_filter[df_filter[filter_genre]==filter_rent]
     
     #-------------------------
@@ -139,8 +145,6 @@ chart_timeseries = alt.Chart(df_timeseries).mark_bar(opacity=0.7
 
    
 #-------------------------
-df_metrics = df_map.groupby("Start_bouw")['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'].sum()
-
 dict_metrics = {}
 for i in df_metrics.columns:
     dict_metrics[i] = {"Highest":{"year":df_metrics.loc[df_metrics[i]==df_metrics[i].max()].index[0],
@@ -173,7 +177,8 @@ text_Koop  = f"""
 Koop huur \n
 Het hoogste jaar was **:green[{dict_metrics['Koop']['Highest']['year']}]** ({dict_metrics['Koop']['Highest']['ammount']}) en het laagste jaar was **:red[{dict_metrics['Koop']['Lowest']['year']}]** ({dict_metrics['Koop']['Lowest']['ammount']})
 """
-    
+
+
 #-------------------------
 INITIAL_VIEW_STATE = pdk.ViewState(
     latitude=52.374119, 
