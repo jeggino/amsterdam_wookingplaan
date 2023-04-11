@@ -128,8 +128,6 @@ chart_pie = alt.Chart(df_piechart).encode(
     color=alt.Color(pie_color,scale=alt.Scale(scheme='category20b'),legend=alt.Legend(orient="left",title=None)),
 ).mark_arc(innerRadius=5, stroke="#fff")
 
-row_1_2_tab1.altair_chart((chart_pie),use_container_width=True)
-
 
 # -------------------------------------------------------    
 chart_timeseries = alt.Chart(df_timeseries).mark_bar(opacity=0.7
@@ -137,15 +135,9 @@ chart_timeseries = alt.Chart(df_timeseries).mark_bar(opacity=0.7
     alt.X('Start_bouw:O', axis=alt.Axis(domain=False, tickSize=0),title="Start bouw"),
     alt.Y('sum(value):Q', stack=filter_normilize, title="Antaal"),
     alt.Color('variable:N',scale=alt.Scale(scheme='category20b'),legend=alt.Legend(orient="top",title=None)),
-    ).properties(height=550, width=750)
+    ).properties(height=650, width=750)
 
-row_2_1.altair_chart((chart_timeseries),use_container_width=True)
-
-
-# -------------------------------------------------------    
-row_1_1.dataframe(df_table,use_container_width=True)
-
-    
+   
 #-------------------------
 df_metrics = df_map.groupby("Start_bouw")['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'].sum()
 
@@ -181,14 +173,6 @@ text_Koop  = f"""
 Koop huur \n
 Het hoogste jaar was **:green[{dict_metrics['Koop']['Highest']['year']}]** ({dict_metrics['Koop']['Highest']['ammount']}) en het laagste jaar was **:red[{dict_metrics['Koop']['Lowest']['year']}]** ({dict_metrics['Koop']['Lowest']['ammount']})
 """
-
-with row_2_2:
-    st.subheader(text_Sociale_huur)
-    st.subheader(text_Middeldure_huur)
-    st.subheader(text_Dure_huur)
-    st.subheader(text_Dure_huur_of_Koop)
-    st.subheader(text_Koop)
-
     
 #-------------------------
 INITIAL_VIEW_STATE = pdk.ViewState(
@@ -257,15 +241,28 @@ r = pdk.Deck(
     initial_view_state=INITIAL_VIEW_STATE,
 )
 
-row_3_2.pydeck_chart(pydeck_obj=r, use_container_width=True)
-
     
 #--------------------------------------------------
 chart_sunburst = px.sunburst(df_sunburst, path=path, values='value',
                   labels={"value": "Antaal"}
                  )
 
+
+#--------------------------------------------------
+row_1_1.dataframe(df_table,use_container_width=True)
+row_1_2_tab1.altair_chart((chart_pie),use_container_width=True)
 row_1_2_tab2.plotly_chart(chart_sunburst, theme="streamlit", use_container_width=True)
+row_2_1.altair_chart((chart_timeseries),use_container_width=True)
+with row_2_2:
+    st.subheader(text_Sociale_huur)
+    st.subheader(text_Middeldure_huur)
+    st.subheader(text_Dure_huur)
+    st.subheader(text_Dure_huur_of_Koop)
+    st.subheader(text_Koop)
+row_3_2.pydeck_chart(pydeck_obj=r, use_container_width=True)
+
+
+
 
 
 
