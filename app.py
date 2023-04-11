@@ -156,7 +156,6 @@ else:
     
     #-------------------------
     row_1_1.dataframe(df_table, use_container_width=True)
-    
     row_2_1.altair_chart((chart_timeseries),use_container_width=True)
     
 
