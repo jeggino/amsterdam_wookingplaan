@@ -239,7 +239,7 @@ polygon_layer = pdk.Layer(
 )
 
 if filter_huur == 'Sociale_huur':
-    tooltip = {"text": "Antaal: {Sociale_huur}"}
+    tooltip = {"text": "Projectnaam: {Projectnaam} \n Start bouw: {Start_bouw} \n Antaal: {Sociale_huur}"}
 elif filter_huur == 'Dure_huur':
     tooltip = {"text": "Antaal: {Dure_huur}"}
 elif filter_huur == 'Middeldure_huur':
