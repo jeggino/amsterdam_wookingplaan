@@ -7,6 +7,8 @@ import altair as alt
 import plotly.express as px
 import pydeck as pdk
 
+import html5lib
+
 
 # -------------------------------------------------------
 st.set_page_config(
