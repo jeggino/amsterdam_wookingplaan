@@ -67,9 +67,7 @@ if genre == 'Totaal':
     #-------------------------
     df_total = df_filter[['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop']].sum().reset_index().rename(columns={0:"Antaal","index":"Huur"})
     
-    #-------------------------
-    source_2 = pd.melt(df_filter, id_vars=['Start_bouw'], 
-           value_vars=['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop']) 
+    
     
     #-------------------------
     df_table = df_total.set_index("Huur")
@@ -77,21 +75,25 @@ if genre == 'Totaal':
     #-------------------------
     df_piechart = df_filter
     
+    pie_theta = "Antaal"
+    pie_radius = "Antaal"
+    pie_color = "Huur"
+    
+    #-------------------------
+    df_timeseries = pd.melt(df_filter, id_vars=['Start_bouw'], 
+           value_vars=['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop']) 
+    
     #-------------------------
     df_map = df_filter
     
     #-------------------------
     df_sunburst = df_filter
-    
-    #-------------------------
-    pie_theta = "Antaal"
-    pie_radius = "Antaal"
-    pie_color = "Huur"
+        
     
     
       
 
-    time_serie = alt.Chart(source_2).mark_bar(opacity=0.7
+    time_serie = alt.Chart(df_timeseries).mark_bar(opacity=0.7
     ).encode(
         alt.X('Start_bouw:O', axis=alt.Axis(domain=False, tickSize=0),title="Start bouw"),
         alt.Y('sum(value):Q', stack=stack_filter, title="Antaal"),
@@ -120,6 +122,10 @@ else:
     #-------------------------
     df_piechart = df_segmentation.T.reset_index()[["index",filter_rent]].rename(columns={"index":"Huur"})
     
+    pie_theta = filter_rent
+    pie_radius = filter_rent
+    pie_color = "Huur"
+    
     #-------------------------
     source_2 = pd.melt(df_filter[df_filter[genre]==filter_rent], id_vars=['Start_bouw'], 
                        value_vars=['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'])
@@ -131,11 +137,8 @@ else:
     elif genre == 'Gebied':
         df_map = df_filter[df_filter["Gebied"]==filter_rent]
         df_sunburst = df_filter[df_filter["Gebied"]==filter_rent]
+   
     
-    #-------------------------
-    pie_theta = filter_rent
-    pie_radius = filter_rent
-    pie_color = "Huur"
     
     
     
