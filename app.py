@@ -85,12 +85,6 @@ if genre == 'Totaal':
     pie_radius = "Antaal"
     pie_color = "Huur"
     
-    pie_total = alt.Chart(df_total).encode(
-        theta=alt.Theta("Antaal", stack=True),
-        radius=alt.Radius("Antaal", scale=alt.Scale(type="sqrt", zero=True, rangeMin=5)),
-        color=alt.Color('Huur:N',scale=alt.Scale(scheme='category20b'),legend=alt.Legend(orient="left",title=None)),
-    ).mark_arc(innerRadius=5, stroke="#fff")
-    
     
       
 
@@ -104,7 +98,6 @@ if genre == 'Totaal':
     
     #-------------------------
     row_1_1.dataframe(df_table,use_container_width=True)
-    row_1_2_tab1.altair_chart((pie_total),use_container_width=True)
     row_2_1.altair_chart((time_serie),use_container_width=True)
     
     
@@ -136,20 +129,17 @@ else:
         df_map = df_filter[df_filter["Gebied"]==filter_rent]
         df_sunburst = df_filter[df_filter["Gebied"]==filter_rent]
     
-    
+    #-------------------------
     pie_theta = filter_rent
     pie_radius = filter_rent
     pie_color = "Huur"
     
+    
+    
     #-------------------------
-    pie_chart = alt.Chart(source).encode(
-        theta=alt.Theta(pie_theta, stack=True),
-        radius=alt.Radius(pie_radius, scale=alt.Scale(type="sqrt", zero=True, rangeMin=0)),
-        color=alt.Color(pie_color,scale=alt.Scale(scheme='category20b'),legend=alt.Legend(orient="left",title=None)),
-    ).mark_arc(innerRadius=5, stroke="#fff")
     
 
-    time_serie = alt.Chart(source_2).mark_bar(opacity=0.7
+    chart_timeseries = alt.Chart(source_2).mark_bar(opacity=0.7
         ).encode(
         alt.X('Start_bouw:O', axis=alt.Axis(domain=False, tickSize=0),title="Start bouw"),
         alt.Y('sum(value):Q', stack=stack_filter, title="Antaal"),
@@ -160,8 +150,18 @@ else:
     
     #-------------------------
     row_1_1.dataframe(df_table, use_container_width=True)
-    row_1_2_tab1.altair_chart((pie_chart),use_container_width=True)
-    row_2_1.altair_chart((time_serie),use_container_width=True)
+    
+    row_2_1.altair_chart((chart_timeseries),use_container_width=True)
+    
+
+#-------------------------
+chart_pie = alt.Chart(source).encode(
+    theta=alt.Theta(pie_theta, stack=True),
+    radius=alt.Radius(pie_radius, scale=alt.Scale(type="sqrt", zero=True, rangeMin=0)),
+    color=alt.Color(pie_color,scale=alt.Scale(scheme='category20b'),legend=alt.Legend(orient="left",title=None)),
+).mark_arc(innerRadius=5, stroke="#fff")
+
+row_1_2_tab1.altair_chart((chart_pie),use_container_width=True)
     
     
     
