@@ -89,7 +89,7 @@ if genre == 'Totaal':
     
     #-------------------------
     col2_left.dataframe(df_total.set_index("Huur"),use_container_width=True)
-    col2_right.altair_chart((pie_total),use_container_width=True)
+#     col2_right.altair_chart((pie_total),use_container_width=True)
     tab3_col4.altair_chart((time_serie),use_container_width=True)
     
     #-------------------------
@@ -133,7 +133,7 @@ else:
     
     #-------------------------
     col2_left.dataframe(df_tab,use_container_width=True)
-    col2_right.altair_chart((pie_subareas),use_container_width=True)
+#     col2_right.altair_chart((pie_subareas),use_container_width=True)
     tab3_col4.altair_chart((time_serie),use_container_width=True)
     
     #-------------------------
@@ -271,7 +271,7 @@ fig = px.sunburst(df_sunburst, path=['Start_bouw',"Fase","variable"], values='va
                   labels={"value": "Antaal",}
                  )
 
-tab3_col4.plotly_chart(fig, theme="streamlit", use_container_width=True)
+col2_right.plotly_chart(fig, theme="streamlit", use_container_width=True)
 
 
 
