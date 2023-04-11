@@ -49,7 +49,7 @@ filter_year = expander.slider("Kies jaarreeks", int(df.Start_bouw.min()), int(df
 filter_fase = expander.multiselect('Kies wat voor soort bouwfase',['Investeringsbesluit genomen','In aanbouw genomen','Verkenning','Principebesluit genomen'],
                                    default=['Investeringsbesluit genomen','In aanbouw genomen','Verkenning','Principebesluit genomen'])
 genre = expander.radio("",('Totaal','Stadsdeel', 'Gebied'), horizontal=True, label_visibility="collapsed")
-stack_filter = tab3_col5.selectbox("", ['zero', 'normalize'], label_visibility="collapsed") 
+stack_filter = row_2_1.selectbox("", ['zero', 'normalize'], label_visibility="collapsed") 
 filter_huur = map_left.selectbox('Kies wat voor soort huur',('Dure_huur','Sociale_huur','Middeldure_huur', 'Dure_huur_of_Koop','Koop'))
 filter_map = map_left.selectbox('',('road', 'light_no_labels', 'dark_no_labels'),label_visibility="collapsed")
 
