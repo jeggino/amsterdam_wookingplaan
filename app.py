@@ -38,7 +38,7 @@ row_1_1,row_1_2,row_1_3 = st.columns([3,2,2], gap="large")
 "---"
 row_2_1, row_2_2 = st.columns([3,1], gap="large")
 "---"
-map_left,map_right = st.columns([1,6], gap="large")
+row_3_1,row_3_2 = st.columns([1,6], gap="large")
 
 
 # -------------------------------------------------------
@@ -50,8 +50,8 @@ filter_fase = expander.multiselect('Kies wat voor soort bouwfase',['Investerings
                                    default=['Investeringsbesluit genomen','In aanbouw genomen','Verkenning','Principebesluit genomen'])
 genre = expander.radio("",('Totaal','Stadsdeel', 'Gebied'), horizontal=True, label_visibility="collapsed")
 stack_filter = row_2_2.selectbox("", ['zero', 'normalize'], label_visibility="collapsed") 
-filter_huur = map_left.selectbox('Kies wat voor soort huur',('Dure_huur','Sociale_huur','Middeldure_huur', 'Dure_huur_of_Koop','Koop'))
-filter_map = map_left.selectbox('',('road', 'light_no_labels', 'dark_no_labels'),label_visibility="collapsed")
+filter_huur = row_3_1.selectbox('Kies wat voor soort huur',('Dure_huur','Sociale_huur','Middeldure_huur', 'Dure_huur_of_Koop','Koop'))
+filter_map = row_3_1.selectbox('',('road', 'light_no_labels', 'dark_no_labels'),label_visibility="collapsed")
 
 
 # -------------------------------------------------------    
@@ -256,7 +256,7 @@ r = pdk.Deck(
     initial_view_state=INITIAL_VIEW_STATE,
 )
 
-map_right.pydeck_chart(pydeck_obj=r, use_container_width=True)
+row_3_2.pydeck_chart(pydeck_obj=r, use_container_width=True)
 
     
 #--------------------------------------------------
