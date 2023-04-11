@@ -67,13 +67,11 @@ if genre == 'Totaal':
     #-------------------------
     df_total = df_filter[['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop']].sum().reset_index().rename(columns={0:"Antaal","index":"Huur"})
     
-    
-    
     #-------------------------
     df_table = df_total.set_index("Huur")
     
     #-------------------------
-    df_piechart = df_filter
+    df_piechart = df_total
     
     pie_theta = "Antaal"
     pie_radius = "Antaal"
