@@ -90,17 +90,17 @@ if genre == 'Totaal':
 
 else:
 
-    df_segmentation = df_filter.groupby(genre)['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'].sum()
+    df_else = df_filter.groupby(genre)['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'].sum()
     filter_rent = expander.selectbox('Kies een stadsdeel of gebied', df_segmentation.index)
     
     #-------------------------
-    df_table = df_segmentation.style \
+    df_table = df_else.style \
         .apply(lambda x: ['background-color: red' if x.name == filter_rent else '' for i in x],axis=1) \
         .apply(lambda x: ["color: white" if x.name == filter_rent else '' for i in x],axis=1) \
         .apply(lambda x: ["font-weight: bold" if x.name == filter_rent else '' for i in x],axis=1)
     
     #-------------------------
-    df_piechart = df_segmentation.T.reset_index()[["index",filter_rent]].rename(columns={"index":"Huur"})
+    df_piechart = df_else.T.reset_index()[["index",filter_rent]].rename(columns={"index":"Huur"})
     
     pie_theta = filter_rent
     pie_radius = filter_rent
