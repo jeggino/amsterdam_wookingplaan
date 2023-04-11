@@ -158,7 +158,7 @@ else:
     
     
     #-------------------------
-    row_1_1.dataframe(df_tab,use_container_width=True)
+    row_1_1.dataframe(df_table, use_container_width=True)
     row_1_2_tab1.altair_chart((pie_subareas),use_container_width=True)
     row_2_1.altair_chart((time_serie),use_container_width=True)
     
