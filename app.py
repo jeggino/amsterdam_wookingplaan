@@ -96,7 +96,7 @@ if genre == 'Totaal':
 
     time_serie = alt.Chart(source_2).mark_bar(opacity=0.7
     ).encode(
-        alt.X('Start_bouw:O', axis=alt.Axis( domain=False, tickSize=0)),
+        alt.X('Start_bouw:O', axis=alt.Axis(domain=False, tickSize=0),title="Start bouw"),
         alt.Y('sum(value):Q', stack=stack_filter, title="Antaal"),
         alt.Color('variable:N',scale=alt.Scale(scheme='category20b'),legend=alt.Legend(orient="top",title=None)),
     ).properties(height=550, width=750)
@@ -152,7 +152,7 @@ else:
             axis=alt.Axis(domain=False, tickSize=0)
         ),
         alt.Y('sum(value):Q', stack=stack_filter, title="Antaal"),
-        alt.Color('variable:N',scale=alt.Scale(scheme='category20b'),legend=alt.Legend(orient="top",title=None)),
+        alt.Color('variable:N',scale=alt.Scale(scheme='category20b'),legend=alt.Legend(orient="top",title=None),title="Start bouw"),
         ).properties(height=550, width=750)
     
     
