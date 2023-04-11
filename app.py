@@ -104,7 +104,7 @@ else:
     pie_color = "Huur"
     
     #-------------------------
-    df_timeseries = pd.melt(df_filter[df_filter[genre]==filter_rent], id_vars=['Start_bouw'], 
+    df_timeseries = pd.melt(df_filter[df_filter[filter_genre]==filter_rent], id_vars=['Start_bouw'], 
                        value_vars=['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'])
     
     #-------------------------
