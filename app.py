@@ -35,7 +35,7 @@ df = get_data()
 # -------------------------------------------------------
 expander = st.sidebar
 row_1_1,row_1_2 = st.columns([3,2], gap="large")
-row_1_2_tab1, row_1_2_tab2 = row_1_2.tabs(["Pie", "Sun"])
+row_1_2_tab1, row_1_2_tab2 = row_1_2.tabs(["Pie-chart 🥧", "Sunburst-chart ☀️"])
 "---"
 row_2_1, row_2_2 = st.columns([3,1], gap="large")
 "---"
