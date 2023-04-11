@@ -36,6 +36,8 @@ df = get_data()
 expander = st.sidebar
 row_1_1,row_1_2 = st.columns([3,2], gap="large")
 row_1_2_tab1, row_1_2_tab2 = row_1_2.tabs(["Pie", "Sun"])
+row_1_2_tab2_col1,row_1_2_tab2_col2 = row_1_2_tab2.columns([3,2], gap="large")
+
 "---"
 row_2_1, row_2_2 = st.columns([3,1], gap="large")
 "---"
@@ -90,7 +92,7 @@ if genre == 'Totaal':
     
     #-------------------------
     row_1_1.dataframe(df_total.set_index("Huur"),use_container_width=True)
-    row_1_2_tab1.altair_chart((pie_total),use_container_width=True)
+    row_1_2_tab2_col2.altair_chart((pie_total),use_container_width=True)
     row_2_1.altair_chart((time_serie),use_container_width=True)
     
     #-------------------------
