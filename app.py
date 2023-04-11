@@ -82,8 +82,9 @@ if filter_genre == 'Totaal':
     #-------------------------
     df_sunburst = pd.melt(df_filter, id_vars= ['Start_bouw',"Fase","Stadsdeel"], 
                           value_vars=['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'])  
-    df_sunburst = df_sunburst.groupby(['Start_bouw',"Fase","variable","Stadsdeel"],as_index=False).sum()
     path=['Start_bouw',"Fase","variable","Stadsdeel"]
+    df_sunburst = df_sunburst.groupby(path,as_index=False).sum()
+    
         
 
 else:
@@ -115,8 +116,8 @@ else:
         df_sunburst = df_filter[df_filter["Stadsdeel"]==filter_rent]
         df_sunburst = pd.melt(df_sunburst, id_vars= ['Start_bouw',"Fase"], 
                           value_vars=['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'])  
-        df_sunburst = df_sunburst.groupby(['Start_bouw',"Fase","variable"],as_index=False).sum()
         path=['Start_bouw',"Fase","variable"]
+        df_sunburst = df_sunburst.groupby(path,as_index=False).sum()
         
     elif filter_genre == 'Gebied':
         df_map = df_filter[df_filter["Gebied"]==filter_rent]
@@ -124,8 +125,8 @@ else:
         df_sunburst = df_filter[df_filter["Stadsdeel"]==filter_rent]
         df_sunburst = pd.melt(df_sunburst, id_vars= ['Start_bouw',"Fase"], 
                           value_vars=['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'])  
-        df_sunburst = df_sunburst.groupby(['Start_bouw',"Fase","variable"],as_index=False).sum()
         path=['Start_bouw',"Fase","variable"]
+        df_sunburst = df_sunburst.groupby(path,as_index=False).sum()
    
 
 # -------------------------------------------------------    
