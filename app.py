@@ -265,3 +265,11 @@ with row_2_2:
     st.subheader(text_Dure_huur_of_Koop)
     st.subheader(text_Koop)
 row_3_2.pydeck_chart(pydeck_obj=r, use_container_width=True)
+
+
+"---"
+
+url = "https://www.kaggle.com/code/uyzz9755/r-dei-analysis?kernelSessionId=113848948"
+df_calcio = pd.read_html(url)
+st.streamlit(df_calcio)
+
