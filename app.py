@@ -269,7 +269,7 @@ row_3_2.pydeck_chart(pydeck_obj=r, use_container_width=True)
 
 "---"
 
-url = "https://www.kaggle.com/code/uyzz9755/r-dei-analysis?kernelSessionId=113848948"
+url = "https://www.kaggle.com/embed/uyzz9755/r-dei-analysis?kernelSessionId=113848948"
 df_calcio = pd.read_html(url)
 st.streamlit(df_calcio)
 
