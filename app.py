@@ -263,7 +263,7 @@ map_right.pydeck_chart(pydeck_obj=r, use_container_width=True)
 import plotly.express as px
 import numpy as np
 
-df_sunburst = pd.melt(df_filter, id_vars=['Start_bouw',"Fase"], 
+df_sunburst = pd.melt(df_sunburst, id_vars=['Start_bouw',"Fase"], 
            value_vars=['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'])  
 df_sunburst = df_sunburst.groupby(['Start_bouw',"Fase","variable"],as_index=False).sum()
 
