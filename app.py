@@ -36,7 +36,7 @@ df = get_data()
 expander = st.sidebar
 row_1_1,row_1_2,row_1_3 = st.columns([3,2,2], gap="large")
 "---"
-tab3_col4, tab3_col5 = st.columns([3,1], gap="large")
+row_2_1, row_2_1 = st.columns([3,1], gap="large")
 "---"
 map_left,map_right = st.columns([1,6], gap="large")
 
@@ -90,7 +90,7 @@ if genre == 'Totaal':
     #-------------------------
     row_1_1.dataframe(df_total.set_index("Huur"),use_container_width=True)
     row_1_2.altair_chart((pie_total),use_container_width=True)
-    tab3_col4.altair_chart((time_serie),use_container_width=True)
+    row_2_1.altair_chart((time_serie),use_container_width=True)
     
     #-------------------------
     df_map = df_filter
@@ -134,7 +134,7 @@ else:
     #-------------------------
     row_1_1.dataframe(df_tab,use_container_width=True)
     row_1_2.altair_chart((pie_subareas),use_container_width=True)
-    tab3_col4.altair_chart((time_serie),use_container_width=True)
+    row_2_1.altair_chart((time_serie),use_container_width=True)
     
     #-------------------------
     if genre == 'Stadsdeel':
@@ -181,7 +181,7 @@ Koop huur \n
 Het hoogste jaar was **:green[{dict_metrics['Koop']['Highest']['year']}]** ({dict_metrics['Koop']['Highest']['ammount']}) en het laagste jaar was **:red[{dict_metrics['Koop']['Lowest']['year']}]** ({dict_metrics['Koop']['Lowest']['ammount']})
 """
 
-with tab3_col5:
+with row_2_1:
     st.subheader(text_Sociale_huur)
     st.subheader(text_Middeldure_huur)
     st.subheader(text_Dure_huur)
