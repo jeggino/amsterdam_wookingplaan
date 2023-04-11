@@ -75,6 +75,9 @@ if genre == 'Totaal':
     df_table = df_total.set_index("Huur")
     
     #-------------------------
+    df_piechart = df_filter
+    
+    #-------------------------
     df_map = df_filter
     
     #-------------------------
@@ -115,7 +118,7 @@ else:
         .apply(lambda x: ["font-weight: bold" if x.name == filter_rent else '' for i in x],axis=1)
     
     #-------------------------
-    source = df_segmentation.T.reset_index()[["index",filter_rent]].rename(columns={"index":"Huur"})
+    df_piechart = df_segmentation.T.reset_index()[["index",filter_rent]].rename(columns={"index":"Huur"})
     
     #-------------------------
     source_2 = pd.melt(df_filter[df_filter[genre]==filter_rent], id_vars=['Start_bouw'], 
@@ -155,7 +158,7 @@ else:
     
 
 #-------------------------
-chart_pie = alt.Chart(source).encode(
+chart_pie = alt.Chart(df_piechart).encode(
     theta=alt.Theta(pie_theta, stack=True),
     radius=alt.Radius(pie_radius, scale=alt.Scale(type="sqrt", zero=True, rangeMin=0)),
     color=alt.Color(pie_color,scale=alt.Scale(scheme='category20b'),legend=alt.Legend(orient="left",title=None)),
