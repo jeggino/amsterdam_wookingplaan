@@ -70,7 +70,7 @@ if genre == 'Totaal':
     pie_total = alt.Chart(df_total).encode(
         theta=alt.Theta("Antaal", stack=True),
         radius=alt.Radius("Antaal", scale=alt.Scale(type="sqrt", zero=True, rangeMin=5)),
-        color=alt.Color('Huur:N',scale=alt.Scale(scheme='category20b'),legend=alt.Legend(orient="left",title=None)),
+        color=alt.Color('Huur:N',scale=alt.Scale(scheme='category20b'),legend=alt.Legend(orient="up-left",title=None)),
     ).mark_arc(innerRadius=5, stroke="#fff")
     
     
