@@ -47,7 +47,7 @@ filter_year = expander.slider("Kies jaarreeks", int(df.Start_bouw.min()), int(df
 filter_fase = expander.multiselect('Kies wat voor soort bouwfase',('Investeringsbesluit genomen','In aanbouw genomen','Verkenning','Principebesluit genomen'),
                                    default=('Investeringsbesluit genomen','In aanbouw genomen','Verkenning','Principebesluit genomen'))
 filter_genre = expander.radio("",('Totaal','Stadsdeel', 'Gebied'), horizontal=True, label_visibility="collapsed")
-stack_filter = row_2_2.selectbox("", ('zero', 'normalize'), label_visibility="collapsed") 
+filter_normilize = row_2_2.selectbox("", ('zero', 'normalize'), label_visibility="collapsed") 
 filter_huur = row_3_1.selectbox('Kies wat voor soort huur',('Dure_huur','Sociale_huur','Middeldure_huur', 'Dure_huur_of_Koop','Koop'))
 filter_map = row_3_1.selectbox('',('road', 'light_no_labels', 'dark_no_labels'),label_visibility="collapsed")
 
@@ -130,7 +130,7 @@ row_1_2_tab1.altair_chart((chart_pie),use_container_width=True)
 chart_timeseries = alt.Chart(df_timeseries).mark_bar(opacity=0.7
     ).encode(
     alt.X('Start_bouw:O', axis=alt.Axis(domain=False, tickSize=0),title="Start bouw"),
-    alt.Y('sum(value):Q', stack=stack_filter, title="Antaal"),
+    alt.Y('sum(value):Q', stack=filter_normilize, title="Antaal"),
     alt.Color('variable:N',scale=alt.Scale(scheme='category20b'),legend=alt.Legend(orient="top",title=None)),
     ).properties(height=550, width=750)
 
