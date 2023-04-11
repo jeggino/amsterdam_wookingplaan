@@ -82,7 +82,10 @@ if filter_genre == 'Totaal':
     df_map = df_filter
     
     #-------------------------
-    df_sunburst = df_filter
+    df_sunburst = pd.melt(df_filter, id_vars= ['Start_bouw',"Fase"], 
+                          value_vars=['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'])  
+    df_sunburst = df_sunburst.groupby(['Start_bouw',"Fase","variable"],as_index=False).sum()
+    path=['Start_bouw',"Fase","variable"]
         
 
 else:
@@ -110,10 +113,21 @@ else:
     #-------------------------
     if filter_genre == 'Stadsdeel':
         df_map = df_filter[df_filter["Stadsdeel"]==filter_rent]
+        
         df_sunburst = df_filter[df_filter["Stadsdeel"]==filter_rent]
+        df_sunburst = pd.melt(df_sunburst, id_vars= ['Start_bouw',"Fase",filter_genre], 
+                          value_vars=['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'])  
+        df_sunburst = df_sunburst.groupby(['Start_bouw',"Fase","variable"],as_index=False).sum()
+        path=['Start_bouw',"Fase",filter_genre,"variable"]
+        
     elif filter_genre == 'Gebied':
         df_map = df_filter[df_filter["Gebied"]==filter_rent]
-        df_sunburst = df_filter[df_filter["Gebied"]==filter_rent]
+        
+        df_sunburst = df_filter[df_filter["Stadsdeel"]==filter_rent]
+        df_sunburst = pd.melt(df_sunburst, id_vars= ['Start_bouw',"Fase",filter_genre], 
+                          value_vars=['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'])  
+        df_sunburst = df_sunburst.groupby(['Start_bouw',"Fase","variable"],as_index=False).sum()
+        path=['Start_bouw',"Fase",filter_genre,"variable"]
    
 
 #-------------------------
@@ -256,15 +270,11 @@ row_3_2.pydeck_chart(pydeck_obj=r, use_container_width=True)
 
     
 #--------------------------------------------------
-df_sunburst = pd.melt(df_sunburst, id_vars=['Start_bouw',"Fase"], 
-           value_vars=['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'])  
-df_sunburst = df_sunburst.groupby(['Start_bouw',"Fase","variable"],as_index=False).sum()
-
-fig = px.sunburst(df_sunburst, path=['Start_bouw',"Fase","variable"], values='value',
-                  labels={"value": "Antaal",}
+chart_sunburst = px.sunburst(df_sunburst, path=path, values='value',
+                  labels={"value": "Antaal"}
                  )
 
-row_1_2_tab2.plotly_chart(fig, theme="streamlit", use_container_width=True)
+row_1_2_tab2.plotly_chart(chart_sunburst, theme="streamlit", use_container_width=True)
 
 
 
