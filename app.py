@@ -257,11 +257,17 @@ map_right.pydeck_chart(pydeck_obj=r, use_container_width=True)
 #--------------------------------------------------
 import plotly.express as px
 import numpy as np
-df = px.data.gapminder().query("year == 2007")
-fig = px.sunburst(df, path=['continent', 'country'], values='pop',
-                  color='lifeExp', hover_data=['iso_alpha'],
-                  color_continuous_scale='RdBu',
-                  color_continuous_midpoint=np.average(df['lifeExp'], weights=df['pop']))
+
+df_sunburst = pd.melt(df_filter, id_vars=['Start_bouw',"Fase"], 
+           value_vars=['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'])  
+df_sunburst = df_sunburst.groupby(['Start_bouw',"Fase","variable"],as_index=False).sum()
+
+fig = px.sunburst(df_sunburst, path=['Start_bouw',"Fase","variable"], values='value',
+                  hover_data=['Start_bouw',"Fase","variable"],
+                  labels={
+                      "value": "Antaal",
+                 },
+                 )
 st.plotly_chart(fig, use_container_width=False, sharing="streamlit", theme="streamlit")
 
 
