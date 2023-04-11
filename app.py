@@ -93,7 +93,7 @@ if genre == 'Totaal':
     
       
 
-    time_serie = alt.Chart(df_timeseries).mark_bar(opacity=0.7
+    chart_timeseries = alt.Chart(df_timeseries).mark_bar(opacity=0.7
     ).encode(
         alt.X('Start_bouw:O', axis=alt.Axis(domain=False, tickSize=0),title="Start bouw"),
         alt.Y('sum(value):Q', stack=stack_filter, title="Antaal"),
@@ -103,7 +103,7 @@ if genre == 'Totaal':
     
     #-------------------------
     row_1_1.dataframe(df_table,use_container_width=True)
-    row_2_1.altair_chart((time_serie),use_container_width=True)
+    row_2_1.altair_chart((chart_timeseries),use_container_width=True)
     
     
 
@@ -127,7 +127,7 @@ else:
     pie_color = "Huur"
     
     #-------------------------
-    source_2 = pd.melt(df_filter[df_filter[genre]==filter_rent], id_vars=['Start_bouw'], 
+    df_timeseries = pd.melt(df_filter[df_filter[genre]==filter_rent], id_vars=['Start_bouw'], 
                        value_vars=['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'])
     
     #-------------------------
@@ -145,7 +145,7 @@ else:
     #-------------------------
     
 
-    chart_timeseries = alt.Chart(source_2).mark_bar(opacity=0.7
+    chart_timeseries = alt.Chart(df_timeseries).mark_bar(opacity=0.7
         ).encode(
         alt.X('Start_bouw:O', axis=alt.Axis(domain=False, tickSize=0),title="Start bouw"),
         alt.Y('sum(value):Q', stack=stack_filter, title="Antaal"),
