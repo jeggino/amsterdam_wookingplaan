@@ -70,7 +70,7 @@ if genre == 'Totaal':
     pie_total = alt.Chart(df_total).encode(
         theta=alt.Theta("Antaal", stack=True),
         radius=alt.Radius("Antaal", scale=alt.Scale(type="sqrt", zero=True, rangeMin=5)),
-        color=alt.Color('Huur:N',scale=alt.Scale(scheme='category20b')),
+        color=alt.Color('Huur:N',scale=alt.Scale(scheme='category20b'),legend=alt.Legend(orient="top",title=None)),
     ).mark_arc(innerRadius=5, stroke="#fff")
     
     
@@ -84,7 +84,7 @@ if genre == 'Totaal':
         axis=alt.Axis( domain=False, tickSize=0)
     ),
     alt.Y('sum(value):Q', stack=stack_filter, title="Antaal"),
-    alt.Color('variable:N',scale=alt.Scale(scheme='category20b')),
+    alt.Color('variable:N',scale=alt.Scale(scheme='category20b'),legend=alt.Legend(orient="top",title=None)),
     ).properties(height=550, width=750)
     
     
@@ -110,7 +110,7 @@ else:
     pie_subareas = alt.Chart(source).encode(
         theta=alt.Theta(filter_rent, stack=True),
         radius=alt.Radius(filter_rent, scale=alt.Scale(type="sqrt", zero=True, rangeMin=0)),
-        color=alt.Color('Huur:N',scale=alt.Scale(scheme='category20b')),
+        color=alt.Color('Huur:N',scale=alt.Scale(scheme='category20b'),legend=alt.Legend(orient="top",title=None)),
     ).mark_arc(innerRadius=5, stroke="#fff")
     
     #-------------------------
@@ -123,7 +123,7 @@ else:
             axis=alt.Axis(domain=False, tickSize=0)
         ),
         alt.Y('sum(value):Q', stack=stack_filter, title="Antaal"),
-        alt.Color('variable:N',scale=alt.Scale(scheme='category20b')),
+        alt.Color('variable:N',scale=alt.Scale(scheme='category20b'),legend=alt.Legend(orient="top",title=None)),
         ).properties(height=550, width=750)
     
     #-------------------------
