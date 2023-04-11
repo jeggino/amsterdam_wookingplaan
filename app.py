@@ -40,6 +40,7 @@ tab3_col4, tab3_col5 = st.columns([3,1], gap="large")
 "---"
 map_left,map_right = st.columns([1,6], gap="large")
 
+
 # -------------------------------------------------------
 filter_year = expander.slider("Kies jaarreeks", int(df.Start_bouw.min()), int(df.Start_bouw.max()), 
                     value=(int(df.Start_bouw.min()),
@@ -53,8 +54,6 @@ filter_huur = map_left.selectbox('Kies wat voor soort huur',('Dure_huur','Social
 filter_map = map_left.selectbox('',('road', 'light_no_labels', 'dark_no_labels'),label_visibility="collapsed")
 
 
-
-
 # -------------------------------------------------------    
 choices_StartBouw = (df.Start_bouw>=filter_year[0]) & (df.Start_bouw<=filter_year[1])
 choices_fase = (df.Fase.isin(filter_fase))
@@ -64,7 +63,6 @@ df_filter = df[choices_StartBouw & choices_fase]
    
 if genre == 'Totaal':
 
-    
     #-------------------------
     df_total = df_filter[['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop']].sum().reset_index().rename(columns={0:"Antaal","index":"Huur"})
     
@@ -102,9 +100,9 @@ else:
 
     df_segmentation = df_filter.groupby(genre)['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'].sum()
     filter_rent = expander.selectbox('Kies een stadsdeel of gebied', df_segmentation.index)
-
     source = df_segmentation.T.reset_index()[["index",filter_rent]].rename(columns={"index":"Huur"})
-
+    
+    #-------------------------
     pie_subareas = alt.Chart(source).encode(
         theta=alt.Theta(filter_rent, stack=True),
         radius=alt.Radius(filter_rent, scale=alt.Scale(type="sqrt", zero=True, rangeMin=0)),
