@@ -268,7 +268,7 @@ fig = px.sunburst(df_sunburst, path=['Start_bouw',"Fase","variable"], values='va
                       "value": "Antaal",
                  },
                  )
-st.plotly_chart(fig, use_container_width=False, sharing="streamlit", theme="streamlit")
+st.plotly_chart(fig, use_container_width=False, sharing="streamlit", theme="streamlit", use_container_width=True)
 
 
 
