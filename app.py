@@ -91,7 +91,7 @@ if genre == 'Totaal':
 else:
 
     df_else = df_filter.groupby(genre)['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'].sum()
-    filter_rent = expander.selectbox('Kies een stadsdeel of gebied', df_segmentation.index)
+    filter_rent = expander.selectbox('Kies een stadsdeel of gebied', df_else.index)
     
     #-------------------------
     df_table = df_else.style \
