@@ -13,7 +13,6 @@ st.set_page_config(
     page_title="Amterdam woon[plaan",
     page_icon="🏠",
     layout="wide",
-    
 )
 
 
@@ -55,7 +54,6 @@ filter_map = row_3_1.selectbox('',('road', 'light_no_labels', 'dark_no_labels'),
 # -------------------------------------------------------    
 choices_StartBouw = (df.Start_bouw>=filter_year[0]) & (df.Start_bouw<=filter_year[1])
 choices_fase = (df.Fase.isin(filter_fase))
-
 df_filter = df[choices_StartBouw & choices_fase]
         
    
@@ -82,10 +80,10 @@ if filter_genre == 'Totaal':
     df_map = df_filter
     
     #-------------------------
-    df_sunburst = pd.melt(df_filter, id_vars= ['Start_bouw',"Fase",], 
+    df_sunburst = pd.melt(df_filter, id_vars= ['Start_bouw',"Fase","Stadsdeel"], 
                           value_vars=['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'])  
-    df_sunburst = df_sunburst.groupby(['Start_bouw',"Fase","variable"],as_index=False).sum()
-    path=['Start_bouw',"Fase","variable"]
+    df_sunburst = df_sunburst.groupby(['Start_bouw',"Fase",,"Stadsdeel","variable"],as_index=False).sum()
+    path=['Start_bouw',"Fase","variable","Stadsdeel"]
         
 
 else:
@@ -130,7 +128,7 @@ else:
         path=['Start_bouw',"Fase","variable"]
    
 
-#-------------------------
+# -------------------------------------------------------    
 chart_pie = alt.Chart(df_piechart).encode(
     theta=alt.Theta(pie_theta, stack=True),
     radius=alt.Radius(pie_radius, scale=alt.Scale(type="sqrt", zero=True, rangeMin=0)),
@@ -140,7 +138,7 @@ chart_pie = alt.Chart(df_piechart).encode(
 row_1_2_tab1.altair_chart((chart_pie),use_container_width=True)
 
 
-#-------------------------
+# -------------------------------------------------------    
 chart_timeseries = alt.Chart(df_timeseries).mark_bar(opacity=0.7
     ).encode(
     alt.X('Start_bouw:O', axis=alt.Axis(domain=False, tickSize=0),title="Start bouw"),
@@ -151,7 +149,7 @@ chart_timeseries = alt.Chart(df_timeseries).mark_bar(opacity=0.7
 row_2_1.altair_chart((chart_timeseries),use_container_width=True)
 
 
-#-------------------------
+# -------------------------------------------------------    
 row_1_1.dataframe(df_table,use_container_width=True)
 
     
