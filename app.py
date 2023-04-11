@@ -94,6 +94,9 @@ if genre == 'Totaal':
     
     #-------------------------
     df_map = df_filter
+    
+    #-------------------------
+    df_sunburst = df_filter
 
 
 else:
@@ -136,8 +139,10 @@ else:
     #-------------------------
     if genre == 'Stadsdeel':
         df_map = df_filter[df_filter["Stadsdeel"]==filter_rent]
+        df_sunburst = df_filter[df_filter["Stadsdeel"]==filter_rent]
     elif genre == 'Gebied':
         df_map = df_filter[df_filter["Gebied"]==filter_rent]
+        df_sunburst = df_filter[df_filter["Gebied"]==filter_rent]
     
     
 #-------------------------
