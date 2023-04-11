@@ -67,6 +67,21 @@ if genre == 'Totaal':
     #-------------------------
     df_total = df_filter[['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop']].sum().reset_index().rename(columns={0:"Antaal","index":"Huur"})
     
+    #-------------------------
+    source_2 = pd.melt(df_filter, id_vars=['Start_bouw'], 
+           value_vars=['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop']) 
+    
+    #-------------------------
+    df_table = df_total.set_index("Huur")
+    
+    
+    #-------------------------
+    df_map = df_filter
+    
+    #-------------------------
+    df_sunburst = df_filter
+    
+    
     pie_total = alt.Chart(df_total).encode(
         theta=alt.Theta("Antaal", stack=True),
         radius=alt.Radius("Antaal", scale=alt.Scale(type="sqrt", zero=True, rangeMin=5)),
@@ -74,30 +89,22 @@ if genre == 'Totaal':
     ).mark_arc(innerRadius=5, stroke="#fff")
     
     
-    #-------------------------
-    source_2 = pd.melt(df_filter, id_vars=['Start_bouw'], 
-           value_vars=['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'])   
+      
 
     time_serie = alt.Chart(source_2).mark_bar(opacity=0.7
     ).encode(
-    alt.X('Start_bouw:O',
-        axis=alt.Axis( domain=False, tickSize=0)
-    ),
-    alt.Y('sum(value):Q', stack=stack_filter, title="Antaal"),
-    alt.Color('variable:N',scale=alt.Scale(scheme='category20b'),legend=alt.Legend(orient="top",title=None)),
+        alt.X('Start_bouw:O', axis=alt.Axis( domain=False, tickSize=0)),
+        alt.Y('sum(value):Q', stack=stack_filter, title="Antaal"),
+        alt.Color('variable:N',scale=alt.Scale(scheme='category20b'),legend=alt.Legend(orient="top",title=None)),
     ).properties(height=550, width=750)
     
     
     #-------------------------
-    row_1_1.dataframe(df_total.set_index("Huur"),use_container_width=True)
+    row_1_1.dataframe(df_table,use_container_width=True)
     row_1_2_tab1.altair_chart((pie_total),use_container_width=True)
     row_2_1.altair_chart((time_serie),use_container_width=True)
     
-    #-------------------------
-    df_map = df_filter
     
-    #-------------------------
-    df_sunburst = df_filter
 
 
 else:
