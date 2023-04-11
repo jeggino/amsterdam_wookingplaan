@@ -29,7 +29,7 @@ df = get_data()
 
 
 # -------------------------------------------------------
-expander = st.sidebar
+sidebar = st.sidebar
 row_1_1,row_1_2 = st.columns([3,2], gap="large")
 row_1_2_tab1, row_1_2_tab2 = row_1_2.tabs(["Pie-chart 🥧", "Sunburst-chart ☀️"])
 "---"
@@ -39,13 +39,13 @@ row_3_1,row_3_2 = st.columns([1,6], gap="large")
 
 
 # -------------------------------------------------------
-filter_year = expander.slider("Kies jaarreeks", int(df.Start_bouw.min()), int(df.Start_bouw.max()), 
+filter_year = sidebar.slider("Kies jaarreeks", int(df.Start_bouw.min()), int(df.Start_bouw.max()), 
                     value=(int(df.Start_bouw.min()),
                            int(df.Start_bouw.max()))
                    )
-filter_fase = expander.multiselect('Kies wat voor soort bouwfase',('Investeringsbesluit genomen','In aanbouw genomen','Verkenning','Principebesluit genomen'),
+filter_fase = sidebar.multiselect('Kies wat voor soort bouwfase',('Investeringsbesluit genomen','In aanbouw genomen','Verkenning','Principebesluit genomen'),
                                    default=('Investeringsbesluit genomen','In aanbouw genomen','Verkenning','Principebesluit genomen'))
-filter_genre = expander.radio("",('Totaal','Stadsdeel', 'Gebied'), horizontal=True, label_visibility="collapsed")
+filter_genre = sidebar.radio("",('Totaal','Stadsdeel', 'Gebied'), horizontal=True, label_visibility="collapsed")
 filter_normilize = row_2_2.selectbox("", ('zero', 'normalize'), label_visibility="collapsed") 
 filter_huur = row_3_1.selectbox('Kies wat voor soort huur',('Dure_huur','Sociale_huur','Middeldure_huur', 'Dure_huur_of_Koop','Koop'))
 filter_map = row_3_1.selectbox('',('road', 'light_no_labels', 'dark_no_labels'),label_visibility="collapsed")
@@ -93,7 +93,7 @@ if filter_genre == 'Totaal':
 else:
 
     df_else = df_filter.groupby(filter_genre)['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'].sum()
-    filter_rent = expander.selectbox('Kies een stadsdeel of gebied', df_else.index)
+    filter_rent = sidebar.selectbox('Kies een stadsdeel of gebied', df_else.index)
     
     #-------------------------
     df_table = df_else.style \
@@ -265,11 +265,3 @@ with row_2_2:
     st.subheader(text_Dure_huur_of_Koop)
     st.subheader(text_Koop)
 row_3_2.pydeck_chart(pydeck_obj=r, use_container_width=True)
-
-
-
-
-
-
-
-
