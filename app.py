@@ -84,7 +84,7 @@ if genre == 'Totaal':
         axis=alt.Axis( domain=False, tickSize=0)
     ),
     alt.Y('sum(value):Q', stack=stack_filter, title="Antaal"),
-    alt.Color('variable:N',scale=alt.Scale(scheme='category20b'),legend=None),
+    alt.Color('variable:N',scale=alt.Scale(scheme='category20b')),
     ).properties(height=550, width=750)
     
     
@@ -123,7 +123,7 @@ else:
             axis=alt.Axis(domain=False, tickSize=0)
         ),
         alt.Y('sum(value):Q', stack=stack_filter, title="Antaal"),
-        alt.Color('variable:N',scale=alt.Scale(scheme='category20b'),legend=None),
+        alt.Color('variable:N',scale=alt.Scale(scheme='category20b')),
         ).properties(height=550, width=750)
     
     #-------------------------
