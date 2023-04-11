@@ -1,20 +1,17 @@
 import streamlit as st
-
 import pandas as pd
 import geopandas as gpd
-
 import datetime
 from datetime import date,datetime
-
 import altair as alt
-
+import plotly.express as px
 import pydeck as pdk
 
 
 # -------------------------------------------------------
 st.set_page_config(
     page_title="Amterdam woon[plaan",
-    page_icon="👷",
+    page_icon="🏠",
     layout="wide",
     
 )
@@ -47,10 +44,10 @@ filter_year = expander.slider("Kies jaarreeks", int(df.Start_bouw.min()), int(df
                     value=(int(df.Start_bouw.min()),
                            int(df.Start_bouw.max()))
                    )
-filter_fase = expander.multiselect('Kies wat voor soort bouwfase',['Investeringsbesluit genomen','In aanbouw genomen','Verkenning','Principebesluit genomen'],
-                                   default=['Investeringsbesluit genomen','In aanbouw genomen','Verkenning','Principebesluit genomen'])
-genre = expander.radio("",('Totaal','Stadsdeel', 'Gebied'), horizontal=True, label_visibility="collapsed")
-stack_filter = row_2_2.selectbox("", ['zero', 'normalize'], label_visibility="collapsed") 
+filter_fase = expander.multiselect('Kies wat voor soort bouwfase',('Investeringsbesluit genomen','In aanbouw genomen','Verkenning','Principebesluit genomen'),
+                                   default=('Investeringsbesluit genomen','In aanbouw genomen','Verkenning','Principebesluit genomen'))
+filter_genre = expander.radio("",('Totaal','Stadsdeel', 'Gebied'), horizontal=True, label_visibility="collapsed")
+stack_filter = row_2_2.selectbox("", ('zero', 'normalize'), label_visibility="collapsed") 
 filter_huur = row_3_1.selectbox('Kies wat voor soort huur',('Dure_huur','Sociale_huur','Middeldure_huur', 'Dure_huur_of_Koop','Koop'))
 filter_map = row_3_1.selectbox('',('road', 'light_no_labels', 'dark_no_labels'),label_visibility="collapsed")
 
@@ -62,7 +59,7 @@ choices_fase = (df.Fase.isin(filter_fase))
 df_filter = df[choices_StartBouw & choices_fase]
         
    
-if genre == 'Totaal':
+if filter_genre == 'Totaal':
 
     #-------------------------
     df_total = df_filter[['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop']].sum().reset_index().rename(columns={0:"Antaal","index":"Huur"})
@@ -90,7 +87,7 @@ if genre == 'Totaal':
 
 else:
 
-    df_else = df_filter.groupby(genre)['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'].sum()
+    df_else = df_filter.groupby(filter_genre)['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'].sum()
     filter_rent = expander.selectbox('Kies een stadsdeel of gebied', df_else.index)
     
     #-------------------------
@@ -111,10 +108,10 @@ else:
                        value_vars=['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'])
     
     #-------------------------
-    if genre == 'Stadsdeel':
+    if filter_genre == 'Stadsdeel':
         df_map = df_filter[df_filter["Stadsdeel"]==filter_rent]
         df_sunburst = df_filter[df_filter["Stadsdeel"]==filter_rent]
-    elif genre == 'Gebied':
+    elif filter_genre == 'Gebied':
         df_map = df_filter[df_filter["Gebied"]==filter_rent]
         df_sunburst = df_filter[df_filter["Gebied"]==filter_rent]
    
@@ -259,9 +256,6 @@ row_3_2.pydeck_chart(pydeck_obj=r, use_container_width=True)
 
     
 #--------------------------------------------------
-import plotly.express as px
-import numpy as np
-
 df_sunburst = pd.melt(df_sunburst, id_vars=['Start_bouw',"Fase"], 
            value_vars=['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'])  
 df_sunburst = df_sunburst.groupby(['Start_bouw',"Fase","variable"],as_index=False).sum()
