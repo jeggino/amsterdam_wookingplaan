@@ -137,12 +137,15 @@ else:
         df_sunburst = df_filter[df_filter["Gebied"]==filter_rent]
     
     
+    pie_theta = filter_rent
+    pie_radius = filter_rent
+    pie_color = "Huur"
     
     #-------------------------
-    pie_subareas = alt.Chart(source).encode(
-        theta=alt.Theta(filter_rent, stack=True),
-        radius=alt.Radius(filter_rent, scale=alt.Scale(type="sqrt", zero=True, rangeMin=0)),
-        color=alt.Color('Huur:N',scale=alt.Scale(scheme='category20b'),legend=alt.Legend(orient="left",title=None)),
+    pie_chart = alt.Chart(source).encode(
+        theta=alt.Theta(pie_theta, stack=True),
+        radius=alt.Radius(pie_radius, scale=alt.Scale(type="sqrt", zero=True, rangeMin=0)),
+        color=alt.Color(pie_color,scale=alt.Scale(scheme='category20b'),legend=alt.Legend(orient="left",title=None)),
     ).mark_arc(innerRadius=5, stroke="#fff")
     
 
@@ -157,7 +160,7 @@ else:
     
     #-------------------------
     row_1_1.dataframe(df_table, use_container_width=True)
-    row_1_2_tab1.altair_chart((pie_subareas),use_container_width=True)
+    row_1_2_tab1.altair_chart((pie_chart),use_container_width=True)
     row_2_1.altair_chart((time_serie),use_container_width=True)
     
     
