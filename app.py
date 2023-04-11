@@ -82,7 +82,7 @@ if filter_genre == 'Totaal':
     #-------------------------
     df_sunburst = pd.melt(df_filter, id_vars= ['Start_bouw',"Fase","Stadsdeel"], 
                           value_vars=['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'])  
-    df_sunburst = df_sunburst.groupby(['Start_bouw',"Fase",,"Stadsdeel","variable"],as_index=False).sum()
+    df_sunburst = df_sunburst.groupby(['Start_bouw',"Fase","variable","Stadsdeel"],as_index=False).sum()
     path=['Start_bouw',"Fase","variable","Stadsdeel"]
         
 
