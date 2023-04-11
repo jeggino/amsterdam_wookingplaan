@@ -74,13 +74,16 @@ if genre == 'Totaal':
     #-------------------------
     df_table = df_total.set_index("Huur")
     
-    
     #-------------------------
     df_map = df_filter
     
     #-------------------------
     df_sunburst = df_filter
     
+    #-------------------------
+    pie_theta = "Antaal"
+    pie_radius = "Antaal"
+    pie_color = "Huur"
     
     pie_total = alt.Chart(df_total).encode(
         theta=alt.Theta("Antaal", stack=True),
@@ -111,7 +114,29 @@ else:
 
     df_segmentation = df_filter.groupby(genre)['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'].sum()
     filter_rent = expander.selectbox('Kies een stadsdeel of gebied', df_segmentation.index)
+    
+    #-------------------------
+    df_table = df_segmentation.style \
+        .apply(lambda x: ['background-color: red' if x.name == filter_rent else '' for i in x],axis=1) \
+        .apply(lambda x: ["color: white" if x.name == filter_rent else '' for i in x],axis=1) \
+        .apply(lambda x: ["font-weight: bold" if x.name == filter_rent else '' for i in x],axis=1)
+    
+    #-------------------------
     source = df_segmentation.T.reset_index()[["index",filter_rent]].rename(columns={"index":"Huur"})
+    
+    #-------------------------
+    source_2 = pd.melt(df_filter[df_filter[genre]==filter_rent], id_vars=['Start_bouw'], 
+                       value_vars=['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'])
+    
+    #-------------------------
+    if genre == 'Stadsdeel':
+        df_map = df_filter[df_filter["Stadsdeel"]==filter_rent]
+        df_sunburst = df_filter[df_filter["Stadsdeel"]==filter_rent]
+    elif genre == 'Gebied':
+        df_map = df_filter[df_filter["Gebied"]==filter_rent]
+        df_sunburst = df_filter[df_filter["Gebied"]==filter_rent]
+    
+    
     
     #-------------------------
     pie_subareas = alt.Chart(source).encode(
@@ -120,9 +145,6 @@ else:
         color=alt.Color('Huur:N',scale=alt.Scale(scheme='category20b'),legend=alt.Legend(orient="left",title=None)),
     ).mark_arc(innerRadius=5, stroke="#fff")
     
-    #-------------------------
-    source_2 = pd.melt(df_filter[df_filter[genre]==filter_rent], id_vars=['Start_bouw'], 
-                       value_vars=['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'])   
 
     time_serie = alt.Chart(source_2).mark_bar(opacity=0.7
         ).encode(
@@ -133,24 +155,14 @@ else:
         alt.Color('variable:N',scale=alt.Scale(scheme='category20b'),legend=alt.Legend(orient="top",title=None)),
         ).properties(height=550, width=750)
     
-    #-------------------------
-    df_tab = df_segmentation.style \
-        .apply(lambda x: ['background-color: red' if x.name == filter_rent else '' for i in x],axis=1) \
-        .apply(lambda x: ["color: white" if x.name == filter_rent else '' for i in x],axis=1) \
-        .apply(lambda x: ["font-weight: bold" if x.name == filter_rent else '' for i in x],axis=1)
+    
     
     #-------------------------
     row_1_1.dataframe(df_tab,use_container_width=True)
     row_1_2_tab1.altair_chart((pie_subareas),use_container_width=True)
     row_2_1.altair_chart((time_serie),use_container_width=True)
     
-    #-------------------------
-    if genre == 'Stadsdeel':
-        df_map = df_filter[df_filter["Stadsdeel"]==filter_rent]
-        df_sunburst = df_filter[df_filter["Stadsdeel"]==filter_rent]
-    elif genre == 'Gebied':
-        df_map = df_filter[df_filter["Gebied"]==filter_rent]
-        df_sunburst = df_filter[df_filter["Gebied"]==filter_rent]
+    
     
     
 #-------------------------
