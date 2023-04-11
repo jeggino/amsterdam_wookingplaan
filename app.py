@@ -34,7 +34,7 @@ df = get_data()
 
 # -------------------------------------------------------
 expander = st.sidebar
-col2_left,col2_right = st.columns([3,2], gap="large")
+row_1_1,row_1_2,row_1_3 = st.columns([3,2,2], gap="large")
 "---"
 tab3_col4, tab3_col5 = st.columns([3,1], gap="large")
 "---"
@@ -88,8 +88,8 @@ if genre == 'Totaal':
     
     
     #-------------------------
-    col2_left.dataframe(df_total.set_index("Huur"),use_container_width=True)
-#     col2_right.altair_chart((pie_total),use_container_width=True)
+    row_1_1.dataframe(df_total.set_index("Huur"),use_container_width=True)
+    row_1_2.altair_chart((pie_total),use_container_width=True)
     tab3_col4.altair_chart((time_serie),use_container_width=True)
     
     #-------------------------
@@ -132,8 +132,8 @@ else:
         .apply(lambda x: ["font-weight: bold" if x.name == filter_rent else '' for i in x],axis=1)
     
     #-------------------------
-    col2_left.dataframe(df_tab,use_container_width=True)
-#     col2_right.altair_chart((pie_subareas),use_container_width=True)
+    row_1_1.dataframe(df_tab,use_container_width=True)
+    row_1_2.altair_chart((pie_subareas),use_container_width=True)
     tab3_col4.altair_chart((time_serie),use_container_width=True)
     
     #-------------------------
@@ -271,7 +271,7 @@ fig = px.sunburst(df_sunburst, path=['Start_bouw',"Fase","variable"], values='va
                   labels={"value": "Antaal",}
                  )
 
-col2_right.plotly_chart(fig, theme="streamlit", use_container_width=True)
+row_1_3.plotly_chart(fig, theme="streamlit", use_container_width=True)
 
 
 
