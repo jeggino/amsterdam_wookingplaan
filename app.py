@@ -87,14 +87,6 @@ if genre == 'Totaal':
     #-------------------------
     df_sunburst = df_filter
         
-    
-    
-    
-    #-------------------------
-    row_1_1.dataframe(df_table,use_container_width=True)
-    
-    
-
 
 else:
 
@@ -126,11 +118,6 @@ else:
         df_map = df_filter[df_filter["Gebied"]==filter_rent]
         df_sunburst = df_filter[df_filter["Gebied"]==filter_rent]
    
-    
-    
-    #-------------------------
-    row_1_1.dataframe(df_table, use_container_width=True)
-    
 
 #-------------------------
 chart_pie = alt.Chart(df_piechart).encode(
@@ -152,9 +139,10 @@ chart_timeseries = alt.Chart(df_timeseries).mark_bar(opacity=0.7
 
 row_2_1.altair_chart((chart_timeseries),use_container_width=True)
 
-    
-    
-    
+
+#-------------------------
+row_1_1.dataframe(df_table,use_container_width=True)
+
     
 #-------------------------
 df_metrics = df_map.groupby("Start_bouw")['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'].sum()
