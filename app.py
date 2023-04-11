@@ -241,13 +241,13 @@ polygon_layer = pdk.Layer(
 if filter_huur == 'Sociale_huur':
     tooltip = {"text": "Projectnaam: {Projectnaam} \n Start bouw: {Start_bouw} \n Antaal: {Sociale_huur}"}
 elif filter_huur == 'Dure_huur':
-    tooltip = {"text": "Antaal: {Dure_huur}"}
+    tooltip = {"text": "Projectnaam: {Projectnaam} \n Start bouw: {Start_bouw} \n Antaal: {Sociale_huur}"}
 elif filter_huur == 'Middeldure_huur':
-    tooltip = {"text": "Antaal: {Middeldure_huur}"}
+    tooltip = {"text": "Projectnaam: {Projectnaam} \n Start bouw: {Start_bouw} \n Antaal: {Sociale_huur}"}
 elif filter_huur == 'Dure_huur_of_Koop':
-    tooltip = {"text": "Antaal: {Dure_huur_of_Koop}"}
+    tooltip = {"text": "Projectnaam: {Projectnaam} \n Start bouw: {Start_bouw} \n Antaal: {Sociale_huur}"}
 elif filter_huur == 'Koop':
-    tooltip = {"text": "Antaal: {Koop}"}
+    tooltip = {"text": "Projectnaam: {Projectnaam} \n Start bouw: {Start_bouw} \n Antaal: {Sociale_huur}"}
 
 
 r = pdk.Deck(
