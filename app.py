@@ -263,12 +263,10 @@ df_sunburst = pd.melt(df_filter, id_vars=['Start_bouw',"Fase"],
 df_sunburst = df_sunburst.groupby(['Start_bouw',"Fase","variable"],as_index=False).sum()
 
 fig = px.sunburst(df_sunburst, path=['Start_bouw',"Fase","variable"], values='value',
-                  hover_data=['Start_bouw',"Fase","variable"],
-                  labels={
-                      "value": "Antaal",
-                 },
+                  labels={"value": "Antaal",}
                  )
-st.plotly_chart(fig, sharing="streamlit", theme="streamlit", use_container_width=True)
+
+st.plotly_chart(fig, theme="streamlit", use_container_width=True)
 
 
 
