@@ -90,7 +90,7 @@ if filter_genre == 'Totaal':
 
 else:
 
-    df_else = df_filter.groupby(filter_genre)['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'].sum()
+    df_else = df_filter.groupby(filter_genre)[['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop']].sum()
     filter_rent = sidebar.selectbox('Kies een stadsdeel of gebied', df_else.index)
     
     #-------------------------
@@ -111,7 +111,7 @@ else:
                        value_vars=['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'])
     
     #-------------------------
-    df_metrics = df_filter[df_filter[filter_genre]==filter_rent].groupby("Start_bouw")['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'].sum()
+    df_metrics = df_filter[df_filter[filter_genre]==filter_rent].groupby("Start_bouw")[['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop']].sum()
     
     #-------------------------
     df_map = df_filter[df_filter[filter_genre]==filter_rent]
