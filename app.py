@@ -75,7 +75,6 @@ if filter_genre == 'Totaal':
     df_timeseries = pd.melt(df_filter, id_vars=['Start_bouw'], 
            value_vars=['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop']) 
     #-------------------------
-    st.dataframe(df_filter.drop("geometry",axis=1))
     df_metrics = df_filter.groupby("Start_bouw")[['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop']].sum()
 
     #-------------------------
