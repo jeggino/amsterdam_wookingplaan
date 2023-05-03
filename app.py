@@ -77,7 +77,7 @@ if filter_genre == 'Totaal':
     st.dataframe(df_filter)
     #-------------------------
     df_metrics = df_filter.groupby("Start_bouw")['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'].sum()
-    st.dataframe(df_metrics)
+
     #-------------------------
     df_map = df_filter
     
