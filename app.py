@@ -76,7 +76,7 @@ if filter_genre == 'Totaal':
            value_vars=['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop']) 
     #-------------------------
     st.dataframe(df_filter.drop("geometry",axis=1))
-    df_metrics = df_filter.groupby("Start_bouw")['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop'].sum()
+    df_metrics = df_filter.groupby("Start_bouw")[['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop']].sum()
 
     #-------------------------
     df_map = df_filter
