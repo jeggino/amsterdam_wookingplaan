@@ -26,7 +26,7 @@ st.set_page_config(
 
 # -------------------------------------------------------
 # df = get_data()
-df  = gpd.GeoDataFrame.from_features("data.geojson")
+df  = gpd.read_file("data.geojson")
 
 
 # -------------------------------------------------------
