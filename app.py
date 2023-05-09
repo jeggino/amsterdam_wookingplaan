@@ -17,7 +17,7 @@ st.set_page_config(
 
 
 # -------------------------------------------------------
-@st.cache_data() 
+# @st.cache_data() 
 def get_data():
     df_raw = gpd.read_file('https://maps.amsterdam.nl/open_geodata/geojson_lnglat.php?KAARTLAAG=WONINGBOUWPLANNEN&THEMA=woningbouwplannen')
     df_raw = df_raw[df_raw.Start_bouw!=0]
@@ -26,6 +26,7 @@ def get_data():
 
 # -------------------------------------------------------
 df = get_data()
+
 
 # -------------------------------------------------------
 sidebar = st.sidebar
@@ -86,8 +87,7 @@ if filter_genre == 'Totaal':
     path=['Start_bouw',"Fase","variable","Stadsdeel"]
     df_sunburst = df_sunburst.groupby(path,as_index=False).sum()
     
-        
-
+       
 else:
 
     df_else = df_filter.groupby(filter_genre)[['Sociale_huur', 'Middeldure_huur', 'Dure_huur', 'Dure_huur_of_Koop','Koop']].sum()
@@ -124,7 +124,6 @@ else:
     df_sunburst = df_sunburst.groupby(path,as_index=False).sum()
         
    
-
 # -------------------------------------------------------    
 chart_pie = alt.Chart(df_piechart).encode(
     theta=alt.Theta(pie_theta, stack=True),
