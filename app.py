@@ -17,7 +17,7 @@ st.set_page_config(
 
 
 # -------------------------------------------------------
-# @st.cache_data() 
+@st.cache_data() 
 def get_data():
     df_raw = gpd.read_file('https://maps.amsterdam.nl/open_geodata/geojson_lnglat.php?KAARTLAAG=WONINGBOUWPLANNEN&THEMA=woningbouwplannen')
     df_raw = df_raw[df_raw.Start_bouw!=0]
