@@ -6,7 +6,7 @@ from datetime import date,datetime
 import altair as alt
 import plotly.express as px
 import pydeck as pdk
-
+import fiona
 
 # -------------------------------------------------------
 st.set_page_config(
