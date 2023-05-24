@@ -12,7 +12,7 @@ import fiona
 st.set_page_config(
     page_title="Amterdam woon[plaan",
     page_icon="🏠",
-    layout="wide",
+    layout="dashboard",
 )
 
 
